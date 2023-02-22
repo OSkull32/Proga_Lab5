@@ -1,0 +1,17 @@
+plugins {
+    id 'java'
+}
+
+group 'ru.ifmo.lab'
+version ''
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+}
+
+test {
+    useJUnitPlatform()
+}
