@@ -71,4 +71,10 @@ public class CollectionManager {
             System.err.println("Невозможно записать null в данное поле");
         }
     }
+
+    public void clear(){
+        hashtable.clear();
+    }
+
+
 }
