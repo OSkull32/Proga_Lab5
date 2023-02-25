@@ -1,8 +1,6 @@
 package ru.ifmo.lab.collection;
 
-import ru.ifmo.lab.utility.FieldValidatble;
-
-public class Coordinates implements FieldValidatble {
+public class Coordinates {
     private int x; //Максимальное значение поля: 713
     private Integer y; //Значение поля должно быть больше -397, Поле не может быть null
 
@@ -25,12 +23,6 @@ public class Coordinates implements FieldValidatble {
 
     public Integer getY() {
         return y;
-    }
-
-    @Override
-    public boolean validate() {
-        if (x > 713) return false;
-        return y > -397 && y != null;
     }
 
     @Override

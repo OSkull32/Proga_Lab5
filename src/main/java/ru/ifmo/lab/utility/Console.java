@@ -4,7 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 public class Console {
-    Scanner scanner;
+    private Scanner scanner;
 
     public Console() {
         scanner = new Scanner(System.in, StandardCharsets.UTF_8);
