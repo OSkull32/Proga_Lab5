@@ -24,7 +24,7 @@ public class CollectionManager {
      */
     public CollectionManager() {
         this.hashtable = new Hashtable<>();
-        String i = Instant.now().toString();
+        String i = LocalDateTime.now().toString();
         collectionInitialization = LocalDateTime.parse(i);
     }
 
