@@ -1,21 +1,36 @@
 package ru.ifmo.lab.collection;
 
 import java.time.Instant;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+/**
+ * Класс отвечающий за работу с коллекциями
+ */
 public class CollectionManager {
+    /**
+     * Коллекция, с которой осуществляется работа
+     */
     Hashtable<Integer, Flat> hashtable;
 
-    ZonedDateTime collectionInitialization;
+    /**
+     * Время инициализации коллекции
+     */
+    LocalDateTime collectionInitialization;
 
+    /**
+     * Конструктор, создающий новый объект менеджера коллекции
+     */
     public CollectionManager() {
         this.hashtable = new Hashtable<>();
         String i = Instant.now().toString();
-        collectionInitialization = ZonedDateTime.parse(i);
+        collectionInitialization = LocalDateTime.parse(i);
     }
 
+    /**
+     * Метод, выводящий основную информацию об коллекции
+     */
     public void info() {
         System.out.println("Коллекция " + hashtable.getClass().getSimpleName());
         System.out.println("Тип элементов коллекции: " + Flat.class.getSimpleName());
@@ -25,6 +40,9 @@ public class CollectionManager {
         System.out.println("Количество элементов в коллекции: " + hashtable.size());
     }
 
+    /**
+     * Метод, выводящий элементы коллекции
+     */
     public void show() {
         if (hashtable.size() == 0) {
             System.out.println("Коллекция пуста.");
@@ -35,12 +53,25 @@ public class CollectionManager {
         }
     }
 
+    /**
+     * Метод, добавляющий новый элемент в коллекцию
+     *
+     * @param id идентификатор элемента
+     * @param flat элемент коллекции, который нужно добавить
+     */
     public void insert(Integer id, Flat flat) {
         if (hashtable.get(id) == null) {
             hashtable.put(id, flat);
         } else System.out.println("Элемент с данным ключом уже существует");
     }
 
+    /**
+     * Нужно дорабоать
+     *
+     * @param id
+     * @param field
+     * @param value
+     */
     public void update(Integer id, String field, String value) {
         try {
             switch (field) {
@@ -72,6 +103,9 @@ public class CollectionManager {
         }
     }
 
+    /**
+     * Метод, удаляющий все элементы коллекции
+     */
     public void clear(){
         hashtable.clear();
     }
