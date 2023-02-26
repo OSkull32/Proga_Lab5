@@ -32,11 +32,11 @@ public class CollectionManager {
      * Метод, выводящий основную информацию об коллекции
      */
     public void info() {
-        System.out.println("Коллекция: " + hashtable.getClass().getSimpleName());
+        System.out.println("Коллекция " + hashtable.getClass().getSimpleName());
         System.out.println("Тип элементов коллекции: " + Flat.class.getSimpleName());
-        String pattern = "yyyy-MM-dd HH:mm:ss.SSS";
+        String pattern = "yyyy-mm-dd HH:mm:ss.SSS";
         DateTimeFormatter europeanDateFormat = DateTimeFormatter.ofPattern(pattern);
-        System.out.println("Время инициализации коллекции: " + collectionInitialization.format(europeanDateFormat));
+        System.out.println("Время инициализации коллекции: " + collectionInitialization.plusHours(3).format(europeanDateFormat));
         System.out.println("Количество элементов в коллекции: " + hashtable.size());
     }
 

@@ -1,57 +1,60 @@
 package ru.ifmo.lab.commands;
 
+import ru.ifmo.lab.exceptions.InvalidCommandException;
+import ru.ifmo.lab.exceptions.InvalidValueException;
 import ru.ifmo.lab.utility.Console;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CommandManager {
 
-    private Console console;
+    private final Console CONSOLE;
     private HashMap<String, Command> commands = new HashMap<>();
+    private ArrayList<String> historyList = new ArrayList<>();
+    private final int MAX_HISTORY_SIZE = 13;
 
-    public CommandManager(Console console,
-                          Clear clear,
-                          ExecuteScript executeScript,
-                          Exit exit,
-                          FilterLessThanHouse filterLessThanHouse,
-                          Help help,
-                          History history,
-                          Info info,
-                          InsertId insertId,
-                          InsertNull insertNull,
-                          PrintFieldAscendingHouse printFieldAscendingHouse,
-                          RemoveAllByView removeAllByView,
-                          RemoveGreaterKey removeGreaterKey,
-                          RemoveKey removeKey,
-                          RemoveLowerKey removeLowerKey,
-                          Save save,
-                          Show show) {
-        this.console = console;
-        commands.put("clear", clear);
-        commands.put("execute_script", executeScript);
-        commands.put("exit", exit);
-        commands.put("filter_less_than_house", filterLessThanHouse);
-        commands.put("help", help);
-        commands.put("history", history);
-        commands.put("info", info);
-        commands.put("update", insertId);
-        commands.put("insert", insertNull);
-        commands.put("print_field_ascending_house", printFieldAscendingHouse);
-        commands.put("remove_all_by_view", removeAllByView);
-        commands.put("remove_greater_key", removeGreaterKey);
-        commands.put("remove_key", removeKey);
-        commands.put("remove_lower_key", removeLowerKey);
-        commands.put("save", save);
-        commands.put("show", show);
+    public CommandManager(Console console){
+        this.CONSOLE = console;
+    }
+
+    public void addCommand(String name, Command command){
+        commands.put(name, command);
     }
 
     public void nextCommand() {
-        console.printPreamble();
-        executeCommand("history"); //TODO взятие, проверка и фильтрация аргумента для executeCommand
+        CONSOLE.printPreamble(); //print ">>>"
+        String inputString = CONSOLE.readLine();
+        String clearString = inputString.replaceAll("\s+", " ").trim(); //remove sequences of spaces
+
+        String[] inputs = clearString.split(" ");
+
+        try {
+            executeCommand(inputs[0]);
+        } catch (InvalidCommandException e) {
+            CONSOLE.printCommandError("Invalid command");
+        } catch (InvalidValueException e) {
+            CONSOLE.printCommandError("Invalid value");
+        }
     }
 
-    private void executeCommand(String commandName) {
+    private void executeCommand(String commandName) throws InvalidCommandException, InvalidValueException {
+
         Command command = commands.get(commandName);
+        if (command == null) throw new InvalidCommandException();
         command.execute();
+
+        historyList.add(commandName);
+        if (historyList.size() > MAX_HISTORY_SIZE){
+            historyList.remove(0);
+        }
+    }
+
+    public void getHistoryList() {
+        if (historyList.size() == 0) {
+            CONSOLE.printCommandText("History is empty");
+        } else{
+            CONSOLE.printCommandText(historyList.toString());
+        }
     }
 }
