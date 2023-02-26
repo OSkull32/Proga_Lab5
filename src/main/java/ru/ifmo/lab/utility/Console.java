@@ -56,6 +56,6 @@ public class Console {
      * Метод, выводящий символ стрелки перед запросом ввода команды
      */
     public void printPreamble() {
-        System.out.println(">");
+        System.out.print(">>>");
     }
 }

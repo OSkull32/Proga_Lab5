@@ -41,11 +41,11 @@ public class FlatReader {
      * @return значение поля name, уже проверенное на условия допустимости
      */
     public String readName() {
-        String str;
+        //String str;
 
         while (true) {
             console.printCommandText("name (not null): ");
-            str = console.readLine().trim();
+            String str = console.readLine().trim();
             if (str.equals("")) console.printCommandError("\n Значение поля не может быть null или пустой строкой \n");
             else return str;
         }
