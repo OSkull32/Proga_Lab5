@@ -1,9 +1,9 @@
 package ru.ifmo.lab.collection;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.Hashtable;
+import java.util.Map;
 
 /**
  * Класс отвечающий за работу с коллекциями
@@ -32,11 +32,11 @@ public class CollectionManager {
      * Метод, выводящий основную информацию об коллекции
      */
     public void info() {
-        System.out.println("Коллекция " + hashtable.getClass().getSimpleName());
+        System.out.println("Коллекция: " + hashtable.getClass().getSimpleName());
         System.out.println("Тип элементов коллекции: " + Flat.class.getSimpleName());
-        String pattern = "yyyy-mm-dd HH:mm:ss.SSS";
+        String pattern = "yyyy-MM-dd HH:mm:ss.SSS";
         DateTimeFormatter europeanDateFormat = DateTimeFormatter.ofPattern(pattern);
-        System.out.println("Время инициализации коллекции: " + collectionInitialization.plusHours(3).format(europeanDateFormat));
+        System.out.println("Время инициализации коллекции: " + collectionInitialization.format(europeanDateFormat));
         System.out.println("Количество элементов в коллекции: " + hashtable.size());
     }
 
@@ -56,7 +56,7 @@ public class CollectionManager {
     /**
      * Метод, добавляющий новый элемент в коллекцию
      *
-     * @param id идентификатор элемента
+     * @param id   идентификатор элемента
      * @param flat элемент коллекции, который нужно добавить
      */
     public void insert(Integer id, Flat flat) {
@@ -106,7 +106,7 @@ public class CollectionManager {
     /**
      * Метод, удаляющий все элементы коллекции
      */
-    public void clear(){
+    public void clear() {
         hashtable.clear();
     }
 
