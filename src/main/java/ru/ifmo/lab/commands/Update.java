@@ -7,7 +7,7 @@ import ru.ifmo.lab.utility.Console;
 /**
  * Класс команды, которая обновляет значение элемента коллекции с выбранным id
  */
-public class Update implements CommandWithArguments{
+public class Update implements Command{
 
     private CollectionManager collectionManager;
 
@@ -67,12 +67,12 @@ public class Update implements CommandWithArguments{
         return "изменяет указанное поле выбранного id элемента коллекции";
     }
 
-    /**
-     * @param commandArguments Аргументы команды.
-     * @see Command
-     */
-    @Override
-    public void getCommandArguments(String[] commandArguments) {
-        this.commandArguments = commandArguments;
-    }
+//    /**
+//     * @param commandArguments Аргументы команды.
+//     * @see Command
+//     */
+//    @Override
+//    public void getCommandArguments(String[] commandArguments) {
+//        this.commandArguments = commandArguments;
+//    }
 }

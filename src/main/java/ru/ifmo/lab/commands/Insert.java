@@ -6,7 +6,7 @@ import ru.ifmo.lab.exceptions.WrongArgumentException;
 import ru.ifmo.lab.utility.Console;
 import ru.ifmo.lab.utility.FlatReader;
 
-public class Insert implements CommandWithArguments {
+public class Insert implements Command {
     private CollectionManager collectionManager;
     private Console console;
     private FlatReader flatReader;
@@ -46,14 +46,14 @@ public class Insert implements CommandWithArguments {
         }
     }
 
-    /**
-     * @param arguments Аргументы команды.
-     * @see CommandWithArguments
-     */
-    @Override
-    public void getCommandArguments(String[] arguments) {
-        this.arguments = arguments;
-    }
+//    /**
+//     * @param arguments Аргументы команды.
+//     * @see CommandWithArguments
+//     */
+//    @Override
+//    public void getCommandArguments(String[] arguments) {
+//        this.arguments = arguments;
+//    }
 
     /**
      * @return Возвращает описание данной команды.
