@@ -253,8 +253,24 @@ public class Flat {
      *
      * @param house
      */
-    public void setHouse(House house) {
-        this.house = house;
+    public void setHouseName(String name) {
+        this.house.setHouseName(name);
+    }
+
+    public void setHouseYear(int year) {
+        this.house.setYear(year);
+    }
+
+    public void setHouseNumberOfFloors(Long numberOfFloors) {
+        this.house.setNumberOfFloors(numberOfFloors);
+    }
+
+    public void setHouseNumberOfFlatsOnFloor(long numberOfFlatsOnFloor) {
+        this.house.setNumberOfFlatsOnFloor(numberOfFlatsOnFloor);
+    }
+
+    public void setHouseNumberOfLifts(long numberOfLifts) {
+        this.house.setNumberOfLifts(numberOfLifts);
     }
 
     /**

@@ -53,10 +53,8 @@ public class House {
 
     /**
      * Метод, присваивающий имя объекта класса
-     *
-     * @param name
      */
-    public void setName(String name) {
+    public void setHouseName(String name) {
         this.name = name;
     }
 

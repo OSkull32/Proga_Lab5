@@ -4,7 +4,9 @@ import ru.ifmo.lab.utility.Console;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Hashtable;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -16,7 +18,7 @@ public class CollectionManager {
      */
     private final Hashtable<Integer, Flat> hashtable;
 
-    private final Console console;
+    Console console;
     /*
      * Время инициализации коллекции
      */
@@ -70,11 +72,11 @@ public class CollectionManager {
     }
 
     /**
-     * Нужно дорабоать
+     * Метод, изменяющий поле выбранного элемента коллекции
      *
-     * @param id
-     * @param field
-     * @param value
+     * @param id идентификатор (ключ)
+     * @param field имя поля
+     * @param value значение поля
      */
     public void update(Integer id, String field, String value) {
         try {
@@ -97,6 +99,71 @@ public class CollectionManager {
                     console.printCommandText("Значение поля было изменено");
                     break;
                 }
+                case "area": {
+                    if (value.equals("")) value = null;
+                    hashtable.get(id).setArea(Integer.parseInt(value));
+                    console.printCommandText("Значение поля было изменено");
+                    break;
+                }
+                case "number_of_rooms": {
+                    if (value.equals("")) value = null;
+                    hashtable.get(id).setNumberOfRooms(Long.parseLong(value));
+                    console.printCommandText("Значение поля было изменено");
+                    break;
+                }
+                case "number_of_bathrooms": {
+                    if (value.equals("")) value = null;
+                    hashtable.get(id).setNumberOfBathrooms(Long.parseLong(value));
+                    console.printCommandText("Значение поля было изменено");
+                    break;
+                }
+                case "furnish": {
+                    hashtable.get(id).setFurnish(Furnish.valueOf(value.toUpperCase(Locale.ROOT)));
+                    console.printCommandText("Значение поля было изменено");
+                    break;
+                }
+                case "view": {
+                    hashtable.get(id).setView(View.valueOf(value.toUpperCase(Locale.ROOT)));
+                    console.printCommandText("Значение поля было изменено");
+                    break;
+                }
+                case "house_name": {
+                    if (value.equals("")) throw new NullPointerException();
+                    hashtable.get(id).setHouseName(value);
+                    console.printCommandText("Значение поля было изменено");
+                    break;
+                }
+                case "house_year": {
+                    if (value.equals("")) value = null;
+                    hashtable.get(id).setHouseYear(Integer.parseInt(value));
+                    console.printCommandText("Значение поля было изменено");
+                    break;
+                }
+                case "house_number_of_floors": {
+                    if (value.equals("")) value = null;
+                    hashtable.get(id).setHouseNumberOfFloors(Long.parseLong(value));
+                    console.printCommandText("Значение поля было изменено");
+                    break;
+                }
+                case "house_number_of_flats_on_floor": {
+                    if (value.equals("")) value = null;
+                    hashtable.get(id).setHouseNumberOfFlatsOnFloor(Long.parseLong(value));
+                    console.printCommandText("Значение поля было изменено");
+                    break;
+                }
+                case "house_number_of_lifts": {
+                    if (value.equals("")) value = null;
+                    hashtable.get(id).setHouseNumberOfLifts(Long.parseLong(value));
+                    console.printCommandText("Значение поля было изменено");
+                    break;
+                }
+                case "stop": {
+                    break;
+                }
+                default: {
+                    System.out.println("Поле не распознано");
+                    break;
+                }
             }
         } catch (ClassCastException ex) {
             System.err.println("Указано недопустимое значение для данного поля");
@@ -114,5 +181,26 @@ public class CollectionManager {
         hashtable.clear();
     }
 
+    /**
+     * Метод, выводящий истину, если в коллекции существует элемент с выбранным ключом, иначе ложь
+     *
+     * @param id идентификатор элемента (ключ)
+     * @return true - в коллекции существует элемент с выбранным ключом, false - такого элемента не существует
+     */
+    public boolean containsKey(int id) {
+        return hashtable.containsKey(id);
+    }
 
+    /**
+     * Метод, возвращающий названия всех полей коллекции, которые могут быть изменены
+     *
+     * @return Все поля коллекции выводит в столбец
+     */
+    public String getFieldName() {
+        return "Список всех полей:\nname\ncoordinate_x\ncoordinate_y\n" +
+                "area\nnumber_of_rooms\nnumber_of_bathrooms\nfurnish: " + Arrays.toString(Furnish.values())
+                + "\nview: " + Arrays.toString(View.values()) +
+                "\nhouse_name\nhouse_year\nhouse_number_of_floors\nhouse_number_of_flats_on_floor\nhouse_number_of_lifts";
+
+    }
 }
