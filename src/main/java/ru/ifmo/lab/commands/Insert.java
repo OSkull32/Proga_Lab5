@@ -2,10 +2,11 @@ package ru.ifmo.lab.commands;
 
 import ru.ifmo.lab.collection.CollectionManager;
 import ru.ifmo.lab.collection.Flat;
+import ru.ifmo.lab.exceptions.WrongArgumentException;
 import ru.ifmo.lab.utility.Console;
 import ru.ifmo.lab.utility.FlatReader;
 
-public class Insert implements CommandWithArguments {
+public class Insert implements Command {
     private CollectionManager collectionManager;
     private Console console;
     private FlatReader flatReader;
@@ -29,7 +30,8 @@ public class Insert implements CommandWithArguments {
      * При успешном выполнении команды в потоке вывода высветится уведомление о добавлении элемента в коллекцию.
      */
     @Override
-    public void execute() {
+    public void execute(String args) throws WrongArgumentException {
+        if (args.isEmpty()) throw new WrongArgumentException();
         try {
             if (!collectionManager.containsKey(Integer.parseInt(arguments[0]))) {
                 console.printCommandText("Введите значения полей для элемента коллекции\n");
@@ -44,14 +46,14 @@ public class Insert implements CommandWithArguments {
         }
     }
 
-    /**
-     * @param arguments Аргументы команды.
-     * @see CommandWithArguments
-     */
-    @Override
-    public void getCommandArguments(String[] arguments) {
-        this.arguments = arguments;
-    }
+//    /**
+//     * @param arguments Аргументы команды.
+//     * @see CommandWithArguments
+//     */
+//    @Override
+//    public void getCommandArguments(String[] arguments) {
+//        this.arguments = arguments;
+//    }
 
     /**
      * @return Возвращает описание данной команды.

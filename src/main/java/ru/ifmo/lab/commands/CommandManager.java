@@ -2,21 +2,25 @@ package ru.ifmo.lab.commands;
 
 import ru.ifmo.lab.exceptions.InvalidCommandException;
 import ru.ifmo.lab.exceptions.InvalidValueException;
+import ru.ifmo.lab.exceptions.WrongArgumentException;
 import ru.ifmo.lab.utility.Console;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * Класс, управляющий вызовом команд.
  * @author Kliodt Vadim
- * @version 1.0
+ * @version 2.0
  */
 public class CommandManager {
 
     private final Console CONSOLE;
     private final HashMap<String, Command> COMMANDS = new HashMap<>();
     private final ArrayList<String> HISTORY_LIST = new ArrayList<>();
+    private int MAX_HISTORY_SIZE = 13;
 
     /**
      * Конструирует менеджера команд с заданными {@link Console}
@@ -44,27 +48,31 @@ public class CommandManager {
         String inputString = CONSOLE.readLine();
         String clearString = inputString.replaceAll("\s+", " ").trim(); //remove sequences of spaces
 
-        String[] inputs = clearString.split(" ");
+        String[] inputs = clearString.split(" ", 2);
 
         try {
-            executeCommand(inputs[0]);
+            executeCommand(inputs);
         } catch (InvalidCommandException e) {
             CONSOLE.printCommandError("Invalid command");
-        } catch (InvalidValueException e) {
-            CONSOLE.printCommandError("Invalid value");
+        } catch (WrongArgumentException e) {
+            CONSOLE.printCommandError("Command has wrong argument or does not have argument that required ");
         }
     }
 
     //метод вызывает команду на исполнение
-    private void executeCommand(String commandName) throws InvalidCommandException, InvalidValueException {
+    private void executeCommand(String[] inputs) throws InvalidCommandException, WrongArgumentException {
 
-        Command command = COMMANDS.get(commandName);
+        Command command = COMMANDS.get(inputs[0]);
         if (command == null) throw new InvalidCommandException();
-        command.execute();
+        if (inputs.length == 1) {
+            command.execute(""); //если не было передано аргументов
+        } else {
+            command.execute(inputs[1]); //если было передано 1 и более аргументов
+        }
 
-        HISTORY_LIST.add(commandName);
+        HISTORY_LIST.add(inputs[0]);
 
-        if (HISTORY_LIST.size() > 13) {
+        if (HISTORY_LIST.size() > MAX_HISTORY_SIZE) {
             HISTORY_LIST.remove(0);
         }
     }
@@ -72,11 +80,23 @@ public class CommandManager {
     /**
      * Печатает в консоль последние 13 использованных команд.
      */
-    public void getHistoryList() {
+    public void getHistoryList() { //команда history
         if (HISTORY_LIST.size() == 0) {
             CONSOLE.printCommandText("History is empty");
         } else {
-            CONSOLE.printCommandText(HISTORY_LIST.toString());
+            CONSOLE.printCommandText("History (latest " + MAX_HISTORY_SIZE + " commands): " +
+                    HISTORY_LIST.toString().replace("[", "").replace("]", ""));
+        }
+    }
+
+    /**
+     * Печатает в консоль описание по всем командам.
+     * @see Command#getDescription()
+     */
+    public void getCommandsInfo(){ //команда help
+        Set<String> commandNames = COMMANDS.keySet();
+        for (String commandName : commandNames){
+            CONSOLE.printCommandText(commandName + ": " + COMMANDS.get(commandName).getDescription());
         }
     }
 }

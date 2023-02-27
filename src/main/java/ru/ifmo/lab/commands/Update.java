@@ -1,12 +1,13 @@
 package ru.ifmo.lab.commands;
 
 import ru.ifmo.lab.collection.CollectionManager;
+import ru.ifmo.lab.exceptions.WrongArgumentException;
 import ru.ifmo.lab.utility.Console;
 
 /**
  * Класс команды, которая обновляет значение элемента коллекции с выбранным id
  */
-public class Update implements CommandWithArguments{
+public class Update implements Command{
 
     private CollectionManager collectionManager;
 
@@ -28,7 +29,8 @@ public class Update implements CommandWithArguments{
      * пока в качестве аргумента не будет передан stop
      */
     @Override
-    public void execute(){
+    public void execute(String args) throws WrongArgumentException {
+        if (args.isEmpty()) throw new WrongArgumentException();
         try {
             if (collectionManager.containsKey(Integer.parseInt(commandArguments[0]))) {
                 console.printCommandText(collectionManager.getFieldName());
@@ -65,12 +67,12 @@ public class Update implements CommandWithArguments{
         return "изменяет указанное поле выбранного id элемента коллекции";
     }
 
-    /**
-     * @param commandArguments Аргументы команды.
-     * @see Command
-     */
-    @Override
-    public void getCommandArguments(String[] commandArguments) {
-        this.commandArguments = commandArguments;
-    }
+//    /**
+//     * @param commandArguments Аргументы команды.
+//     * @see Command
+//     */
+//    @Override
+//    public void getCommandArguments(String[] commandArguments) {
+//        this.commandArguments = commandArguments;
+//    }
 }

@@ -1,17 +1,21 @@
 package ru.ifmo.lab.commands;
 
+import ru.ifmo.lab.exceptions.WrongArgumentException;
+
 /**
- * Интерфейс, реализация которого приведена в командах
+ * Интерфейс, реализация которого приведена в командахю
  */
 public interface Command {
     /**
-     * Метод, исполняющий команду
+     * Метод, исполняющий команду.
+     * @param args Сторка, содержащая переданные команде аргументы.
+     * @throws WrongArgumentException если аргумент был введен некорректно / требовался,
+     * но не был введен / не требовался, но был введен.
      */
-    void execute();
+    void execute(String args) throws WrongArgumentException;
 
     /**
      * Метод, описывающий работу команды
-     *
      * @return Возвращает описание команды
      */
     default String getDescription() {
