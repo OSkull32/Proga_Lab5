@@ -32,7 +32,7 @@ public class Update implements Command{
     public void execute(String args) throws WrongArgumentException {
         if (args.isEmpty()) throw new WrongArgumentException();
         try {
-            if (collectionManager.containsKey(Integer.parseInt(commandArguments[0]))) {
+            if (collectionManager.containsKey(Integer.parseInt(args))) {
                 console.printCommandText(collectionManager.getFieldName());
 
                 console.printCommandText("Если хотите остановите изменение элемента, напишите stop");
@@ -42,9 +42,9 @@ public class Update implements Command{
                     try {
                         commandWords = console.readLine().trim().split("\\s+");
                         if (commandWords.length == 1) {
-                            collectionManager.update(Integer.parseInt(commandArguments[0]), commandWords[0], "");
+                            collectionManager.update(Integer.parseInt(args), commandWords[0], "");
                         } else
-                            collectionManager.update(Integer.parseInt(commandArguments[0]), commandWords[0], commandWords[1]);
+                            collectionManager.update(Integer.parseInt(args), commandWords[0], commandWords[1]);
                     } catch (IndexOutOfBoundsException ex) {
                         System.err.println("Не введено поле");
                     }

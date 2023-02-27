@@ -32,7 +32,7 @@ public class FlatReader {
      */
     public Flat read(int id){
         String i = Instant.now().toString();
-        return new Flat(id, readName(), readCoordinates(), LocalDateTime.parse(i), readArea(), readNumberOfRooms(), readNumberOfBathrooms(), readFurnish(), readView(), readHouse());
+        return new Flat(id, readName(), readCoordinates(), LocalDateTime.parse(LocalDateTime.now().toString()), readArea(), readNumberOfRooms(), readNumberOfBathrooms(), readFurnish(), readView(), readHouse());
     }
 
     /**
