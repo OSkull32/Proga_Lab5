@@ -4,10 +4,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 public class Console {
-    /**
+    /*
      * хранит ссылку на Scanner
      */
-    private Scanner scanner;
+    private final Scanner scanner;
 
     /**
      * Конструктор класса без параметров. При вызове scanner производит чтение из стандартного потока ввода с кодировкой UTF-8

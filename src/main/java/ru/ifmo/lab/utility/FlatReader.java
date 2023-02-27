@@ -10,10 +10,10 @@ import java.time.LocalDateTime;
  * Класс, необходимы для чтения полей объекта Flat
  */
 public class FlatReader {
-    /**
+    /*
      * Поле, хранящее ссылку на объект класса типа Console
      */
-    private Console console;
+    private final Console console;
 
     /**
      * Конструктор класса, который присваивает console значение, переданное в конструкторе в качестве параметра

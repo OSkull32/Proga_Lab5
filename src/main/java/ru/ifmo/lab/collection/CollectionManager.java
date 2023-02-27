@@ -9,15 +9,15 @@ import java.util.Map;
  * Класс отвечающий за работу с коллекциями
  */
 public class CollectionManager {
-    /**
+    /*
      * Коллекция, с которой осуществляется работа
      */
-    Hashtable<Integer, Flat> hashtable;
+    private final Hashtable<Integer, Flat> hashtable;
 
-    /**
+    /*
      * Время инициализации коллекции
      */
-    LocalDateTime collectionInitialization;
+    private final LocalDateTime collectionInitialization;
 
     /**
      * Конструктор, создающий новый объект менеджера коллекции
