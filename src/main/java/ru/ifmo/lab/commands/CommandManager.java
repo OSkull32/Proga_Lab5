@@ -2,9 +2,11 @@ package ru.ifmo.lab.commands;
 
 import ru.ifmo.lab.exceptions.InvalidCommandException;
 import ru.ifmo.lab.exceptions.InvalidValueException;
+import ru.ifmo.lab.exceptions.WrongArgumentException;
 import ru.ifmo.lab.utility.Console;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -44,25 +46,29 @@ public class CommandManager {
         String inputString = CONSOLE.readLine();
         String clearString = inputString.replaceAll("\s+", " ").trim(); //remove sequences of spaces
 
-        String[] inputs = clearString.split(" ");
+        String[] inputs = clearString.split(" ", 2);
 
         try {
-            executeCommand(inputs[0]);
+            executeCommand(inputs);
         } catch (InvalidCommandException e) {
             CONSOLE.printCommandError("Invalid command");
-        } catch (InvalidValueException e) {
-            CONSOLE.printCommandError("Invalid value");
+        } catch (WrongArgumentException e) {
+            CONSOLE.printCommandError("Command has wrong argument or does not have argument that required ");
         }
     }
 
     //метод вызывает команду на исполнение
-    private void executeCommand(String commandName) throws InvalidCommandException, InvalidValueException {
+    private void executeCommand(String[] inputs) throws InvalidCommandException, WrongArgumentException {
 
-        Command command = COMMANDS.get(commandName);
+        Command command = COMMANDS.get(inputs[0]);
         if (command == null) throw new InvalidCommandException();
-        command.execute();
+        if (inputs.length == 1) {
+            command.execute(""); //если не было передано аргументов
+        } else {
+            command.execute(inputs[1]); //если было передано 1 и более аргументов
+        }
 
-        HISTORY_LIST.add(commandName);
+        HISTORY_LIST.add(inputs[0]);
 
         if (HISTORY_LIST.size() > 13) {
             HISTORY_LIST.remove(0);

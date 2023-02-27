@@ -1,6 +1,7 @@
 package ru.ifmo.lab.commands;
 
 import ru.ifmo.lab.collection.CollectionManager;
+import ru.ifmo.lab.exceptions.WrongArgumentException;
 import ru.ifmo.lab.utility.Console;
 
 /**
@@ -28,7 +29,8 @@ public class Update implements CommandWithArguments{
      * пока в качестве аргумента не будет передан stop
      */
     @Override
-    public void execute(){
+    public void execute(String args) throws WrongArgumentException {
+        if (args.isEmpty()) throw new WrongArgumentException();
         try {
             if (collectionManager.containsKey(Integer.parseInt(commandArguments[0]))) {
                 console.printCommandText(collectionManager.getFieldName());

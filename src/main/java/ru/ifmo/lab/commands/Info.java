@@ -1,6 +1,7 @@
 package ru.ifmo.lab.commands;
 
 import ru.ifmo.lab.collection.CollectionManager;
+import ru.ifmo.lab.exceptions.WrongArgumentException;
 
 /**
  * Класс команды, которая выводит информацию о коллеции
@@ -24,7 +25,8 @@ public class Info implements Command{
      * Метод, исполняющий команду. Выводит описание коллекции HashTable
      */
     @Override
-    public void execute() {
+    public void execute(String args) throws WrongArgumentException {
+        if (!args.isEmpty()) throw new WrongArgumentException();
         collectionManager.info();
     }
 

@@ -1,5 +1,7 @@
 package ru.ifmo.lab.commands;
 
+import ru.ifmo.lab.exceptions.WrongArgumentException;
+
 /**
  * Класс команды "history".
  * @author Kliodt Vadim
@@ -21,7 +23,8 @@ public class History implements Command{
      * Выполняет команду "history".
      */
     @Override
-    public void execute(){
+    public void execute(String args) throws WrongArgumentException {
+        if (!args.isEmpty()) throw new WrongArgumentException();
         COMMAND_MANAGER.getHistoryList();
     }
 }

@@ -16,8 +16,8 @@ public class Main {
         commandManager.addCommand("help", new Help());
         commandManager.addCommand("history", new History(commandManager));
         commandManager.addCommand("info", new Info(collectionManager));
-        commandManager.addCommand("update", new Update());
-        commandManager.addCommand("insert", new Insert());
+        //commandManager.addCommand("update", new Update());
+        //commandManager.addCommand("insert", new Insert());
         commandManager.addCommand("print_field_ascending_house", new PrintFieldAscendingHouse());
         commandManager.addCommand("remove_all_by_view", new RemoveAllByView());
         commandManager.addCommand("remove_greater_key", new RemoveGreaterKey());
