@@ -1,5 +1,7 @@
 package ru.ifmo.lab.collection;
 
+import ru.ifmo.lab.utility.Console;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Hashtable;
@@ -14,6 +16,7 @@ public class CollectionManager {
      */
     private final Hashtable<Integer, Flat> hashtable;
 
+    private final Console console;
     /*
      * Время инициализации коллекции
      */
@@ -22,22 +25,23 @@ public class CollectionManager {
     /**
      * Конструктор, создающий новый объект менеджера коллекции
      */
-    public CollectionManager() {
+    public CollectionManager(Console console) {
         this.hashtable = new Hashtable<>();
         String i = LocalDateTime.now().toString();
         collectionInitialization = LocalDateTime.parse(i);
+        this.console = console;
     }
 
     /**
      * Метод, выводящий основную информацию об коллекции
      */
     public void info() {
-        System.out.println("Коллекция: " + hashtable.getClass().getSimpleName());
-        System.out.println("Тип элементов коллекции: " + Flat.class.getSimpleName());
+        console.printCommandText ("Коллекция: " + hashtable.getClass().getSimpleName());
+        console.printCommandText("Тип элементов коллекции: " + Flat.class.getSimpleName());
         String pattern = "yyyy-MM-dd HH:mm:ss.SSS";
         DateTimeFormatter europeanDateFormat = DateTimeFormatter.ofPattern(pattern);
-        System.out.println("Время инициализации коллекции: " + collectionInitialization.format(europeanDateFormat));
-        System.out.println("Количество элементов в коллекции: " + hashtable.size());
+        console.printCommandText("Время инициализации коллекции: " + collectionInitialization.format(europeanDateFormat));
+        console.printCommandText("Количество элементов в коллекции: " + hashtable.size());
     }
 
     /**
@@ -45,10 +49,10 @@ public class CollectionManager {
      */
     public void show() {
         if (hashtable.size() == 0) {
-            System.out.println("Коллекция пуста.");
+            console.printCommandText("Коллекция пуста.");
         } else {
             for (Map.Entry<Integer, Flat> entry : hashtable.entrySet()) {
-                System.out.println(entry.getValue().toString());
+                console.printCommandText(entry.getValue().toString());
             }
         }
     }
@@ -62,7 +66,7 @@ public class CollectionManager {
     public void insert(Integer id, Flat flat) {
         if (hashtable.get(id) == null) {
             hashtable.put(id, flat);
-        } else System.out.println("Элемент с данным ключом уже существует");
+        } else console.printCommandText("Элемент с данным ключом уже существует");
     }
 
     /**
@@ -78,19 +82,19 @@ public class CollectionManager {
                 case "name": {
                     if (value.equals("")) throw new NullPointerException();
                     hashtable.get(id).setName(value);
-                    System.out.println("Значение поля было изменено");
+                    console.printCommandText("Значение поля было изменено");
                     break;
                 }
                 case "coordinate_x": {
                     if (value.equals("")) value = null;
                     hashtable.get(id).setCoordinateX(Integer.parseInt(value));
-                    System.out.println("Значение поля было изменено");
+                    console.printCommandText("Значение поля было изменено");
                     break;
                 }
                 case "coordinate_y": {
                     if (value.equals("")) value = null;
                     hashtable.get(id).setCoordinateY(Integer.parseInt(value));
-                    System.out.println("Значение поля было изменено");
+                    console.printCommandText("Значение поля было изменено");
                     break;
                 }
             }

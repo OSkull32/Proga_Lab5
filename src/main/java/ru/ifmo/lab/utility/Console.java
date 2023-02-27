@@ -49,13 +49,13 @@ public class Console {
      * @param str строка, которая выводиться в стандартный поток вывода ошибок
      */
     public void printCommandError(String str) {
-        System.err.println(str);
+        System.out.println("Ошибка: " + str);
     }
 
     /**
      * Метод, выводящий символ стрелки перед запросом ввода команды
      */
     public void printPreamble() {
-        System.out.print(">>>");
+        System.out.print(">");
     }
 }

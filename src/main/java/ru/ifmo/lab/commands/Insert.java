@@ -1,6 +1,6 @@
 package ru.ifmo.lab.commands;
 
-public class InsertNull implements Command{
+public class Insert implements Command{
     @Override
     public void execute(){
         //code here
