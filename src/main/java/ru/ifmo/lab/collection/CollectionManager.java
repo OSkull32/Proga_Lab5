@@ -213,6 +213,24 @@ public class CollectionManager {
     }
 
     /**
+     * Метод, удаляющий все элементы коллекции, вид которого соответствует заданному
+     *
+     * @param view выбранный вид элемента коллекции
+     */
+    public void removeAllByView(View view) {
+        int size = hashtable.size();
+        ArrayList<Integer> keys = new ArrayList<>();
+        for (Map.Entry<Integer, Flat> entry : hashtable.entrySet()) {
+            if (entry.getValue().getView().equals(view)) keys.add(entry.getKey());
+        }
+        for (Integer key : keys) {
+            hashtable.remove(key);
+        }
+        if (size == hashtable.size()) System.out.println("Не было найдено элементов с таким значением поля");
+        else System.out.println("Элементы с данным значением поля удалены");
+    }
+
+    /**
      * Метод, выводящий истину, если в коллекции существует элемент с выбранным ключом, иначе ложь
      *
      * @param id идентификатор элемента (ключ)
