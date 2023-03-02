@@ -251,7 +251,7 @@ public class Flat {
     /**
      * Метод, присваивающий дом объекта класса
      *
-     * @param house
+     * @param name
      */
     public void setHouseName(String name) {
         this.house.setHouseName(name);

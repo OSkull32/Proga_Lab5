@@ -1,6 +1,7 @@
 package ru.ifmo.lab.collection;
 
 import ru.ifmo.lab.utility.Console;
+import ru.ifmo.lab.utility.SortByHouse;
 import ru.ifmo.lab.utility.FileManager;
 
 import java.time.LocalDateTime;
@@ -267,6 +268,30 @@ public class CollectionManager {
                 "area\nnumber_of_rooms\nnumber_of_bathrooms\nfurnish: " + Arrays.toString(Furnish.values())
                 + "\nview: " + Arrays.toString(View.values()) +
                 "\nhouse_name\nhouse_year\nhouse_number_of_floors\nhouse_number_of_flats_on_floor\nhouse_number_of_lifts";
+    }
 
+    /**
+     * Метод выводит в консоль список квартир, отсортированный относительно количества этажей в доме.
+     */
+    public void printFieldAscendingHouse() {
+        Collection<Flat> flatCollection = hashtable.values();
+        ArrayList<Flat> flatList = new ArrayList<>(flatCollection);
+        flatList.sort(new SortByHouse());
+        for (Flat flat : flatList) {
+            console.printCommandText(flat.getName() + " " + flat.getHouse()); //todo изменить формат вывода
+        }
+    }
+
+    /**
+     * Метод выводит в консоль список квартир в домах с меньшим числом этажей, чем указано в параметре.
+     * @param numberOfFloors количество этажей.
+     */
+    public void filterLessThanHouse(int numberOfFloors) {
+        Collection<Flat> flatCollection = hashtable.values();
+        for (Flat flat : flatCollection){
+            if (flat.getHouse().getNumberOfFloors() < numberOfFloors){
+                console.printCommandText(flat.getName() + " " + flat.getHouse()); //todo изменить формат вывода
+            }
+        }
     }
 }

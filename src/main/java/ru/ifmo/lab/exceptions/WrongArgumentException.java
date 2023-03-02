@@ -6,4 +6,10 @@ package ru.ifmo.lab.exceptions;
  * @version 1.0
  */
 public class WrongArgumentException extends Exception{
+    public WrongArgumentException(){
+        super("Command has wrong argument or does not have argument that required");
+    }
+    public WrongArgumentException(String message){
+        super(message);
+    }
 }
