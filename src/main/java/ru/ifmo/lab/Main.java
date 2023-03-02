@@ -26,7 +26,7 @@ public class Main {
         commandManager.addCommand("remove_all_by_view", new RemoveAllByView());
         commandManager.addCommand("remove_greater_key", new RemoveGreaterKey());
         commandManager.addCommand("remove_key", new RemoveKey(collectionManager));
-        commandManager.addCommand("remove_lower_key", new RemoveLowerKey());
+        commandManager.addCommand("remove_lower_key", new RemoveLowerKey(collectionManager));
         commandManager.addCommand("save", new Save());
         commandManager.addCommand("show", new Show(collectionManager));
 

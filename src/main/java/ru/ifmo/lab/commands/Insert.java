@@ -10,7 +10,6 @@ public class Insert implements Command {
     private CollectionManager collectionManager;
     private Console console;
     private FlatReader flatReader;
-    private String[] arguments;
 
     /**
      * Конструктор класса.
@@ -42,18 +41,9 @@ public class Insert implements Command {
         } catch (IndexOutOfBoundsException ex) {
             System.err.println("Не указаны аргументы команды.");
         } catch (NumberFormatException ex) {
-            System.err.println("Формат аргумента не соответствует целочисленному" + ex.getMessage());
+            System.err.println("Формат аргумента не соответствует целочисленному " + ex.getMessage());
         }
     }
-
-//    /**
-//     * @param arguments Аргументы команды.
-//     * @see CommandWithArguments
-//     */
-//    @Override
-//    public void getCommandArguments(String[] arguments) {
-//        this.arguments = arguments;
-//    }
 
     /**
      * @return Возвращает описание данной команды.

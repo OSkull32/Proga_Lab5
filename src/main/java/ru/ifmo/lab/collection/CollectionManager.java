@@ -4,10 +4,7 @@ import ru.ifmo.lab.utility.Console;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.Hashtable;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Класс отвечающий за работу с коллекциями
@@ -183,6 +180,20 @@ public class CollectionManager {
         hashtable.remove(id);
     }
 
+    /**
+     * Метод, удаляющий все элементы коллекции, значение ключа которых меньше указанного
+     *
+     * @param id значение ключа, меньше которого следует удалять элементы
+     */
+    public void removeLowerKey(Integer id) {
+        ArrayList<Integer> keys = new ArrayList<>();
+        for (Map.Entry<Integer, Flat> entry : hashtable.entrySet()) {
+            if (entry.getKey() < id) keys.add(entry.getKey());
+        }
+        for (Integer key : keys) {
+            hashtable.remove(key);
+        }
+    }
 
     /**
      * Метод, удаляющий все элементы коллекции
