@@ -55,7 +55,7 @@ public class CommandManager {
         } catch (InvalidCommandException e) {
             CONSOLE.printCommandError("Invalid command");
         } catch (WrongArgumentException e) {
-            CONSOLE.printCommandError("Command has wrong argument or does not have argument that required ");
+            CONSOLE.printCommandError(e.getMessage());
         }
     }
 
