@@ -3,7 +3,7 @@ package ru.ifmo.lab.commands;
 import ru.ifmo.lab.collection.CollectionManager;
 import ru.ifmo.lab.exceptions.WrongArgumentException;
 /**
- * Класс команды, которая удаляет элементы меньше заданного ключа
+ * Класс команды, удаляющий элементы, у которых id меньше заданного ключа
  */
 public class RemoveLowerKey implements Command{
     private CollectionManager collectionManager;
@@ -11,14 +11,14 @@ public class RemoveLowerKey implements Command{
     /**
      * Конструктор класса.
      *
-     * @param collectionManager Хранит ссылку на созданный в объекте Application объект CollectionManager.
+     * @param collectionManager Хранит ссылку на объект CollectionManager.
      */
     public RemoveLowerKey(CollectionManager collectionManager) {
         this.collectionManager = collectionManager;
     }
 
     /**
-     * Метод, удаляющий все элементы коллекции, значения ключа которых меньше заданного
+     * Метод, удаляющий все элементы коллекции, значения id которых меньше заданного ключа
      */
     @Override
     public void execute(String args) throws WrongArgumentException {
@@ -35,7 +35,7 @@ public class RemoveLowerKey implements Command{
 
     /**
      * @see Command
-     * @return Возращает описание команды.
+     * @return описание команды.
      */
     @Override
     public String getDescription() {

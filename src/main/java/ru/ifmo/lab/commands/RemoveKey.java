@@ -12,7 +12,7 @@ public class RemoveKey implements Command{
     /**
      * Конструктор класса.
      *
-     * @param collectionManager Хранит ссылку на созданный в объекте Application объект CollectionManager.
+     * @param collectionManager Хранит ссылку на объект CollectionManager.
      */
     public RemoveKey(CollectionManager collectionManager) {
         this.collectionManager = collectionManager;

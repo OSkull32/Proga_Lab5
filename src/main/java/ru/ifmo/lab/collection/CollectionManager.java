@@ -195,6 +195,16 @@ public class CollectionManager {
         }
     }
 
+    public void removeGreaterKey(Integer id) {
+        ArrayList<Integer> keys = new ArrayList<>();
+        for (Map.Entry<Integer, Flat> entry : hashtable.entrySet()) {
+            if (entry.getKey() > id) keys.add(entry.getKey());
+        }
+        for (Integer key : keys) {
+            hashtable.remove(key);
+        }
+    }
+
     /**
      * Метод, удаляющий все элементы коллекции
      */

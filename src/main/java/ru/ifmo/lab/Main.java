@@ -24,7 +24,7 @@ public class Main {
         commandManager.addCommand("insert", new Insert(collectionManager, console, flatReader));
         commandManager.addCommand("print_field_ascending_house", new PrintFieldAscendingHouse());
         commandManager.addCommand("remove_all_by_view", new RemoveAllByView());
-        commandManager.addCommand("remove_greater_key", new RemoveGreaterKey());
+        commandManager.addCommand("remove_greater_key", new RemoveGreaterKey(collectionManager));
         commandManager.addCommand("remove_key", new RemoveKey(collectionManager));
         commandManager.addCommand("remove_lower_key", new RemoveLowerKey(collectionManager));
         commandManager.addCommand("save", new Save());
