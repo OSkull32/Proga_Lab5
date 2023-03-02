@@ -15,7 +15,7 @@ public class Info implements Command{
     /**
      * Конструктор класса
      *
-     * @param collectionManager хранит ссылку на созданный в объекте Application объект CollectionManager
+     * @param collectionManager хранит ссылку на объект CollectionManager
      */
     public Info(CollectionManager collectionManager) {
         this.collectionManager = collectionManager;

@@ -15,7 +15,7 @@ public class Show implements Command{
     /**
      * Конструктор класса
      *
-     * @param collectionManager хранит ссылку на созданный в объекте Application объект CollectionManager
+     * @param collectionManager хранит ссылку на объект CollectionManager
      */
     public Show(CollectionManager collectionManager) {
         this.collectionManager = collectionManager;
