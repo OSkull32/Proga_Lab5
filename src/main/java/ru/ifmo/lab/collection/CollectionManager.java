@@ -175,6 +175,16 @@ public class CollectionManager {
     }
 
     /**
+     * Метод, удаляющий выбранный по идентификатору элемент коллекции
+     *
+     * @param id идентификатор элемента коллекции (ключ)
+     */
+    public void removeKey(Integer id) {
+        hashtable.remove(id);
+    }
+
+
+    /**
      * Метод, удаляющий все элементы коллекции
      */
     public void clear() {
