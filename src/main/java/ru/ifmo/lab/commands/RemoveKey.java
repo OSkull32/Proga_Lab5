@@ -8,7 +8,6 @@ import ru.ifmo.lab.exceptions.WrongArgumentException;
  */
 public class RemoveKey implements Command{
     private CollectionManager collectionManager;
-    private String[] commandArguments;
 
     /**
      * Конструктор класса.
