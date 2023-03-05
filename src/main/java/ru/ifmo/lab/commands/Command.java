@@ -3,7 +3,7 @@ package ru.ifmo.lab.commands;
 import ru.ifmo.lab.exceptions.WrongArgumentException;
 
 /**
- * Интерфейс, реализация которого приведена в командахю
+ * Интерфейс, реализация которого приведена в командах.
  */
 public interface Command {
     /**
