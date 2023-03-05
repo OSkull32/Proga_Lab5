@@ -68,6 +68,9 @@ public class Coordinates {
      */
     @Override
     public String toString() {
-        return "(x,y) = (" + x+ "," + y + ")";
+        return "Coordinates{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
     }
 }

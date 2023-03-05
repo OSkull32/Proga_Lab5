@@ -22,7 +22,7 @@ public class Flat {
     /*
      * Время создания объекта класса. Поле не может быть null, Значение этого поля должно генерироваться автоматически
      */
-    private LocalDateTime creationDate;
+//    private LocalDateTime creationDate;
     /*
      * Площадь объекта класса. Значение поля должно быть больше 0
      */
@@ -66,7 +66,7 @@ public class Flat {
         this.id = id;
         this.name = name;
         this.coordinates = coordinates;
-        this.creationDate = localDateTime;
+//        this.creationDate = localDateTime;
         this.area = area;
         this.numberOfRooms = numberOfRooms;
         this.numberOfBathrooms = numberOfBathrooms;
@@ -107,20 +107,20 @@ public class Flat {
      *
      * @return creationDate
      */
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
+//    public LocalDateTime getCreationDate() {
+//        return creationDate;
+//    }
 
     /**
      * Метод, возвращающий отформатированное время создания объекта класса
      *
      * @return formattedCreationDate
      */
-    public String getFormattedCreationDate() {
-        String pattern = "yyyy-MM-dd HH:mm:ss.SSS";
-        DateTimeFormatter europeanDateFormatter = DateTimeFormatter.ofPattern(pattern);
-        return creationDate.plusHours(3).format(europeanDateFormatter);
-    }
+//    public String getFormattedCreationDate() {
+//        String pattern = "yyyy-MM-dd HH:mm:ss.SSS";
+//        DateTimeFormatter europeanDateFormatter = DateTimeFormatter.ofPattern(pattern);
+//        return creationDate.plusHours(3).format(europeanDateFormatter);
+//    }
 
     /**
      * Метод, возвращающий площадь объекта класса
@@ -281,16 +281,16 @@ public class Flat {
     @Override
     public String toString() {
         return "Flat{" +
-                "\nid=" + id +
-                ", \nname='" + name + '\'' +
-                ", \ncoordinates=" + coordinates +
-                ", \ncreationDate=" + creationDate +
-                ", \narea=" + area +
-                ", \nnumberOfRooms=" + numberOfRooms +
-                ", \nnumberOfBathrooms=" + numberOfBathrooms +
-                ", \nfurnish=" + furnish +
-                ", \nview=" + view +
-                ", \nhouse=" + house +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", coordinates=" + coordinates +
+                //", creationDate=" + creationDate +
+                ", area=" + area +
+                ", numberOfRooms=" + numberOfRooms +
+                ", numberOfBathrooms=" + numberOfBathrooms +
+                ", furnish=" + furnish +
+                ", view=" + view +
+                ", house=" + house +
                 '}';
     }
 }

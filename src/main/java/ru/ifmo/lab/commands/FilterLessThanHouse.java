@@ -32,7 +32,7 @@ public class FilterLessThanHouse implements Command {
      */
     @Override
     public void execute(String args) throws WrongArgumentException {
-        if (args.isEmpty()) throw new WrongArgumentException("Требуется аргумент");
+        if (args.isEmpty()) throw new WrongArgumentException("Требуется аргумент.");
         try {
             COLLECTION_MANAGER.filterLessThanHouse(Integer.parseInt(args));
         } catch (NumberFormatException e) {
@@ -47,6 +47,6 @@ public class FilterLessThanHouse implements Command {
      */
     @Override
     public String getDescription() {
-        return "вывести элементы, значение поля house которых меньше заданного";
+        return "Вывести элементы, значение поля house которых меньше заданного";
     }
 }

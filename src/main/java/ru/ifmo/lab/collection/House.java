@@ -138,11 +138,11 @@ public class House implements Comparable<House>{
     @Override
     public String toString() {
         return "House{" +
-                "\nname='" + name + '\'' +
-                ", \nyear=" + year +
-                ", \nnumberOfFloors=" + numberOfFloors +
-                ", \nnumberOfFlatsOnFloor=" + numberOfFlatsOnFloor +
-                ", \nnumberOfLifts=" + numberOfLifts +
+                "name='" + name + '\'' +
+                ", year=" + year +
+                ", numberOfFloors=" + numberOfFloors +
+                ", numberOfFlatsOnFloor=" + numberOfFlatsOnFloor +
+                ", numberOfLifts=" + numberOfLifts +
                 '}';
     }
 

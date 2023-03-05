@@ -32,6 +32,8 @@ public class Save implements Command{
     }
 
     /**
+     * Получить описание команды.
+     *
      * @return описание команды.
      * @see Command
      */

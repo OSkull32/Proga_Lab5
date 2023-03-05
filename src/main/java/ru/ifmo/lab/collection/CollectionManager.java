@@ -1,6 +1,7 @@
 package ru.ifmo.lab.collection;
 
 import ru.ifmo.lab.utility.Console;
+import ru.ifmo.lab.utility.JsonParser;
 import ru.ifmo.lab.utility.SortByHouse;
 import ru.ifmo.lab.utility.FileManager;
 
@@ -215,26 +216,20 @@ public class CollectionManager {
     }
 
     /**
+     * Метод, сохраняющий элементы коллекции в файл в формате JSON.
+     *
+     * @param filePath путь до файла, куда следует сохранить элементы коллекции
+     */
+    public void save(String filePath) {
+        JsonParser parser = new JsonParser();
+        System.out.println(parser.encode(hashtable.get(1)));
+    }
+
+    /**
      * Метод, удаляющий все элементы коллекции, вид которого соответствует заданному
      *
      * @param view выбранный вид элемента коллекции
      */
-
-    /**
-     * Метод, сохраняющий элементы коллекции
-     * Еще нужно написать парсер в JSON
-     * @param filePath путь до файла, куда следует сохранить элементы коллекции
-     */
-    public void save(String filePath) {
-//        Parser parser = new Parser();
-        FileManager fileManager = new FileManager();
-
-        Flat[] flats = new Flat[hashtable.size()];
-        flats = hashtable.values().toArray(flats);
-//        String str = parser.parseToJson(flats);
-        fileManager.writeToFile(Arrays.toString(flats), filePath);
-    }
-
     public void removeAllByView(View view) {
         int size = hashtable.size();
         ArrayList<Integer> keys = new ArrayList<>();

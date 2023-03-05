@@ -27,7 +27,7 @@ public class Main {
         commandManager.addCommand("remove_greater_key", new RemoveGreaterKey(collectionManager));
         commandManager.addCommand("remove_key", new RemoveKey(collectionManager));
         commandManager.addCommand("remove_lower_key", new RemoveLowerKey(collectionManager));
-        commandManager.addCommand("save", new Save(collectionManager, null));
+        commandManager.addCommand("save", new Save(collectionManager, "jsonfile"));
         commandManager.addCommand("show", new Show(collectionManager));
 
         while (true) { //TODO исправить это недоразумение (командой exit)
