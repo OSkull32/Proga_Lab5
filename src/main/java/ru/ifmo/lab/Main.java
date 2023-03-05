@@ -3,14 +3,16 @@ package ru.ifmo.lab;
 import ru.ifmo.lab.collection.CollectionManager;
 import ru.ifmo.lab.commands.*;
 import ru.ifmo.lab.utility.Console;
+import ru.ifmo.lab.utility.FileManager;
 import ru.ifmo.lab.utility.FlatReader;
 
 public class Main {
     public static void main(String[] args) {
 
         Console console = new Console();
+        FileManager fileManager = new FileManager(console);
         FlatReader flatReader = new FlatReader(console);
-        CollectionManager collectionManager = new CollectionManager(console);
+        CollectionManager collectionManager = new CollectionManager(console, fileManager);
         CommandManager commandManager = new CommandManager(console);
 
         commandManager.addCommand("clear", new Clear(collectionManager));
@@ -27,7 +29,7 @@ public class Main {
         commandManager.addCommand("remove_greater_key", new RemoveGreaterKey(collectionManager));
         commandManager.addCommand("remove_key", new RemoveKey(collectionManager));
         commandManager.addCommand("remove_lower_key", new RemoveLowerKey(collectionManager));
-        commandManager.addCommand("save", new Save(collectionManager, "jsonfile"));
+        commandManager.addCommand("save", new Save(collectionManager, fileManager));
         commandManager.addCommand("show", new Show(collectionManager));
 
         while (true) { //TODO исправить это недоразумение (командой exit)

@@ -6,13 +6,20 @@ import java.io.*;
  * Класс, осуществляющий чтение/запись данных
  */
 public class FileManager {
+    private Console console;
+    private File file;
+    public FileManager(Console console){
+        this.console = console;
+        this.file = new File("C:\\Users\\79215\\Desktop\\test.json");
+        //TODO сделать взятие файла из консоли
+    }
+
     /**
-     * Метод, который читает данные из указанного файла.
+     * Метод, который читает данные из файла.
      *
-     * @param file файл, из которого будет чтение данных
      * @return строка, которая хранит все содержимое данного файла
      */
-    public String readFromFile(String file) {
+    public String readFromFile() {
         FileInputStream fileInputStream = null;
         BufferedInputStream bufferedInputStream = null;
 
@@ -45,9 +52,8 @@ public class FileManager {
      * Метод, который записывает данные в файл
      *
      * @param str строка, которую нужно записать в файл
-     * @param file файл, куда следует записывать данные
      */
-    public void writeToFile(String str, String file) {
+    public void writeToFile(String str) {
         FileWriter fileWriter = null;
         BufferedWriter bufferedWriter = null;
 

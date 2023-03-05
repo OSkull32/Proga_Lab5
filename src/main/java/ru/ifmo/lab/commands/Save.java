@@ -2,23 +2,23 @@ package ru.ifmo.lab.commands;
 
 import ru.ifmo.lab.collection.CollectionManager;
 import ru.ifmo.lab.exceptions.WrongArgumentException;
+import ru.ifmo.lab.utility.FileManager;
 
 /**
  * Класс, который сохраняет коллекцию в файл
  */
 public class Save implements Command{
-    private String inputFile;
+    private final FileManager FILE_MANAGER;
     private CollectionManager collectionManager;
 
     /**
      * Конструктор класса
      *
      * @param collectionManager Хранит ссылку на объект CollectionManager.
-     * @param inputFile         Хранит адрес файла, куда следует сохранить элементы коллекции.
      */
-    public Save(CollectionManager collectionManager, String inputFile) {
+    public Save(CollectionManager collectionManager, FileManager fileManager) {
         this.collectionManager = collectionManager;
-        this.inputFile = inputFile;
+        this.FILE_MANAGER = fileManager;
     }
 
     /**
@@ -27,7 +27,7 @@ public class Save implements Command{
     @Override
     public void execute(String args) throws WrongArgumentException {
         if (!args.isEmpty()) throw new WrongArgumentException();
-        collectionManager.save(inputFile);
+        collectionManager.save();
         System.out.println("Коллекция была сохранена.");
     }
 

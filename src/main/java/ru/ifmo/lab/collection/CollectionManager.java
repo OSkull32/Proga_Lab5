@@ -13,25 +13,26 @@ import java.util.*;
  * Класс отвечающий за работу с коллекциями
  */
 public class CollectionManager {
-    /*
-     * Коллекция, с которой осуществляется работа
-     */
+
+    // Коллекция, с которой осуществляется работа
     private final Hashtable<Integer, Flat> hashtable;
 
-    Console console;
-    /*
-     * Время инициализации коллекции
-     */
+    private Console console;
+    private FileManager fileManager;
+    // Время инициализации коллекции
     private final LocalDateTime collectionInitialization;
 
     /**
      * Конструктор, создающий новый объект менеджера коллекции
      */
-    public CollectionManager(Console console) {
-        this.hashtable = new Hashtable<>();
+    public CollectionManager(Console console, FileManager fileManager) {
+
+        this.hashtable = new Hashtable<>(); //TODO сделать по другому!!!!!!!
         String i = LocalDateTime.now().toString();
-        collectionInitialization = LocalDateTime.parse(i);
+        collectionInitialization = LocalDateTime.parse(i); //Todo разобраться зачем это нужно
+
         this.console = console;
+        this.fileManager = fileManager;
     }
 
     /**
@@ -217,11 +218,11 @@ public class CollectionManager {
 
     /**
      * Метод, сохраняющий элементы коллекции в файл в формате JSON.
-     *
-     * @param filePath путь до файла, куда следует сохранить элементы коллекции
      */
-    public void save(String filePath) {
-        System.out.println(JsonParser.encode(hashtable));
+    public void save() {
+        //System.out.println(JsonParser.encode(hashtable));
+        //call filemanager.write to file
+        fileManager.writeToFile(JsonParser.encode(hashtable));
     }
 
     /**
