@@ -221,8 +221,8 @@ public class CollectionManager {
      * @param filePath путь до файла, куда следует сохранить элементы коллекции
      */
     public void save(String filePath) {
-        JsonParser parser = new JsonParser();
-        System.out.println(parser.encode(hashtable.get(1)));
+//        JsonParser parser = new JsonParser();
+        System.out.println(JsonParser.encode(hashtable));
     }
 
     /**

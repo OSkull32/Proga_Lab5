@@ -6,13 +6,10 @@ import ru.ifmo.lab.collection.Flat;
 import java.util.Hashtable;
 
 public class JsonParser {
-
-    private Gson gson = new Gson();
-    public String encode(Flat hashtable){
-        String json = gson.toJson(hashtable);
-        return json;
-
-    };
+    private static final Gson GSON = new Gson();
+    public static String encode(Hashtable<Integer, Flat> hashtable){
+        return GSON.toJson(hashtable);
+    }
 
 //    public Flat decode(String jsonString){};
 }
