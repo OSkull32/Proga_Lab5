@@ -3,16 +3,15 @@ package ru.ifmo.lab.utility;
 import ru.ifmo.lab.collection.*;
 import ru.ifmo.lab.exceptions.InvalidValueException;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Класс, необходимы для чтения полей объекта Flat
  */
 public class FlatReader {
-    /*
-     * Поле, хранящее ссылку на объект класса типа Console
-     */
+
+    // Поле, хранящее ссылку на объект класса типа Console
     private final Console console;
 
     /**
@@ -31,8 +30,12 @@ public class FlatReader {
      * @return объект типа Flat
      */
     public Flat read(int id){
-        String i = Instant.now().toString();
-        return new Flat(id, readName(), readCoordinates(), LocalDateTime.parse(LocalDateTime.now().toString()), readArea(), readNumberOfRooms(), readNumberOfBathrooms(), readFurnish(), readView(), readHouse());
+        // превращение даты создания объекта в строку
+        String creationDate = LocalDateTime
+                .now()
+                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
+        return new Flat(id, readName(), readCoordinates(), creationDate, readArea(),
+                readNumberOfRooms(), readNumberOfBathrooms(), readFurnish(), readView(), readHouse());
     }
 
     /**
@@ -41,8 +44,6 @@ public class FlatReader {
      * @return значение поля name, уже проверенное на условия допустимости
      */
     public String readName() {
-        //String str;
-
         while (true) {
             console.printCommandText("name (not null): ");
             String str = console.readLine().trim();
@@ -118,7 +119,7 @@ public class FlatReader {
             try {
                 console.printCommandText("area(int & area > 0): ");
                 String str = console.readLine().trim();
-                if (str.equals("")) area = Integer.parseInt(null);
+                if (str.equals("")) area = Integer.parseInt(null); //TODO исправить!
                 else {
                     area = Integer.parseInt(str);
                     if (area <= 0) throw new InvalidValueException();
@@ -248,7 +249,7 @@ public class FlatReader {
         while (true) {
             console.printCommandText("House name (not null): ");
             str = console.readLine().trim();
-            if (str == null) console.printCommandError("\n Значение поля не может быть null\n");
+            if (str == null) console.printCommandError("\n Значение поля не может быть null\n"); //TODO исправить
             else return str;
         }
     }
@@ -264,7 +265,7 @@ public class FlatReader {
             try {
                 console.printCommandText("houseYear(int & houseYear > 0): ");
                 String str = console.readLine().trim();
-                if (str.equals("")) houseYear = Integer.parseInt(null);
+                if (str.equals("")) houseYear = Integer.parseInt(null); //TODO исправить
                 else {
                     houseYear = Integer.parseInt(str);
                     if (houseYear <= 0) throw new InvalidValueException();
@@ -319,7 +320,7 @@ public class FlatReader {
                     numberOfFlatsOnFloor = Long.parseLong(str);
                     if (numberOfFlatsOnFloor <= 0) throw new InvalidValueException();
                 }
-                return numberOfFlatsOnFloor;
+                return numberOfFlatsOnFloor; //TODO исправить
             } catch (InvalidValueException ex) {
                 System.out.println("Значение numberOfFlatsOnFloor должно быть больше 0");
             }   catch (NumberFormatException ex) {
@@ -344,7 +345,7 @@ public class FlatReader {
                     numberOfLifts = Long.parseLong(str);
                     if (numberOfLifts <= 0) throw new InvalidValueException();
                 }
-                return numberOfLifts;
+                return numberOfLifts; //TODO исправить
             } catch (InvalidValueException ex) {
                 System.out.println("Значение numberOfLifts должно быть больше 0");
             }   catch (NumberFormatException ex) {
