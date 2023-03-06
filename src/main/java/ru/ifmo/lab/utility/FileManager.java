@@ -5,7 +5,7 @@ import java.io.*;
 /**
  * Класс, осуществляющий чтение/запись данных
  *
- * @author Владимир Данченко, Kloodt Vadim
+ * @author Владимир Данченко, Kliodt Vadim
  * @version 2.0
  */
 public class FileManager {
@@ -14,8 +14,43 @@ public class FileManager {
 
     public FileManager(Console console) {
         this.console = console;
-        this.file = new File("C:\\Users\\79215\\Desktop\\test.json");
-        //TODO сделать взятие файла из консоли
+        do {
+            try {
+                this.file = askForFile();
+            } catch (IOException e) {
+                console.printCommandError("ошибка при создании. Повторите попытку.");
+            }
+        } while (this.file == null);
+        console.printCommandText("Файл успешно добавлен");
+    }
+
+    //метод запрашивает у пользователя имя файла и проверяет его на валидность
+    private File askForFile() throws IOException {
+        console.printCommandText("Введите имя файла (абсолютный путь или путь отностиельно " +
+                "директории проекта): ");
+        String path = console.readLine();
+        File file = new File(path);
+        if (file.isFile()) {
+            return file; //если все ОК
+        }
+        if (file.isDirectory()) { //если указана директория
+            console.printCommandError("Указана директория. Повторите попытку.");
+            return null;
+        }
+        if (!file.exists()) { //если файла вообще не существует
+            console.printCommandError("файл не существует. Введите \"create\", чтобы создать.");
+            if (console.readLine().equals("create")) {
+                if (file.createNewFile()) {
+                    console.printCommandText("Файл создан");
+                    return file;
+                } else {
+                    console.printCommandError("файл с таким именем уже есть. Повторите попытку.");
+                }
+            } else {
+                console.printCommandError("неверный ввод. Повторите попытку.");
+            }
+        }
+        return null;
     }
 
     /**
@@ -30,7 +65,7 @@ public class FileManager {
             return new String(bytes);
         } catch (FileNotFoundException e) {
             // TODO добавить общий метод для случаев FileNotFoundException-ов
-        } catch (IOException | SecurityException e) {
+        } catch (IOException e) {
             console.printCommandError("невозможно прочитать файл. " + e.getMessage());
         }
         return null;

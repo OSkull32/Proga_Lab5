@@ -17,8 +17,7 @@ public class Main {
         Console console = new Console();
         FlatReader flatReader = new FlatReader(console);
         FileManager fileManager = new FileManager(console);
-        //TODO get file from console
-        //TODO сделать проверку файлов (возможно все в одном классе Loader)
+        //TODO сделать проверку файлов
         Hashtable<Integer, Flat> collection = decode(fileManager.readFromFile());
         CollectionManager collectionManager = new CollectionManager(console, fileManager, collection);
         CommandManager commandManager = new CommandManager(console);
