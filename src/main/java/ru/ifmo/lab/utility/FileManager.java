@@ -4,11 +4,15 @@ import java.io.*;
 
 /**
  * Класс, осуществляющий чтение/запись данных
+ *
+ * @author Владимир Данченко, Kloodt Vadim
+ * @version 2.0
  */
 public class FileManager {
     private Console console;
     private File file;
-    public FileManager(Console console){
+
+    public FileManager(Console console) {
         this.console = console;
         this.file = new File("C:\\Users\\79215\\Desktop\\test.json");
         //TODO сделать взятие файла из консоли
@@ -20,32 +24,16 @@ public class FileManager {
      * @return строка, которая хранит все содержимое данного файла
      */
     public String readFromFile() {
-        FileInputStream fileInputStream = null;
-        BufferedInputStream bufferedInputStream = null;
-
-        StringBuffer stringBuffer = new StringBuffer();
-        try {
-            fileInputStream = new FileInputStream(file);
-            bufferedInputStream = new BufferedInputStream(fileInputStream);
-        } catch (IOException ex) {
-            System.err.println("Произошла ошибка при добавлении файла во входящий поток " + ex);
-            System.exit(-1);
-        } catch (NullPointerException ex) {
-            System.err.println("Не указан файл из которого нужно читать данные " + ex);
-            System.exit(-1);
-        } finally {
-            try {
-                if (fileInputStream != null) {
-                    fileInputStream.close();
-                }
-                if (bufferedInputStream != null) {
-                    bufferedInputStream.close();
-                }
-            } catch (IOException ex) {
-                System.err.println("Возникла ошибка при закрытии файла " + ex);
-            }
+        try (FileInputStream fileInputStream = new FileInputStream(file);
+             BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream)) {
+            byte[] bytes = bufferedInputStream.readAllBytes();
+            return new String(bytes);
+        } catch (FileNotFoundException e) {
+            // TODO добавить общий метод для случаев FileNotFoundException-ов
+        } catch (IOException | SecurityException e) {
+            console.printCommandError("невозможно прочитать файл. " + e.getMessage());
         }
-        return stringBuffer.toString();
+        return null;
     }
 
     /**
@@ -58,7 +46,7 @@ public class FileManager {
         BufferedWriter bufferedWriter = null;
 
         try {
-            fileWriter = new FileWriter(file);
+            fileWriter = new FileWriter(file, true);
             bufferedWriter = new BufferedWriter(fileWriter);
 
             bufferedWriter.write(str);

@@ -10,6 +10,7 @@ import java.util.Set;
 
 /**
  * Класс, управляющий вызовом команд.
+ *
  * @author Kliodt Vadim
  * @version 2.0
  */

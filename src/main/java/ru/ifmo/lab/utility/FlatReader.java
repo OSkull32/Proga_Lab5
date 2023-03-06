@@ -235,7 +235,8 @@ public class FlatReader {
      * @return объект типа House
      */
     public House readHouse() {
-        return new House(readHouseName(), readHouseYear(), readHouseNumberOfFloors(), readHouseNumberOfFlatsOnFloor(), readHouseNumberOfLifts());
+        return new House(readHouseName(), readHouseYear(), readHouseNumberOfFloors(),
+                readHouseNumberOfFlatsOnFloor(), readHouseNumberOfLifts());
     }
 
     /**
@@ -249,7 +250,7 @@ public class FlatReader {
         while (true) {
             console.printCommandText("House name (not null): ");
             str = console.readLine().trim();
-            if (str == null) console.printCommandError("\n Значение поля не может быть null\n"); //TODO исправить
+            if (str.equals("")) console.printCommandError("\n Значение поля не может быть null\n"); //TODO исправить
             else return str;
         }
     }
@@ -348,7 +349,7 @@ public class FlatReader {
                 return numberOfLifts; //TODO исправить
             } catch (InvalidValueException ex) {
                 System.out.println("Значение numberOfLifts должно быть больше 0");
-            }   catch (NumberFormatException ex) {
+            } catch (NumberFormatException ex) {
                 System.err.println("Число должно быть типа long");
             }
         }

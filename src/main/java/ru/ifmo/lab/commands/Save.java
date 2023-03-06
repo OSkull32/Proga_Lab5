@@ -2,13 +2,14 @@ package ru.ifmo.lab.commands;
 
 import ru.ifmo.lab.collection.CollectionManager;
 import ru.ifmo.lab.exceptions.WrongArgumentException;
-import ru.ifmo.lab.utility.FileManager;
 
 /**
- * Класс, который сохраняет коллекцию в файл
+ * Класс, который сохраняет коллекцию в файл.
+ *
+ * @author Kliodt Vadim
+ * @version 1.0
  */
 public class Save implements Command{
-    private final FileManager FILE_MANAGER;
     private CollectionManager collectionManager;
 
     /**
@@ -16,9 +17,8 @@ public class Save implements Command{
      *
      * @param collectionManager Хранит ссылку на объект CollectionManager.
      */
-    public Save(CollectionManager collectionManager, FileManager fileManager) {
+    public Save(CollectionManager collectionManager) {
         this.collectionManager = collectionManager;
-        this.FILE_MANAGER = fileManager;
     }
 
     /**

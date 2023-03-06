@@ -25,14 +25,14 @@ public class CollectionManager {
     /**
      * Конструктор, создающий новый объект менеджера коллекции
      */
-    public CollectionManager(Console console, FileManager fileManager) {
-
-        this.hashtable = new Hashtable<>(); //TODO сделать по другому!!!!!!!
-        String i = LocalDateTime.now().toString();
-        collectionInitialization = LocalDateTime.parse(i); //Todo разобраться зачем это нужно
-
+    public CollectionManager(Console console, FileManager fileManager, Hashtable<Integer, Flat> hashtable) {
+        if (hashtable != null) this.hashtable = hashtable;
+        else this.hashtable = new Hashtable<>();
         this.console = console;
         this.fileManager = fileManager;
+
+        String i = LocalDateTime.now().toString();
+        collectionInitialization = LocalDateTime.parse(i);
     }
 
     /**
@@ -220,8 +220,6 @@ public class CollectionManager {
      * Метод, сохраняющий элементы коллекции в файл в формате JSON.
      */
     public void save() {
-        //System.out.println(JsonParser.encode(hashtable));
-        //call filemanager.write to file
         fileManager.writeToFile(JsonParser.encode(hashtable));
     }
 
