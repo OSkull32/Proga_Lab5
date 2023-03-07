@@ -26,4 +26,14 @@ public class Help implements Command{
         if (!args.isEmpty()) throw new WrongArgumentException();
         COMMAND_MANAGER.getCommandsInfo();
     }
+
+    /**
+     * Метод, описывающий работу команды
+     *
+     * @return Возвращает описание команды
+     */
+    @Override
+    public String getDescription() {
+        return "выводит справку по доступным командам";
+    }
 }

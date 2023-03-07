@@ -1,16 +1,25 @@
 package ru.ifmo.lab;
 
 import ru.ifmo.lab.collection.CollectionManager;
+import ru.ifmo.lab.collection.Flat;
 import ru.ifmo.lab.commands.*;
 import ru.ifmo.lab.utility.Console;
+import ru.ifmo.lab.utility.FileManager;
 import ru.ifmo.lab.utility.FlatReader;
+
+import java.util.Hashtable;
+
+import static ru.ifmo.lab.utility.JsonParser.decode;
 
 public class Main {
     public static void main(String[] args) {
 
         Console console = new Console();
         FlatReader flatReader = new FlatReader(console);
-        CollectionManager collectionManager = new CollectionManager(console);
+        FileManager fileManager = new FileManager(console);
+        //TODO сделать проверку файлов
+        Hashtable<Integer, Flat> collection = decode(fileManager.readFromFile());
+        CollectionManager collectionManager = new CollectionManager(console, fileManager, collection);
         CommandManager commandManager = new CommandManager(console);
 
         commandManager.addCommand("clear", new Clear(collectionManager));
@@ -27,7 +36,7 @@ public class Main {
         commandManager.addCommand("remove_greater_key", new RemoveGreaterKey(collectionManager));
         commandManager.addCommand("remove_key", new RemoveKey(collectionManager));
         commandManager.addCommand("remove_lower_key", new RemoveLowerKey(collectionManager));
-        commandManager.addCommand("save", new Save(collectionManager, null));
+        commandManager.addCommand("save", new Save(collectionManager));
         commandManager.addCommand("show", new Show(collectionManager));
 
         while (true) { //TODO исправить это недоразумение (командой exit)

@@ -27,4 +27,14 @@ public class History implements Command{
         if (!args.isEmpty()) throw new WrongArgumentException();
         COMMAND_MANAGER.getHistoryList();
     }
+
+    /**
+     * Метод, описывающий работу команды
+     *
+     * @return Возвращает описание команды
+     */
+    @Override
+    public String getDescription() {
+        return "Возвращает последние 13 использованных команд";
+    }
 }

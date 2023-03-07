@@ -1,72 +1,64 @@
 package ru.ifmo.lab.collection;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 /**
  * Класс объектов коллекции
  */
 public class Flat {
-    /*
-     * Идентификатор коллекции. Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
-     */
+
+    // Идентификатор коллекции. Значение поля должно быть больше 0,
+    // Значение этого поля должно быть уникальным,
+    // Значение этого поля должно генерироваться автоматически
     private int id;
-    /*
-     * Имя объекта класса. Поле не может быть null, Строка не может быть пустой
-     */
+
+    // Имя объекта класса. Поле не может быть null, Строка не может быть пустой
     private String name;
-    /*
-     * Координаты объекта класса. Поле не может быть null
-     */
+
+    // Координаты объекта класса. Поле не может быть null
     private Coordinates coordinates;
-    /*
-     * Время создания объекта класса. Поле не может быть null, Значение этого поля должно генерироваться автоматически
-     */
-    private LocalDateTime creationDate;
-    /*
-     * Площадь объекта класса. Значение поля должно быть больше 0
-     */
+
+    // Время создания объекта класса. Поле не может быть null,
+    // Значение этого поля должно генерироваться автоматически
+    private String creationDate;
+
+    //Площадь объекта класса. Значение поля должно быть больше 0
     private int area;
-    /*
-     * Количество комнат объекта класса. Максимальное значение поля: 14, Значение поля должно быть больше 0
-     */
+
+    // Количество комнат объекта класса. Максимальное значение поля: 14,
+    // Значение поля должно быть больше 0
     private long numberOfRooms;
-    /*
-     * Количество уборных объекта класса. Значение поля должно быть больше 0
-     */
+
+    // Количество уборных объекта класса. Значение поля должно быть больше 0
     private long numberOfBathrooms;
-    /*
-     * Отделка объекта класса. Поле не может быть null
-     */
+
+    // Отделка объекта класса. Поле не может быть null
     private Furnish furnish;
-    /*
-     * Вид из объекта класса. Поле может быть null
-     */
+
+    // Вид из объекта класса. Поле может быть null
     private View view;
-    /*
-     * Дом объекта класса. Поле может быть null
-     */
+
+    // Дом объекта класса. Поле может быть null
     private House house;
 
     /**
      * Конструктор объекта класса
      *
-     * @param id Идентификатор объекта коллекции
-     * @param name Имя объекта класса
-     * @param coordinates Координаты объекта класса
-     * @param localDateTime Время создания объекта класса
-     * @param area Площадь объекта класса
-     * @param numberOfRooms Количество комнат объекта класса
+     * @param id                Идентификатор объекта коллекции
+     * @param name              Имя объекта класса
+     * @param coordinates       Координаты объекта класса
+     * @param creationDate      Время создания объекта класса
+     * @param area              Площадь объекта класса
+     * @param numberOfRooms     Количество комнат объекта класса
      * @param numberOfBathrooms Количество уборных объекта класса
-     * @param furnish Отделка объекта класса
-     * @param view Вид из объекта класса
-     * @param house Дом объекта класса
+     * @param furnish           Отделка объекта класса
+     * @param view              Вид из объекта класса
+     * @param house             Дом объекта класса
      */
-    public Flat(int id, String name, Coordinates coordinates, LocalDateTime localDateTime, int area, long numberOfRooms, long numberOfBathrooms, Furnish furnish, View view, House house) {
+    public Flat(int id, String name, Coordinates coordinates, String creationDate, int area,
+                long numberOfRooms, long numberOfBathrooms, Furnish furnish, View view, House house) {
         this.id = id;
         this.name = name;
         this.coordinates = coordinates;
-        this.creationDate = localDateTime;
+        this.creationDate = creationDate;
         this.area = area;
         this.numberOfRooms = numberOfRooms;
         this.numberOfBathrooms = numberOfBathrooms;
@@ -107,19 +99,8 @@ public class Flat {
      *
      * @return creationDate
      */
-    public LocalDateTime getCreationDate() {
+    public String getCreationDate() {
         return creationDate;
-    }
-
-    /**
-     * Метод, возвращающий отформатированное время создания объекта класса
-     *
-     * @return formattedCreationDate
-     */
-    public String getFormattedCreationDate() {
-        String pattern = "yyyy-MM-dd HH:mm:ss.SSS";
-        DateTimeFormatter europeanDateFormatter = DateTimeFormatter.ofPattern(pattern);
-        return creationDate.plusHours(3).format(europeanDateFormatter);
     }
 
     /**
@@ -177,98 +158,118 @@ public class Flat {
     }
 
     /**
-     * Метод, присваивающий имя объекта класса
+     * Метод, присваивающий имя объекту класса
      *
-     * @param name
+     * @param name имя
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     * Метод, присваивающий координату x объекта класса
+     * Метод, присваивающий координату x объекту класса
      *
-     * @param x
+     * @param x координата х
      */
     public void setCoordinateX(int x) {
         this.getCoordinates().setX(x);
     }
 
     /**
-     * Метод, присваивающий координату y объекта класса
+     * Метод, присваивающий координату y объекту класса
      *
-     * @param y
+     * @param y координата у
      */
     public void setCoordinateY(Integer y) {
         this.getCoordinates().setY(y);
     }
 
     /**
-     * Метод, присваивающий площадь объекта класса
+     * Метод, присваивающий площадь объекту класса
      *
-     * @param area
+     * @param area значение площади
      */
     public void setArea(int area) {
         this.area = area;
     }
 
     /**
-     * Метод, присваивающий количество комнат объекта класса
+     * Метод, присваивающий количество комнат объекту класса
      *
-     * @param numberOfRooms
+     * @param numberOfRooms количество комнат
      */
     public void setNumberOfRooms(long numberOfRooms) {
         this.numberOfRooms = numberOfRooms;
     }
 
     /**
-     * Метод, присваивающий количество уборных объекта класса
+     * Метод, присваивающий количество уборных объекту класса
      *
-     * @param numberOfBathrooms
+     * @param numberOfBathrooms количество уборных
      */
     public void setNumberOfBathrooms(long numberOfBathrooms) {
         this.numberOfBathrooms = numberOfBathrooms;
     }
 
     /**
-     * Метод, присваивающий отделку объекта класса
+     * Метод, присваивающий отделку объекту класса
      *
-     * @param furnish
+     * @param furnish вид отделки
      */
     public void setFurnish(Furnish furnish) {
         this.furnish = furnish;
     }
 
     /**
-     * Метод, присваивающий вид из объекта класса
+     * Метод, присваивающий вид из объекту класса
      *
-     * @param view
+     * @param view тип вида из окна
      */
     public void setView(View view) {
         this.view = view;
     }
 
     /**
-     * Метод, присваивающий дом объекта класса
+     * Метод, присваивающий имя дому объекта класса
      *
-     * @param name
+     * @param name название дома
      */
     public void setHouseName(String name) {
         this.house.setHouseName(name);
     }
 
+    /**
+     * Метод, присваивающий год постройки дому объекта класса
+     *
+     * @param year год постройки дома
+     */
     public void setHouseYear(int year) {
         this.house.setYear(year);
     }
 
+    /**
+     * Метод, присваивающий количество этажей дому объекта класса
+     *
+     * @param numberOfFloors количество этажей
+     */
     public void setHouseNumberOfFloors(Long numberOfFloors) {
         this.house.setNumberOfFloors(numberOfFloors);
     }
 
+    /**
+     * Метод, присваивающий количество квартир на одном этаже дому объекта класса
+     *
+     * @param numberOfFlatsOnFloor количество квартир на одном этаже
+     */
     public void setHouseNumberOfFlatsOnFloor(long numberOfFlatsOnFloor) {
         this.house.setNumberOfFlatsOnFloor(numberOfFlatsOnFloor);
     }
 
+    /**
+     * Метод, присваивающий количество ливтов дому объекта класса
+     *
+     * @param numberOfLifts количество лифтов
+     */
     public void setHouseNumberOfLifts(long numberOfLifts) {
         this.house.setNumberOfLifts(numberOfLifts);
     }

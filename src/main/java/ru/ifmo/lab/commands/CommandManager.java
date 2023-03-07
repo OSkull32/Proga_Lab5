@@ -1,17 +1,16 @@
 package ru.ifmo.lab.commands;
 
 import ru.ifmo.lab.exceptions.InvalidCommandException;
-import ru.ifmo.lab.exceptions.InvalidValueException;
 import ru.ifmo.lab.exceptions.WrongArgumentException;
 import ru.ifmo.lab.utility.Console;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Set;
 
 /**
  * Класс, управляющий вызовом команд.
+ *
  * @author Kliodt Vadim
  * @version 2.0
  */
@@ -20,10 +19,11 @@ public class CommandManager {
     private final Console CONSOLE;
     private final HashMap<String, Command> COMMANDS = new HashMap<>();
     private final ArrayList<String> HISTORY_LIST = new ArrayList<>();
-    private int MAX_HISTORY_SIZE = 13;
+    private final int MAX_HISTORY_SIZE = 13;
 
     /**
      * Конструирует менеджера команд с заданными {@link Console}
+     *
      * @param console Объект {@link Console}, через который класс
      *                осуществляет взаимодействие с пользователем.
      */
@@ -33,6 +33,7 @@ public class CommandManager {
 
     /**
      * Добавляет команду к общему списку и делает ее возможной для вызова.
+     *
      * @param name название команды.
      * @param command объект класса команды.
      */

@@ -1,6 +1,7 @@
 package ru.ifmo.lab.collection;
 
 import ru.ifmo.lab.utility.Console;
+import ru.ifmo.lab.utility.JsonParser;
 import ru.ifmo.lab.utility.SortByHouse;
 import ru.ifmo.lab.utility.FileManager;
 
@@ -12,25 +13,26 @@ import java.util.*;
  * Класс отвечающий за работу с коллекциями
  */
 public class CollectionManager {
-    /*
-     * Коллекция, с которой осуществляется работа
-     */
+
+    // Коллекция, с которой осуществляется работа
     private final Hashtable<Integer, Flat> hashtable;
 
-    Console console;
-    /*
-     * Время инициализации коллекции
-     */
+    private Console console;
+    private FileManager fileManager;
+    // Время инициализации коллекции
     private final LocalDateTime collectionInitialization;
 
     /**
      * Конструктор, создающий новый объект менеджера коллекции
      */
-    public CollectionManager(Console console) {
-        this.hashtable = new Hashtable<>();
+    public CollectionManager(Console console, FileManager fileManager, Hashtable<Integer, Flat> hashtable) {
+        if (hashtable != null) this.hashtable = hashtable;
+        else this.hashtable = new Hashtable<>();
+        this.console = console;
+        this.fileManager = fileManager;
+
         String i = LocalDateTime.now().toString();
         collectionInitialization = LocalDateTime.parse(i);
-        this.console = console;
     }
 
     /**
@@ -215,26 +217,17 @@ public class CollectionManager {
     }
 
     /**
+     * Метод, сохраняющий элементы коллекции в файл в формате JSON.
+     */
+    public void save() {
+        fileManager.writeToFile(JsonParser.encode(hashtable));
+    }
+
+    /**
      * Метод, удаляющий все элементы коллекции, вид которого соответствует заданному
      *
      * @param view выбранный вид элемента коллекции
      */
-
-    /**
-     * Метод, сохраняющий элементы коллекции
-     * Еще нужно написать парсер в JSON
-     * @param filePath путь до файла, куда следует сохранить элементы коллекции
-     */
-    public void save(String filePath) {
-//        Parser parser = new Parser();
-        FileManager fileManager = new FileManager();
-
-        Flat[] flats = new Flat[hashtable.size()];
-        flats = hashtable.values().toArray(flats);
-//        String str = parser.parseToJson(flats);
-        fileManager.writeToFile(Arrays.toString(flats), filePath);
-    }
-
     public void removeAllByView(View view) {
         int size = hashtable.size();
         ArrayList<Integer> keys = new ArrayList<>();
