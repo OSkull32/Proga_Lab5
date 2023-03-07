@@ -68,11 +68,12 @@ public class ExecuteScript implements Command {
      */
     @Override
     public void execute(String args) throws WrongArgumentException {
-        if (args.isEmpty()) throw new WrongArgumentException();
         try {
-            scriptPath = args;
-            if (script.scriptPaths.contains(scriptPath)) throw new RecursiveException();
-            else script.putScript(scriptPath);
+            if (!args.isEmpty()) {
+                scriptPath = args;
+                if (script.scriptPaths.contains(scriptPath)) throw new RecursiveException();
+                else script.putScript(scriptPath);
+            } else throw new IllegalArgumentException();
             File file = new File(scriptPath);
             if (!file.canWrite() || file.isDirectory() || !file.isFile())  throw new IOException();
 
@@ -90,8 +91,10 @@ public class ExecuteScript implements Command {
         } catch (NullPointerException ex) {
             System.err.println("Не выбран файл из которого читать скрипт");
         } catch (IOException ex) {
-            System.err.println("Доступ к файлу невозможен" + ex.getMessage());
-        } catch (RecursiveException ex) {
+            System.err.println("Доступ к файлу невозможен " + ex.getMessage());
+        } catch (IllegalArgumentException ex) {
+            System.err.println("Скрипт не передан в качестве аргумента команды");
+        }catch (RecursiveException ex) {
             System.err.println("Скрипт " + scriptPath + " уже существует, произошел рекурсивный вызов");
         }
         script.removeScript(scriptPath);

@@ -103,7 +103,7 @@ public class CommandManager {
             Command command;
 
             command = COMMANDS.get(words[0].toLowerCase(Locale.ROOT));
-            command.execute(Arrays.toString(args));
+            command.execute(Arrays.toString(args).replace("[", "").replace("]", ""));
         } else {
             System.err.println("Команда " + words[0] + " не распознана, используйте help для справки.");
         }
