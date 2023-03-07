@@ -7,7 +7,7 @@ import ru.ifmo.lab.exceptions.WrongArgumentException;
  * Класс команды, которая удаляет элемент
  */
 public class RemoveKey implements Command{
-    private CollectionManager collectionManager;
+    private final CollectionManager collectionManager;
 
     /**
      * Конструктор класса.

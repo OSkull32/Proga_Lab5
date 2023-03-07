@@ -4,13 +4,10 @@ import ru.ifmo.lab.collection.CollectionManager;
 import ru.ifmo.lab.exceptions.WrongArgumentException;
 
 /**
- * Класс команды, которая выводит информацию о коллеции
+ * Класс команды, которая выводит информацию о коллекции
  */
 public class Info implements Command{
-    /**
-     * Поле, хранящее ссылку на объект класса CollectionManager
-     */
-    private CollectionManager collectionManager;
+    private final CollectionManager collectionManager;
 
     /**
      * Конструктор класса

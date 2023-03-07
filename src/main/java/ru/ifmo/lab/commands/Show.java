@@ -10,7 +10,7 @@ public class Show implements Command{
     /**
      * Поле, хранящее ссылку на объект класса CollectionManager
      */
-    private CollectionManager collectionManager;
+    private final CollectionManager collectionManager;
 
     /**
      * Конструктор класса

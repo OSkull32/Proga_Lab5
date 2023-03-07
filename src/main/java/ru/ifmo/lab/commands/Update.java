@@ -9,11 +9,9 @@ import ru.ifmo.lab.utility.Console;
  */
 public class Update implements Command{
 
-    private CollectionManager collectionManager;
+    private final CollectionManager collectionManager;
 
-    private Console console;
-
-    private String[] commandArguments;
+    private final Console console;
 
     /**
      * @param collectionManager Хранит ссылку на созданный объект CollectionManager.
@@ -66,13 +64,4 @@ public class Update implements Command{
     public String getDescription() {
         return "изменяет указанное поле выбранного id элемента коллекции";
     }
-
-//    /**
-//     * @param commandArguments Аргументы команды.
-//     * @see Command
-//     */
-//    @Override
-//    public void getCommandArguments(String[] commandArguments) {
-//        this.commandArguments = commandArguments;
-//    }
 }

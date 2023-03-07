@@ -8,17 +8,17 @@ public class Flat {
     // Идентификатор коллекции. Значение поля должно быть больше 0,
     // Значение этого поля должно быть уникальным,
     // Значение этого поля должно генерироваться автоматически
-    private int id;
+    private final int id;
 
     // Имя объекта класса. Поле не может быть null, Строка не может быть пустой
     private String name;
 
     // Координаты объекта класса. Поле не может быть null
-    private Coordinates coordinates;
+    private final Coordinates coordinates;
 
     // Время создания объекта класса. Поле не может быть null,
     // Значение этого поля должно генерироваться автоматически
-    private String creationDate;
+    private final String creationDate;
 
     //Площадь объекта класса. Значение поля должно быть больше 0
     private int area;
@@ -37,7 +37,7 @@ public class Flat {
     private View view;
 
     // Дом объекта класса. Поле может быть null
-    private House house;
+    private final House house;
 
     /**
      * Конструктор объекта класса
@@ -221,7 +221,7 @@ public class Flat {
     }
 
     /**
-     * Метод, присваивающий вид из объекту класса
+     * Метод, присваивающий вид из окна объекту класса
      *
      * @param view тип вида из окна
      */
@@ -266,7 +266,7 @@ public class Flat {
     }
 
     /**
-     * Метод, присваивающий количество ливтов дому объекта класса
+     * Метод, присваивающий количество лифтов дому объекта класса
      *
      * @param numberOfLifts количество лифтов
      */

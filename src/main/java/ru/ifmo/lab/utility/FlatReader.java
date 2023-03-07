@@ -24,7 +24,7 @@ public class FlatReader {
     }
 
     /**
-     * Метод, выполняющий чтение данных из консоли. Вввод полей в поределенном порядке
+     * Метод, выполняющий чтение данных из консоли. Ввод полей в определенном порядке
      *
      * @param id Идентификатор объекта класса Flat, который записывается в качестве ключа в коллекцию
      * @return объект типа Flat
@@ -68,17 +68,12 @@ public class FlatReader {
      */
     public int readCoordinatesX() {
         int x;
-
         while (true) {
             try {
                 console.printCommandText("coordinate x(int & x <= 713): ");
-                String str = console.readLine().trim();
-                if (str.equals("")) x = 0;
-                else {
-                    x = Integer.parseInt(str);
-                    if (x > 713) throw new InvalidValueException();
-                }
-                return x;
+                x = Integer.parseInt(console.readLine().trim());
+                if (x > 713) throw new InvalidValueException();
+                else return x;
             } catch (InvalidValueException ex) {
                 System.out.println("Координата x должна быть не более 713");
             } catch (NumberFormatException ex) {

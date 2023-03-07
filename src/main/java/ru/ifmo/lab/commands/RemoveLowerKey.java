@@ -6,7 +6,7 @@ import ru.ifmo.lab.exceptions.WrongArgumentException;
  * Класс команды, удаляющий элементы, у которых id меньше заданного ключа
  */
 public class RemoveLowerKey implements Command{
-    private CollectionManager collectionManager;
+    private final CollectionManager collectionManager;
 
     /**
      * Конструктор класса.

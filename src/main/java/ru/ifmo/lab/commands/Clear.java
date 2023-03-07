@@ -1,7 +1,6 @@
 package ru.ifmo.lab.commands;
 
 import ru.ifmo.lab.collection.CollectionManager;
-import ru.ifmo.lab.exceptions.InvalidCommandException;
 import ru.ifmo.lab.exceptions.WrongArgumentException;
 
 /**
@@ -11,7 +10,7 @@ public class Clear implements Command {
     /**
      * Поле, хранящее ссылку на объект класса collectionManager
      */
-    private CollectionManager collectionManager;
+    private final CollectionManager collectionManager;
 
     /**
      * Конструктор класса

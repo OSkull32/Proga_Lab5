@@ -6,7 +6,7 @@ import ru.ifmo.lab.exceptions.WrongArgumentException;
  * Класс команды, удаляющая элементы id которых, больше заданного ключа
  */
 public class RemoveGreaterKey implements Command{
-    private CollectionManager collectionManager;
+    private final CollectionManager collectionManager;
 
     /**
      * Конструктор класса.

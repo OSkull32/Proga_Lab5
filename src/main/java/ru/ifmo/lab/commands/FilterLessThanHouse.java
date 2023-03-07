@@ -14,9 +14,9 @@ public class FilterLessThanHouse implements Command {
     private final CollectionManager COLLECTION_MANAGER;
 
     /**
-     * Конструирует объект, првязывая его к конкретному объекту {@link CollectionManager}.
+     * Конструирует объект, привязывая его к конкретному объекту {@link CollectionManager}.
      *
-     * @param collectionManager указывет на объект {@link CollectionManager}, в котором
+     * @param collectionManager указывает на объект {@link CollectionManager}, в котором
      *                          будет вызываться соответствующий
      *                          метод {@link CollectionManager#filterLessThanHouse(int numberOfFloors)}.
      */
@@ -27,7 +27,7 @@ public class FilterLessThanHouse implements Command {
     /**
      * Метод запускает исполнение команды "filter_less_then_house".
      *
-     * @param args Сторка, содержащая переданные команде аргументы.
+     * @param args Строка, содержащая переданные команде аргументы.
      * @throws WrongArgumentException при неправильном аргументе.
      */
     @Override

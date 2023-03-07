@@ -21,7 +21,7 @@ public class JsonParser {
     /**
      * Метод представляет коллекцию в формате Json для последующего сохранения в файл
      *
-     * @param hashtable коллекция ({@link Hashtable}) с объектим типа {@link Flat}
+     * @param hashtable коллекция ({@link Hashtable}) с объектом типа {@link Flat}
      * @return строку в Json формате
      */
     public static String encode(Hashtable<Integer, Flat> hashtable) {
@@ -32,7 +32,7 @@ public class JsonParser {
      * Метод переводит строку, переданную ему в Json формате, в коллекцию объектов
      *
      * @param jsonString строка в Json формате
-     * @return коллекцию ({@link Hashtable}) с объектим типа {@link Flat}
+     * @return коллекцию ({@link Hashtable}) с объектом типа {@link Flat}
      */
     public static Hashtable<Integer, Flat> decode(String jsonString) {
         return GSON.fromJson(jsonString, HASHTABLE_TYPE);

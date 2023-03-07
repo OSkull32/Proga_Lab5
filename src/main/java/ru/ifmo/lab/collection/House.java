@@ -70,7 +70,7 @@ public class House implements Comparable<House>{
     /**
      * Метод, присваивающий возраст объекта класса
      *
-     * @param year
+     * @param year количество лет
      */
     public void setYear(int year) {
         this.year = year;
@@ -88,7 +88,7 @@ public class House implements Comparable<House>{
     /**
      * Метод, присваивающий количество этажей объекта класса
      *
-     * @param numberOfFloors
+     * @param numberOfFloors количество этажей
      */
     public void setNumberOfFloors(Long numberOfFloors) {
         this.numberOfFloors = numberOfFloors;
@@ -106,7 +106,7 @@ public class House implements Comparable<House>{
     /**
      * Метод, присваивающий количество квартир на этаже объекта класса
      *
-     * @param numberOfFlatsOnFloor
+     * @param numberOfFlatsOnFloor количество квартир на этаже
      */
     public void setNumberOfFlatsOnFloor(long numberOfFlatsOnFloor) {
         this.numberOfFlatsOnFloor = numberOfFlatsOnFloor;
@@ -124,7 +124,7 @@ public class House implements Comparable<House>{
     /**
      * Метод, присваивающий количество лифтов объекта класса
      *
-     * @param numberOfLifts
+     * @param numberOfLifts количество лифтов
      */
     public void setNumberOfLifts(Long numberOfLifts) {
         this.numberOfLifts = numberOfLifts;

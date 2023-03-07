@@ -9,7 +9,7 @@ import java.io.*;
  * @version 2.0
  */
 public class FileManager {
-    private Console console;
+    private final Console console;
     private File file;
 
     public FileManager(Console console) {
@@ -26,7 +26,7 @@ public class FileManager {
 
     //метод запрашивает у пользователя имя файла и проверяет его на валидность
     private File askForFile() throws IOException {
-        console.printCommandText("Введите имя файла (абсолютный путь или путь отностиельно " +
+        console.printCommandText("Введите имя файла (абсолютный путь или путь относительно " +
                 "директории проекта): ");
         String path = console.readLine();
         File file = new File(path);

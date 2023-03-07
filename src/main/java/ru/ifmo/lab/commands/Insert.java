@@ -7,9 +7,9 @@ import ru.ifmo.lab.utility.Console;
 import ru.ifmo.lab.utility.FlatReader;
 
 public class Insert implements Command {
-    private CollectionManager collectionManager;
-    private Console console;
-    private FlatReader flatReader;
+    private final CollectionManager collectionManager;
+    private final Console console;
+    private final FlatReader flatReader;
 
     /**
      * Конструктор класса.

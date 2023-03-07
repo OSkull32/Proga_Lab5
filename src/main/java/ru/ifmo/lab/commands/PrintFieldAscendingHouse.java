@@ -13,9 +13,9 @@ public class PrintFieldAscendingHouse implements Command {
     private final CollectionManager COLLECTION_MANAGER;
 
     /**
-     * Конструирует объект, првязывая его к конкретному объекту {@link CollectionManager}.
+     * Конструирует объект, привязывая его к конкретному объекту {@link CollectionManager}.
      *
-     * @param collectionManager указывет на объект {@link CollectionManager}, в котором
+     * @param collectionManager указывает на объект {@link CollectionManager}, в котором
      *                          будет вызываться соответствующий
      *                          метод {@link CollectionManager#printFieldAscendingHouse()}.
      */
@@ -26,7 +26,7 @@ public class PrintFieldAscendingHouse implements Command {
     /**
      * Метод запускает исполнение команды "print_field_ascending_house".
      *
-     * @param args Сторка, содержащая переданные команде аргументы.
+     * @param args Строка, содержащая переданные команде аргументы.
      * @throws WrongArgumentException - если команде был передан аргумент.
      */
     @Override

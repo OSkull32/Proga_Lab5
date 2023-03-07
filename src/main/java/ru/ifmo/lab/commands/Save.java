@@ -10,7 +10,7 @@ import ru.ifmo.lab.exceptions.WrongArgumentException;
  * @version 1.0
  */
 public class Save implements Command{
-    private CollectionManager collectionManager;
+    private final CollectionManager collectionManager;
 
     /**
      * Конструктор класса

@@ -11,8 +11,8 @@ public class Help implements Command{
     private final CommandManager COMMAND_MANAGER;
 
     /**
-     * Конструирует объект, првязывая его к конкретному объекту {@link CommandManager}.
-     * @param commandManager указывет на объект {@link CommandManager}, в котором
+     * Конструирует объект, привязывая его к конкретному объекту {@link CommandManager}.
+     * @param commandManager указывает на объект {@link CommandManager}, в котором
      *                       будет вызываться соответствующий метод {@link CommandManager#getCommandsInfo()}.
      */
     public Help(CommandManager commandManager){

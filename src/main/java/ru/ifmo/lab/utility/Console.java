@@ -28,7 +28,7 @@ public class Console {
     /**
      * Метод, считывающий данные из места, на которое ссылается поле scanner
      *
-     * @return возвращает считанную страку
+     * @return возвращает считанную строку
      */
     public String readLine() {
         return scanner.nextLine();

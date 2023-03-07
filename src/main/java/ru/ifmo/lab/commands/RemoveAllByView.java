@@ -8,7 +8,7 @@ import ru.ifmo.lab.exceptions.WrongArgumentException;
  * Класс команды, удаляющая элементы вид которых, соответствует заданному
  */
 public class RemoveAllByView implements Command{
-    private CollectionManager collectionManager;
+    private final CollectionManager collectionManager;
 
     /**
      * Конструктор класса.
