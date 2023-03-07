@@ -2,12 +2,107 @@ package ru.ifmo.lab.commands;
 
 import ru.ifmo.lab.exceptions.WrongArgumentException;
 
-import java.io.WriteAbortedException;
+import ru.ifmo.lab.collection.CollectionManager;
+import ru.ifmo.lab.exceptions.RecursiveException;
+import ru.ifmo.lab.utility.Console;
+import ru.ifmo.lab.utility.FlatReader;
 
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+/**
+ * Класс команды, которая считывает и исполняет скрипт из указанного файла
+ */
 public class ExecuteScript implements Command {
+    private final CollectionManager collectionManager;
+
+    private final FlatReader flatReader;
+
+    private String scriptPath;
+
+    private final Script script;
+
+    /**
+     * Конструктор класса
+     *
+     * @param collectionManager Хранит ссылку на объект CollectionManager
+     * @param flatReader Хранит ссылку на объект, осуществляющий чтение полей из console
+     * @param script Хранит объект класса, из которого мы получаем список адресов скрипта
+     */
+    public ExecuteScript(CollectionManager collectionManager, FlatReader flatReader, Script script) {
+        this.collectionManager = collectionManager;
+        this.flatReader = flatReader;
+        this.script = script;
+    }
+
+    /**
+     * Статический класс, в котором храниться коллекция адресов скрипта
+     */
+    public static class Script {
+        private final ArrayList<String> scriptPaths = new ArrayList<>();
+
+        /**
+         * Метод, добавляющий скрипт в коллекцию.
+         *
+         * @param scriptPath Адрес скрипта
+         */
+        public void putScript(String scriptPath) {
+            scriptPaths.add(scriptPath);
+        }
+
+        /**
+         * Метод, убирающий скрипт в коллекцию.
+         *
+         * @param scriptPath Адрес скрипта
+         */
+        public void removeScript(String scriptPath) {
+            scriptPaths.remove(scriptPath);
+        }
+    }
+
+    /**
+     * Метод исполняющий команду.
+     *
+     * @param args Строка, содержащая переданные команде аргументы.
+     */
     @Override
     public void execute(String args) throws WrongArgumentException {
         if (args.isEmpty()) throw new WrongArgumentException();
-        //code here
+        try {
+            scriptPath = args;
+            if (script.scriptPaths.contains(scriptPath)) throw new RecursiveException();
+            else script.putScript(scriptPath);
+            File file = new File(scriptPath);
+            if (!file.canWrite() || file.isDirectory() || !file.isFile())  throw new IOException();
+
+            FileInputStream fileInputStream = new FileInputStream(scriptPath);
+            BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
+            Scanner scanner = new Scanner(bufferedInputStream);
+            Console console = new Console(scanner);
+            CommandManager commandManager = new CommandManager(collectionManager, console, flatReader, script);
+
+            while (scanner.hasNext()) {
+                commandManager.execute(scanner.nextLine());
+            }
+        } catch (FileNotFoundException ex) {
+            System.err.println("Файл скрипта не найден");
+        } catch (NullPointerException ex) {
+            System.err.println("Не выбран файл из которого читать скрипт");
+        } catch (IOException ex) {
+            System.err.println("Доступ к файлу невозможен" + ex.getMessage());
+        } catch (RecursiveException ex) {
+            System.err.println("Скрипт " + scriptPath + " уже существует, произошел рекурсивный вызов");
+        }
+        script.removeScript(scriptPath);
+    }
+
+    /**
+     * @see Command
+     * @return Описание команды execute_script
+     */
+    @Override
+    public String  getDescription() {
+        return "выполняет команды, описанные в скрипте";
     }
 }

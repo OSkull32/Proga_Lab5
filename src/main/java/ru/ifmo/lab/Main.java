@@ -14,6 +14,7 @@ import static ru.ifmo.lab.utility.JsonParser.decode;
 public class Main {
     public static void main(String[] args) {
 
+        ExecuteScript.Script script = new ExecuteScript.Script();
         Console console = new Console();
         FlatReader flatReader = new FlatReader(console);
         FileManager fileManager = new FileManager(console);
@@ -23,7 +24,7 @@ public class Main {
         CommandManager commandManager = new CommandManager(console);
 
         commandManager.addCommand("clear", new Clear(collectionManager));
-        //commandManager.addCommand("execute_script", new ExecuteScript());
+        commandManager.addCommand("execute_script", new ExecuteScript(collectionManager, flatReader, script));
         commandManager.addCommand("exit", new Exit());
         commandManager.addCommand("filter_less_than_house", new FilterLessThanHouse(collectionManager));
         commandManager.addCommand("help", new Help(commandManager));
