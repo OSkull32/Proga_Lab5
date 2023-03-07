@@ -24,7 +24,6 @@ public class CommandManager {
     private final ArrayList<String> HISTORY_LIST = new ArrayList<>();
     private final int MAX_HISTORY_SIZE = 13;
     Console console = new Console();
-    CommandManager commandManager = new CommandManager(console);
 
     /**
      * Конструирует менеджера команд с заданными {@link Console}
@@ -77,8 +76,8 @@ public class CommandManager {
         COMMANDS.put("execute_script", new ExecuteScript(collectionManager, flatReader, script));
         COMMANDS.put("exit", new Exit());
         COMMANDS.put("filter_less_than_house", new FilterLessThanHouse(collectionManager));
-        COMMANDS.put("help", new Help(commandManager));
-        COMMANDS.put("history", new History(commandManager));
+        COMMANDS.put("help", new Help(this));
+        COMMANDS.put("history", new History(this));
         COMMANDS.put("info", new Info(collectionManager));
         COMMANDS.put("update", new Update(collectionManager, console));
         COMMANDS.put("insert", new Insert(collectionManager, console, flatReader));
