@@ -33,10 +33,10 @@ public class Insert implements Command {
         if (args.isEmpty()) throw new WrongArgumentException();
         try {
             if (!collectionManager.containsKey(Integer.parseInt(args))) {
-                console.printCommandText("Введите значения полей для элемента коллекции\n");
+                console.printCommandTextNext("Введите значения полей для элемента коллекции");
                 Flat flat = flatReader.read(Integer.parseInt(args));
                 collectionManager.insert(Integer.parseInt(args), flat);
-                console.printCommandText("Элемент добавлен в коллекцию\n");
+                console.printCommandTextNext("Элемент добавлен в коллекцию");
             } else System.err.println("Элемент с данным ключом уже существует в коллекции");
         } catch (IndexOutOfBoundsException ex) {
             System.err.println("Не указаны аргументы команды.");

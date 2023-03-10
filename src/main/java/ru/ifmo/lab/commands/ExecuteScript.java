@@ -1,11 +1,7 @@
 package ru.ifmo.lab.commands;
 
-import ru.ifmo.lab.exceptions.WrongArgumentException;
-
-import ru.ifmo.lab.collection.CollectionManager;
 import ru.ifmo.lab.exceptions.RecursiveException;
-import ru.ifmo.lab.utility.Console;
-import ru.ifmo.lab.utility.FlatReader;
+import ru.ifmo.lab.exceptions.WrongArgumentException;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -15,9 +11,8 @@ import java.util.Scanner;
  * Класс команды, которая считывает и исполняет скрипт из указанного файла
  */
 public class ExecuteScript implements Command {
-    private final CollectionManager collectionManager;
 
-    private final FlatReader flatReader;
+    private final CommandManager commandManager;
 
     private String scriptPath;
 
@@ -30,9 +25,8 @@ public class ExecuteScript implements Command {
      * @param flatReader Хранит ссылку на объект, осуществляющий чтение полей из console
      * @param script Хранит объект класса, из которого мы получаем список адресов скрипта
      */
-    public ExecuteScript(CollectionManager collectionManager, FlatReader flatReader, Script script) {
-        this.collectionManager = collectionManager;
-        this.flatReader = flatReader;
+    public ExecuteScript(Script script, CommandManager commandManager) {
+        this.commandManager = commandManager;
         this.script = script;
     }
 
@@ -75,16 +69,14 @@ public class ExecuteScript implements Command {
                 else script.putScript(scriptPath);
             } else throw new IllegalArgumentException();
             File file = new File(scriptPath);
-            if (!file.canWrite() || file.isDirectory() || !file.isFile())  throw new IOException();
+            if (!file.canRead() || file.isDirectory() || !file.isFile())  throw new IOException();
 
             FileInputStream fileInputStream = new FileInputStream(scriptPath);
             BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
             Scanner scanner = new Scanner(bufferedInputStream);
-            Console console = new Console(scanner);
-            CommandManager commandManager = new CommandManager(collectionManager, console, flatReader, script);
 
             while (scanner.hasNext()) {
-                commandManager.execute(scanner.nextLine());
+                commandManager.executeScript(scanner.nextLine());
             }
         } catch (FileNotFoundException ex) {
             System.err.println("Файл скрипта не найден");

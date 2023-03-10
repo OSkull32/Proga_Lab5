@@ -31,10 +31,10 @@ public class Update implements Command{
         if (args.isEmpty()) throw new WrongArgumentException();
         try {
             if (collectionManager.containsKey(Integer.parseInt(args))) {
-                console.printCommandText(collectionManager.getFieldName());
+                console.printCommandTextNext(collectionManager.getFieldName());
 
-                console.printCommandText("Если хотите остановите изменение элемента, напишите stop");
-                console.printCommandText("Введите значения полей для элемента коллекции:\n");
+                console.printCommandTextNext("Если хотите остановите изменение элемента, напишите stop");
+                console.printCommandText("Введите название поля и желаемое значение для изменения:");
                 String[] commandWords = new String[0];
                 do {
                     try {

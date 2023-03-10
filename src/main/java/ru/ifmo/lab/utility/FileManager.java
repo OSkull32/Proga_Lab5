@@ -21,7 +21,7 @@ public class FileManager {
                 console.printCommandError("ошибка при создании. Повторите попытку.");
             }
         } while (this.file == null);
-        console.printCommandText("Файл успешно добавлен");
+        console.printCommandTextNext("Файл успешно добавлен");
     }
 
     //метод запрашивает у пользователя имя файла и проверяет его на валидность
@@ -41,7 +41,7 @@ public class FileManager {
             console.printCommandError("файл не существует. Введите \"create\", чтобы создать.");
             if (console.readLine().equals("create")) {
                 if (file.createNewFile()) {
-                    console.printCommandText("Файл создан");
+                    console.printCommandTextNext("Файл создан");
                     return file;
                 } else {
                     console.printCommandError("файл с таким именем уже есть. Повторите попытку.");
@@ -77,30 +77,13 @@ public class FileManager {
      * @param str строка, которую нужно записать в файл
      */
     public void writeToFile(String str) {
-        FileWriter fileWriter = null;
-        BufferedWriter bufferedWriter = null;
-
-        try {
-            fileWriter = new FileWriter(file, true);
-            bufferedWriter = new BufferedWriter(fileWriter);
-
+        try (FileWriter fileWriter = new FileWriter(file);
+             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)){
             bufferedWriter.write(str);
-
         } catch (IOException ex) {
-            System.err.println("Произошла ошибка при добавлении файла в поток " + ex);
+            console.printCommandError("Произошла ошибка при добавлении файла в поток " + ex);
         } catch (NullPointerException ex) {
-            System.err.println("Не указан файл, в который нужно записать данные " + ex);
-        } finally {
-            try {
-                if (bufferedWriter != null) {
-                    bufferedWriter.close();
-                }
-                if (fileWriter != null) {
-                    fileWriter.close();
-                }
-            } catch (IOException ex) {
-                System.err.println("Произошла ошибка при закрытии " + ex);
-            }
+            console.printCommandError("Не указан файл, в который нужно записать данные " + ex);
         }
     }
 }

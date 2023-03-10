@@ -7,12 +7,6 @@ import ru.ifmo.lab.exceptions.WrongArgumentException;
  */
 public class Exit implements Command{
     /**
-     * Конструктор класса
-     */
-    public Exit(){
-    }
-
-    /**
      * Метод, исполняющий команду. Выводит сообщение о завершении работы программы
      */
     @Override

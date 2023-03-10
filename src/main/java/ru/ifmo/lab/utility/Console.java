@@ -39,8 +39,17 @@ public class Console {
      *
      * @param str строка, которая выводиться в стандартный поток вывода
      */
-    public void printCommandText(String str) {
+    public void printCommandTextNext(String str) {
         System.out.println(str);
+    }
+
+    /**
+     * Метод, выводящий текст в стандартный поток вывода
+     *
+     * @param str строка, которая выводиться в стандартный поток вывода
+     */
+    public void printCommandText(String str) {
+        System.out.print(str);
     }
 
     /**

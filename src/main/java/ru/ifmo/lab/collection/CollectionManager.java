@@ -17,8 +17,8 @@ public class CollectionManager {
     // Коллекция, с которой осуществляется работа
     private final Hashtable<Integer, Flat> hashtable;
 
-    private Console console;
-    private FileManager fileManager;
+    private final Console console;
+    private final FileManager fileManager;
     // Время инициализации коллекции
     private final LocalDateTime collectionInitialization;
 
@@ -39,12 +39,12 @@ public class CollectionManager {
      * Метод, выводящий основную информацию об коллекции
      */
     public void info() {
-        console.printCommandText ("Коллекция: " + hashtable.getClass().getSimpleName());
-        console.printCommandText("Тип элементов коллекции: " + Flat.class.getSimpleName());
+        console.printCommandTextNext("Коллекция: " + hashtable.getClass().getSimpleName());
+        console.printCommandTextNext("Тип элементов коллекции: " + Flat.class.getSimpleName());
         String pattern = "yyyy-MM-dd HH:mm:ss.SSS";
         DateTimeFormatter europeanDateFormat = DateTimeFormatter.ofPattern(pattern);
-        console.printCommandText("Время инициализации коллекции: " + collectionInitialization.format(europeanDateFormat));
-        console.printCommandText("Количество элементов в коллекции: " + hashtable.size());
+        console.printCommandTextNext("Время инициализации коллекции: " + collectionInitialization.format(europeanDateFormat));
+        console.printCommandTextNext("Количество элементов в коллекции: " + hashtable.size());
     }
 
     /**
@@ -52,10 +52,10 @@ public class CollectionManager {
      */
     public void show() {
         if (hashtable.size() == 0) {
-            console.printCommandText("Коллекция пуста.");
+            console.printCommandTextNext("Коллекция пуста.");
         } else {
             for (Map.Entry<Integer, Flat> entry : hashtable.entrySet()) {
-                console.printCommandText(entry.getValue().toString());
+                console.printCommandTextNext(entry.getValue().toString());
             }
         }
     }
@@ -69,7 +69,7 @@ public class CollectionManager {
     public void insert(Integer id, Flat flat) {
         if (hashtable.get(id) == null) {
             hashtable.put(id, flat);
-        } else console.printCommandText("Элемент с данным ключом уже существует");
+        } else console.printCommandTextNext("Элемент с данным ключом уже существует");
     }
 
     /**
@@ -85,77 +85,79 @@ public class CollectionManager {
                 case "name": {
                     if (value.equals("")) throw new NullPointerException();
                     hashtable.get(id).setName(value);
-                    console.printCommandText("Значение поля было изменено");
+                    console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "coordinate_x": {
-                    if (value.equals("")) value = null;
+                    if (value.equals("")) throw new NullPointerException();
                     hashtable.get(id).setCoordinateX(Integer.parseInt(value));
-                    console.printCommandText("Значение поля было изменено");
+                    console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "coordinate_y": {
-                    if (value.equals("")) value = null;
+                    if (value.equals("")) throw new NullPointerException();
                     hashtable.get(id).setCoordinateY(Integer.parseInt(value));
-                    console.printCommandText("Значение поля было изменено");
+                    console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "area": {
-                    if (value.equals("")) value = null;
+                    if (value.equals("")) throw new NullPointerException();
                     hashtable.get(id).setArea(Integer.parseInt(value));
-                    console.printCommandText("Значение поля было изменено");
+                    console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "number_of_rooms": {
-                    if (value.equals("")) value = null;
+                    if (value.equals("")) throw new NullPointerException();
                     hashtable.get(id).setNumberOfRooms(Long.parseLong(value));
-                    console.printCommandText("Значение поля было изменено");
+                    console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "number_of_bathrooms": {
-                    if (value.equals("")) value = null;
+                    if (value.equals("")) throw new NullPointerException();
                     hashtable.get(id).setNumberOfBathrooms(Long.parseLong(value));
-                    console.printCommandText("Значение поля было изменено");
+                    console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "furnish": {
+                    if (value.equals("")) throw new NullPointerException();
                     hashtable.get(id).setFurnish(Furnish.valueOf(value.toUpperCase(Locale.ROOT)));
-                    console.printCommandText("Значение поля было изменено");
+                    console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "view": {
+                    if (value.equals("")) throw new NullPointerException();
                     hashtable.get(id).setView(View.valueOf(value.toUpperCase(Locale.ROOT)));
-                    console.printCommandText("Значение поля было изменено");
+                    console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "house_name": {
                     if (value.equals("")) throw new NullPointerException();
                     hashtable.get(id).setHouseName(value);
-                    console.printCommandText("Значение поля было изменено");
+                    console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "house_year": {
-                    if (value.equals("")) value = null;
+                    if (value.equals("")) throw new NullPointerException();
                     hashtable.get(id).setHouseYear(Integer.parseInt(value));
-                    console.printCommandText("Значение поля было изменено");
+                    console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "house_number_of_floors": {
-                    if (value.equals("")) value = null;
+                    if (value.equals("")) throw new NullPointerException();
                     hashtable.get(id).setHouseNumberOfFloors(Long.parseLong(value));
-                    console.printCommandText("Значение поля было изменено");
+                    console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "house_number_of_flats_on_floor": {
-                    if (value.equals("")) value = null;
+                    if (value.equals("")) throw new NullPointerException();
                     hashtable.get(id).setHouseNumberOfFlatsOnFloor(Long.parseLong(value));
-                    console.printCommandText("Значение поля было изменено");
+                    console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "house_number_of_lifts": {
-                    if (value.equals("")) value = null;
+                    if (value.equals("")) throw new NullPointerException();
                     hashtable.get(id).setHouseNumberOfLifts(Long.parseLong(value));
-                    console.printCommandText("Значение поля было изменено");
+                    console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "stop": {
@@ -271,7 +273,7 @@ public class CollectionManager {
         ArrayList<Flat> flatList = new ArrayList<>(flatCollection);
         flatList.sort(new SortByHouse());
         for (Flat flat : flatList) {
-            console.printCommandText(flat.getName() + " " + flat.getHouse()); //todo изменить формат вывода
+            console.printCommandTextNext(flat.getName() + " " + flat.getHouse()); //todo изменить формат вывода
         }
     }
 
@@ -283,7 +285,7 @@ public class CollectionManager {
         Collection<Flat> flatCollection = hashtable.values();
         for (Flat flat : flatCollection){
             if (flat.getHouse().getNumberOfFloors() < numberOfFloors){
-                console.printCommandText(flat.getName() + " " + flat.getHouse()); //todo изменить формат вывода
+                console.printCommandTextNext(flat.getName() + " " + flat.getHouse()); //todo изменить формат вывода
             }
         }
     }

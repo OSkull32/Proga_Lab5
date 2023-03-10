@@ -47,7 +47,7 @@ public class FlatReader {
         while (true) {
             console.printCommandText("name (not null): ");
             String str = console.readLine().trim();
-            if (str.equals("")) console.printCommandError("\n Значение поля не может быть null или пустой строкой \n");
+            if (str.equals("")) console.printCommandError(" Значение поля не может быть null или пустой строкой");
             else return str;
         }
     }
@@ -113,13 +113,9 @@ public class FlatReader {
         while (true) {
             try {
                 console.printCommandText("area(int & area > 0): ");
-                String str = console.readLine().trim();
-                if (str.equals("")) area = Integer.parseInt(null); //TODO исправить!
-                else {
-                    area = Integer.parseInt(str);
-                    if (area <= 0) throw new InvalidValueException();
-                }
-                return area;
+                area = Integer.parseInt(console.readLine().trim());
+                if (area <= 0) throw new InvalidValueException();
+                else return area;
             } catch (InvalidValueException ex) {
                 System.out.println("Значение area должно быть больше 0");
             }   catch (NumberFormatException ex) {
@@ -137,14 +133,10 @@ public class FlatReader {
         long numberOfRooms;
         while (true) {
             try {
-                console.printCommandText("numberOfRooms(int & 0 < numberOfRooms <=14): ");
-                String str = console.readLine().trim();
-                if (str.equals("")) numberOfRooms = Long.parseLong(null);
-                else {
-                    numberOfRooms = Long.parseLong(str);
-                    if (numberOfRooms <= 0 || numberOfRooms > 14) throw new InvalidValueException();
-                }
-                return numberOfRooms;
+                console.printCommandText("numberOfRooms(long & 0 < numberOfRooms <=14): ");
+                numberOfRooms = Long.parseLong(console.readLine().trim());
+                if (numberOfRooms <= 0 || numberOfRooms > 14) throw new InvalidValueException();
+                else return numberOfRooms;
             } catch (InvalidValueException ex) {
                 System.out.println("Значение numberOfRooms должно быть больше 0 и не более 14");
             }   catch (NumberFormatException ex) {
@@ -162,14 +154,10 @@ public class FlatReader {
         long numberOfBathrooms;
         while (true) {
             try {
-                console.printCommandText("numberOfBathrooms(int & numberOfBathrooms > 0): ");
-                String str = console.readLine().trim();
-                if (str.equals("")) numberOfBathrooms = Long.parseLong(null);
-                else {
-                    numberOfBathrooms = Long.parseLong(str);
-                    if (numberOfBathrooms <= 0) throw new InvalidValueException();
-                }
-                return numberOfBathrooms;
+                console.printCommandText("numberOfBathrooms(long & numberOfBathrooms > 0): ");
+                numberOfBathrooms = Long.parseLong(console.readLine().trim());
+                if (numberOfBathrooms <= 0) throw new InvalidValueException();
+                else return numberOfBathrooms;
             } catch (InvalidValueException ex) {
                 System.out.println("Значение numberOfBathrooms должно быть больше 0");
             }   catch (NumberFormatException ex) {
@@ -245,7 +233,7 @@ public class FlatReader {
         while (true) {
             console.printCommandText("House name (not null): ");
             str = console.readLine().trim();
-            if (str.equals("")) console.printCommandError("\n Значение поля не может быть null\n"); //TODO исправить
+            if (str.equals("")) console.printCommandError(" Значение поля не может быть null");
             else return str;
         }
     }
@@ -260,13 +248,9 @@ public class FlatReader {
         while (true) {
             try {
                 console.printCommandText("houseYear(int & houseYear > 0): ");
-                String str = console.readLine().trim();
-                if (str.equals("")) houseYear = Integer.parseInt(null); //TODO исправить
-                else {
-                    houseYear = Integer.parseInt(str);
-                    if (houseYear <= 0) throw new InvalidValueException();
-                }
-                return houseYear;
+                houseYear = Integer.parseInt(console.readLine().trim());
+                if (houseYear <= 0) throw new InvalidValueException();
+                else return houseYear;
             } catch (InvalidValueException ex) {
                 System.out.println("Значение houseYear должно быть больше 0");
             }   catch (NumberFormatException ex) {
@@ -306,17 +290,13 @@ public class FlatReader {
      * @return значение поля numberOfFlatsOnFloor, уже проверенное на условия допустимости
      */
     public long readHouseNumberOfFlatsOnFloor() {
-        Long numberOfFlatsOnFloor;
+        long numberOfFlatsOnFloor;
         while (true) {
             try {
                 console.printCommandText("number of flats on floor(long & numberOfFlatsOnFloor > 0): ");
-                String str = console.readLine().trim();
-                if (str.equals("")) numberOfFlatsOnFloor = null;
-                else {
-                    numberOfFlatsOnFloor = Long.parseLong(str);
-                    if (numberOfFlatsOnFloor <= 0) throw new InvalidValueException();
-                }
-                return numberOfFlatsOnFloor; //TODO исправить
+                numberOfFlatsOnFloor = Long.parseLong(console.readLine().trim());
+                if (numberOfFlatsOnFloor <= 0) throw new InvalidValueException();
+                else return numberOfFlatsOnFloor;
             } catch (InvalidValueException ex) {
                 System.out.println("Значение numberOfFlatsOnFloor должно быть больше 0");
             }   catch (NumberFormatException ex) {
@@ -330,7 +310,7 @@ public class FlatReader {
      *
      * @return значение поля numberOfLifts, уже проверенное на условия допустимости
      */
-    public long readHouseNumberOfLifts() {
+    public Long readHouseNumberOfLifts() {
         Long numberOfLifts;
         while (true) {
             try {
@@ -341,7 +321,7 @@ public class FlatReader {
                     numberOfLifts = Long.parseLong(str);
                     if (numberOfLifts <= 0) throw new InvalidValueException();
                 }
-                return numberOfLifts; //TODO исправить
+                return numberOfLifts;
             } catch (InvalidValueException ex) {
                 System.out.println("Значение numberOfLifts должно быть больше 0");
             } catch (NumberFormatException ex) {

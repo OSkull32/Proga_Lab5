@@ -24,7 +24,7 @@ public class Main {
         CommandManager commandManager = new CommandManager(console);
 
         commandManager.addCommand("clear", new Clear(collectionManager));
-        commandManager.addCommand("execute_script", new ExecuteScript(collectionManager, flatReader, script));
+        commandManager.addCommand("execute_script", new ExecuteScript(script, commandManager));
         commandManager.addCommand("exit", new Exit());
         commandManager.addCommand("filter_less_than_house", new FilterLessThanHouse(collectionManager));
         commandManager.addCommand("help", new Help(commandManager));
