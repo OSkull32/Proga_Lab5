@@ -1,3 +1,0 @@
-history
- execute_script test-files/scr755.txt
- save

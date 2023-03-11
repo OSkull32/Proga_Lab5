@@ -1,3 +1,0 @@
-history
- execute_script test-files/scr6058.txt
- save

@@ -1,3 +1,0 @@
-history
- execute_script test-files/scr1497.txt
- save

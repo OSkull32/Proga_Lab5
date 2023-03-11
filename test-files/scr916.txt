@@ -1,3 +1,0 @@
-history
- execute_script test-files/scr917.txt
- save
