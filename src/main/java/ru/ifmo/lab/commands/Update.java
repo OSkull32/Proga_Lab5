@@ -44,14 +44,14 @@ public class Update implements Command{
                         } else
                             collectionManager.update(Integer.parseInt(args), commandWords[0], commandWords[1]);
                     } catch (IndexOutOfBoundsException ex) {
-                        System.err.println("Не введено поле");
+                        console.printCommandError("Не введено поле");
                     }
                 } while (!commandWords[0].equals("stop"));
-            } else System.err.println("Элемента с данным ключом не существует");
+            } else console.printCommandError("Элемента с данным ключом не существует");
         } catch (IndexOutOfBoundsException ex) {
-            System.err.println("Не указаны все аргументы команды");
+            console.printCommandError("Не указаны все аргументы команды");
         } catch (NumberFormatException ex) {
-            System.err.println("Формат аргумента не соответствует" + ex.getMessage());
+            console.printCommandError("Формат аргумента не соответствует" + ex.getMessage());
         }
     }
 

@@ -4,9 +4,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 public class Console {
-    /*
-     * хранит ссылку на Scanner
-     */
+
+    // хранит ссылку на Scanner
     private final Scanner scanner;
 
     /**
@@ -14,15 +13,6 @@ public class Console {
      */
     public Console() {
         scanner = new Scanner(System.in, StandardCharsets.UTF_8);
-    }
-
-    /**
-     * Конструктор класса с параметрами
-     *
-     * @param scanner хранит ссылку на объект типа Scanner
-     */
-    public Console(Scanner scanner) {
-        this.scanner = scanner;
     }
 
     /**

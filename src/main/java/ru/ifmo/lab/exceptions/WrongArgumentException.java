@@ -7,7 +7,8 @@ package ru.ifmo.lab.exceptions;
  */
 public class WrongArgumentException extends Exception{
     public WrongArgumentException(){
-        super("Command has wrong argument or does not have argument that required");
+        super("Команда имеет неверный аргумент, или миеет аргумент, когда он не " +
+                "требуется, или не имеет аргумента, когда он требуется");
     }
     public WrongArgumentException(String message){
         super(message);

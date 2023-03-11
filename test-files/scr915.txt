@@ -1,0 +1,3 @@
+history
+ execute_script test-files/scr916.txt
+ save

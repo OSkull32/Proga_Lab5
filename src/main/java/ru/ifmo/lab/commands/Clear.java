@@ -2,23 +2,25 @@ package ru.ifmo.lab.commands;
 
 import ru.ifmo.lab.collection.CollectionManager;
 import ru.ifmo.lab.exceptions.WrongArgumentException;
+import ru.ifmo.lab.utility.Console;
 
 /**
  * Команда, очищающая коллекцию
  */
 public class Clear implements Command {
-    /**
-     * Поле, хранящее ссылку на объект класса collectionManager
-     */
+
+    // Поле, хранящее ссылку на объект класса collectionManager
     private final CollectionManager collectionManager;
+    private final Console CONSOLE;
 
     /**
      * Конструктор класса
      *
      * @param collectionManager хранит ссылку на объект CollectionManager
      */
-    public Clear(CollectionManager collectionManager) {
+    public Clear(CollectionManager collectionManager, Console console) {
         this.collectionManager = collectionManager;
+        this.CONSOLE = console;
     }
 
     /**
@@ -28,7 +30,7 @@ public class Clear implements Command {
     public void execute(String args) throws WrongArgumentException {
         if (!args.isEmpty()) throw new WrongArgumentException();
         collectionManager.clear();
-        System.out.println("Коллекция была очищена");
+        CONSOLE.printCommandTextNext("Коллекция была очищена");
     }
 
     /**

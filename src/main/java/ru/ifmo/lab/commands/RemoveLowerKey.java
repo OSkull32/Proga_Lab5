@@ -2,19 +2,23 @@ package ru.ifmo.lab.commands;
 
 import ru.ifmo.lab.collection.CollectionManager;
 import ru.ifmo.lab.exceptions.WrongArgumentException;
+import ru.ifmo.lab.utility.Console;
+
 /**
  * Класс команды, удаляющий элементы, у которых id меньше заданного ключа
  */
 public class RemoveLowerKey implements Command{
     private final CollectionManager collectionManager;
+    private final Console CONSOLE;
 
     /**
      * Конструктор класса.
      *
      * @param collectionManager Хранит ссылку на объект CollectionManager.
      */
-    public RemoveLowerKey(CollectionManager collectionManager) {
+    public RemoveLowerKey(CollectionManager collectionManager, Console console) {
         this.collectionManager = collectionManager;
+        this.CONSOLE = console;
     }
 
     /**
@@ -25,11 +29,11 @@ public class RemoveLowerKey implements Command{
         if (args.isEmpty()) throw new WrongArgumentException();
         try {
             collectionManager.removeLowerKey(Integer.parseInt(args));
-            System.out.println("Элементы коллекции были удалены.");
+            CONSOLE.printCommandTextNext("Элементы коллекции были удалены.");
         } catch (IndexOutOfBoundsException ex) {
-            System.out.println("Не указан аргумент команды");
+            CONSOLE.printCommandError("Не указан аргумент команды");
         } catch (NumberFormatException ex) {
-            System.out.println("Формат аргумента не соответствует целочисленному " + ex.getMessage());
+            CONSOLE.printCommandError("Формат аргумента не соответствует целочисленному " + ex.getMessage());
         }
     }
 

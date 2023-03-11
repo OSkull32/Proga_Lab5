@@ -4,20 +4,23 @@ import ru.ifmo.lab.exceptions.WrongArgumentException;
 
 /**
  * Класс команды "help".
+ *
  * @author Kliodt Vadim
  * @version 1.1
  */
-public class Help implements Command{
+public class Help implements Command {
     private final CommandManager COMMAND_MANAGER;
 
     /**
      * Конструирует объект, привязывая его к конкретному объекту {@link CommandManager}.
+     *
      * @param commandManager указывает на объект {@link CommandManager}, в котором
      *                       будет вызываться соответствующий метод {@link CommandManager#getCommandsInfo()}.
      */
-    public Help(CommandManager commandManager){
+    public Help(CommandManager commandManager) {
         this.COMMAND_MANAGER = commandManager;
     }
+
     /**
      * Выполняет команду "help".
      */

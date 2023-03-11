@@ -1,0 +1,3 @@
+history
+ execute_script test-files/scr8818.txt
+ save

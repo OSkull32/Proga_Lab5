@@ -1,0 +1,3 @@
+history
+ execute_script test-files/scr7952.txt
+ save

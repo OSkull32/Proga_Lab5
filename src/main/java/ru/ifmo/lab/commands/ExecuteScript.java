@@ -2,6 +2,7 @@ package ru.ifmo.lab.commands;
 
 import ru.ifmo.lab.exceptions.RecursiveException;
 import ru.ifmo.lab.exceptions.WrongArgumentException;
+import ru.ifmo.lab.utility.Console;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -16,41 +17,30 @@ public class ExecuteScript implements Command {
 
     private String scriptPath;
 
-    private final Script script;
+    private final Script script = new Script();
+    private final Console CONSOLE;
 
     /**
      * Конструктор класса
      *
-     * @param collectionManager Хранит ссылку на объект CollectionManager
-     * @param flatReader Хранит ссылку на объект, осуществляющий чтение полей из console
-     * @param script Хранит объект класса, из которого мы получаем список адресов скрипта
+     * @param commandManager Хранит ссылку на объект CommandManager
      */
-    public ExecuteScript(Script script, CommandManager commandManager) {
+    public ExecuteScript(CommandManager commandManager, Console console) {
         this.commandManager = commandManager;
-        this.script = script;
+        this.CONSOLE = console;
     }
 
-    /**
-     * Статический класс, в котором храниться коллекция адресов скрипта
-     */
-    public static class Script {
+
+    //Статический класс, в котором храниться коллекция адресов скрипта
+    private static class Script {
         private final ArrayList<String> scriptPaths = new ArrayList<>();
 
-        /**
-         * Метод, добавляющий скрипт в коллекцию.
-         *
-         * @param scriptPath Адрес скрипта
-         */
-        public void putScript(String scriptPath) {
+        //Метод, добавляющий скрипт в коллекцию.
+        private void putScript(String scriptPath) {
             scriptPaths.add(scriptPath);
         }
-
-        /**
-         * Метод, убирающий скрипт в коллекцию.
-         *
-         * @param scriptPath Адрес скрипта
-         */
-        public void removeScript(String scriptPath) {
+        // Метод, убирающий скрипт в коллекцию.
+        private void removeScript(String scriptPath) {
             scriptPaths.remove(scriptPath);
         }
     }
@@ -79,15 +69,15 @@ public class ExecuteScript implements Command {
                 commandManager.executeScript(scanner.nextLine());
             }
         } catch (FileNotFoundException ex) {
-            System.err.println("Файл скрипта не найден");
+            CONSOLE.printCommandError("Файл скрипта не найден");
         } catch (NullPointerException ex) {
-            System.err.println("Не выбран файл из которого читать скрипт");
+            CONSOLE.printCommandError("Не выбран файл из которого читать скрипт");
         } catch (IOException ex) {
-            System.err.println("Доступ к файлу невозможен " + ex.getMessage());
+            CONSOLE.printCommandError("Доступ к файлу невозможен " + ex.getMessage());
         } catch (IllegalArgumentException ex) {
-            System.err.println("Скрипт не передан в качестве аргумента команды");
+            CONSOLE.printCommandError("Скрипт не передан в качестве аргумента команды");
         }catch (RecursiveException ex) {
-            System.err.println("Скрипт " + scriptPath + " уже существует, произошел рекурсивный вызов");
+            CONSOLE.printCommandError("Скрипт " + scriptPath + " уже существует, произошел рекурсивный вызов");
         }
         script.removeScript(scriptPath);
     }

@@ -2,20 +2,23 @@ package ru.ifmo.lab.commands;
 
 import ru.ifmo.lab.collection.CollectionManager;
 import ru.ifmo.lab.exceptions.WrongArgumentException;
+import ru.ifmo.lab.utility.Console;
 
 /**
  * Класс команды, которая удаляет элемент
  */
 public class RemoveKey implements Command{
     private final CollectionManager collectionManager;
+    private final Console CONSOLE;
 
     /**
      * Конструктор класса.
      *
      * @param collectionManager Хранит ссылку на объект CollectionManager.
      */
-    public RemoveKey(CollectionManager collectionManager) {
+    public RemoveKey(CollectionManager collectionManager, Console console) {
         this.collectionManager = collectionManager;
+        this.CONSOLE = console;
     }
 
     /**
@@ -27,12 +30,12 @@ public class RemoveKey implements Command{
         try {
             if (collectionManager.containsKey(Integer.parseInt(args))) {
                 collectionManager.removeKey(Integer.parseInt(args));
-                System.out.println("Элемент коллекции был удален.");
-            } else System.out.println("Данного элемента коллекции не существует");
+                CONSOLE.printCommandTextNext("Элемент коллекции был удален.");
+            } else CONSOLE.printCommandTextNext("Данного элемента коллекции не существует");
         } catch (IndexOutOfBoundsException ex) {
-            System.err.println("Не указаны аргументы команды");
+            CONSOLE.printCommandError("Не указаны аргументы команды");
         } catch (NumberFormatException ex) {
-            System.err.println("Формат аргумента не соответствует целочисленному " + ex.getMessage());
+            CONSOLE.printCommandError("Формат аргумента не соответствует целочисленному " + ex.getMessage());
         }
     }
 

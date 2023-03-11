@@ -3,7 +3,7 @@ package ru.ifmo.lab.collection;
 /**
  * Класс - дом объекта класса Flat
  */
-public class House implements Comparable<House>{
+public class House implements Comparable<House> {
     /*
      * Имя объекта класса. Поле не может быть null
      */
@@ -28,11 +28,11 @@ public class House implements Comparable<House>{
     /**
      * Конструктор класса
      *
-     * @param name имя объекта класса
-     * @param year возраст объекта класса
-     * @param numberOfFloors количество этажей объекта класса
+     * @param name                 имя объекта класса
+     * @param year                 возраст объекта класса
+     * @param numberOfFloors       количество этажей объекта класса
      * @param numberOfFlatsOnFloor количество квартир на этаже объекта класса
-     * @param numberOfLifts количество лифтов объекта класса
+     * @param numberOfLifts        количество лифтов объекта класса
      */
     public House(String name, int year, Long numberOfFloors, long numberOfFlatsOnFloor, Long numberOfLifts) {
         this.name = name;
@@ -148,11 +148,15 @@ public class House implements Comparable<House>{
 
     /**
      * Метод сравнивает 2 дома по количеству этажей.
+     *
      * @param o объект для сравнения.
      * @return результат сравнения полей методом {@link Long#compare}.
      */
     @Override
     public int compareTo(House o) {
+        if (Long.compare(this.numberOfFloors, o.getNumberOfFloors()) == 0){
+            return Long.compare(this.numberOfFlatsOnFloor, o.getNumberOfFlatsOnFloor());
+        }
         return Long.compare(this.numberOfFloors, o.getNumberOfFloors());
     }
 }

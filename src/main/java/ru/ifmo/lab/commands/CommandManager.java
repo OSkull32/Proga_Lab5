@@ -15,12 +15,11 @@ import java.util.*;
  * @version 2.0
  */
 public class CommandManager {
-    private CollectionManager collectionManager;
-    private FlatReader flatReader;
-    ExecuteScript.Script script;
     private final Console CONSOLE;
     private final HashMap<String, Command> COMMANDS = new HashMap<>();
     private final ArrayList<String> HISTORY_LIST = new ArrayList<>();
+    private final CollectionManager COLLECTION_MANAGER;
+    private final FlatReader FLAT_READER;
     private final int MAX_HISTORY_SIZE = 13;
 
     /**
@@ -29,8 +28,11 @@ public class CommandManager {
      * @param console Объект {@link Console}, через который класс
      *                осуществляет взаимодействие с пользователем.
      */
-    public CommandManager(Console console) {
+    public CommandManager(Console console, CollectionManager collectionManager, FlatReader flatReader) {
         this.CONSOLE = console;
+        this.COLLECTION_MANAGER = collectionManager;
+        this.FLAT_READER = flatReader;
+        putAllCommands();
     }
 
     /**
@@ -48,34 +50,48 @@ public class CommandManager {
             command = COMMANDS.get(words[0].toLowerCase(Locale.ROOT));
             command.execute(Arrays.toString(args).replace("[", "").replace("]", ""));
         } else {
-            System.err.println("Команда " + words[0] + " не распознана, используйте help для справки.");
+            CONSOLE.printCommandError("Команда " + words[0] + " не распознана, используйте help для справки.");
         }
     }
-    /**
-     * Добавляет команду к общему списку и делает ее возможной для вызова.
-     *
-     * @param name название команды.
-     * @param command объект класса команды.
-     */
-    public void addCommand(String name, Command command) {
+
+
+    // Добавляет команду к общему списку и делает ее возможной для вызова.
+    private void addCommand(String name, Command command) {
         COMMANDS.put(name, command);
+    }
+    // метод добавляет все команды в список
+    private void putAllCommands(){
+        addCommand("clear", new Clear(COLLECTION_MANAGER, CONSOLE));
+        addCommand("execute_script", new ExecuteScript(this, CONSOLE));
+        addCommand("exit", new Exit(CONSOLE));
+        addCommand("filter_less_than_house", new FilterLessThanHouse(COLLECTION_MANAGER));
+        addCommand("help", new Help(this));
+        addCommand("history", new History(this));
+        addCommand("info", new Info(COLLECTION_MANAGER));
+        addCommand("update", new Update(COLLECTION_MANAGER, CONSOLE));
+        addCommand("insert", new Insert(COLLECTION_MANAGER, CONSOLE, FLAT_READER));
+        addCommand("print_field_ascending_house", new PrintFieldAscendingHouse(COLLECTION_MANAGER));
+        addCommand("remove_all_by_view", new RemoveAllByView(COLLECTION_MANAGER, CONSOLE));
+        addCommand("remove_greater_key", new RemoveGreaterKey(COLLECTION_MANAGER, CONSOLE));
+        addCommand("remove_key", new RemoveKey(COLLECTION_MANAGER, CONSOLE));
+        addCommand("remove_lower_key", new RemoveLowerKey(COLLECTION_MANAGER, CONSOLE));
+        addCommand("save", new Save(COLLECTION_MANAGER, CONSOLE));
+        addCommand("show", new Show(COLLECTION_MANAGER));
     }
 
     /**
      * При вызове этого метода в консоли запрашивается команда.
      */
     public void nextCommand() {
-        CONSOLE.printPreamble(); //print ">>>"
-        String inputString = CONSOLE.readLine();
-        String clearString = inputString.replaceAll("\\s+", " ").trim(); //remove sequences of spaces
-
-        String[] inputs = clearString.split(" ", 2);
+        CONSOLE.printPreamble(); //print ">"
+        String[] inputs = CONSOLE
+                .readLine()
+                .trim()
+                .split("\\s+", 2);
 
         try {
             executeCommand(inputs);
-        } catch (InvalidCommandException e) {
-            CONSOLE.printCommandError("Invalid command");
-        } catch (WrongArgumentException e) {
+        } catch (InvalidCommandException | WrongArgumentException e) {
             CONSOLE.printCommandError(e.getMessage());
         }
     }
@@ -83,8 +99,10 @@ public class CommandManager {
     //метод вызывает команду на исполнение
     private void executeCommand(String[] inputs) throws InvalidCommandException, WrongArgumentException {
 
+        if (inputs[0].equals("")) return;
         Command command = COMMANDS.get(inputs[0]);
-        if (command == null) throw new InvalidCommandException();
+
+        if (command == null) throw new InvalidCommandException("введена несуществующая команда");
         if (inputs.length == 1) {
             command.execute(""); //если не было передано аргументов
         } else {
@@ -112,11 +130,12 @@ public class CommandManager {
 
     /**
      * Печатает в консоль описание по всем командам.
+     *
      * @see Command#getDescription()
      */
-    public void getCommandsInfo(){ //команда help
+    public void getCommandsInfo() { //команда help
         Set<String> commandNames = COMMANDS.keySet();
-        for (String commandName : commandNames){
+        for (String commandName : commandNames) {
             CONSOLE.printCommandTextNext(commandName + ": " + COMMANDS.get(commandName).getDescription());
         }
     }
