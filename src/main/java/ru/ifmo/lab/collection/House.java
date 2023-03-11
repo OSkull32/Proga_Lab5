@@ -138,23 +138,24 @@ public class House implements Comparable<House> {
     @Override
     public String toString() {
         return "House{" +
-                "\nname='" + name + '\'' +
-                ", \nyear=" + year +
-                ", \nnumberOfFloors=" + numberOfFloors +
-                ", \nnumberOfFlatsOnFloor=" + numberOfFlatsOnFloor +
-                ", \nnumberOfLifts=" + numberOfLifts +
+                "name='" + name + '\'' +
+                ", year=" + year +
+                ", numberOfFloors=" + numberOfFloors +
+                ", numberOfFlatsOnFloor=" + numberOfFlatsOnFloor +
+                ", numberOfLifts=" + numberOfLifts +
                 '}';
     }
 
     /**
-     * Метод сравнивает 2 дома по количеству этажей.
+     * Метод сравнивает 2 дома по количеству этажей, если оно одинаковое, то сравнивает по
+     * количеству квартир на этаже.
      *
      * @param o объект для сравнения.
-     * @return результат сравнения полей методом {@link Long#compare}.
+     * @return результат сравнения полей.
      */
     @Override
     public int compareTo(House o) {
-        if (Long.compare(this.numberOfFloors, o.getNumberOfFloors()) == 0){
+        if ((long) this.numberOfFloors == o.getNumberOfFloors()){
             return Long.compare(this.numberOfFlatsOnFloor, o.getNumberOfFlatsOnFloor());
         }
         return Long.compare(this.numberOfFloors, o.getNumberOfFloors());

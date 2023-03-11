@@ -1,5 +1,11 @@
 package ru.ifmo.lab.collection;
 
+import com.google.gson.annotations.JsonAdapter;
+import ru.ifmo.lab.utility.LocalDateTimeAdapter;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 /**
  * Класс объектов коллекции
  */
@@ -18,7 +24,8 @@ public class Flat {
 
     // Время создания объекта класса. Поле не может быть null,
     // Значение этого поля должно генерироваться автоматически
-    private final String creationDate;
+    @JsonAdapter(LocalDateTimeAdapter.class)
+    private final LocalDateTime creationDate;
 
     //Площадь объекта класса. Значение поля должно быть больше 0
     private int area;
@@ -53,7 +60,7 @@ public class Flat {
      * @param view              Вид из объекта класса
      * @param house             Дом объекта класса
      */
-    public Flat(int id, String name, Coordinates coordinates, String creationDate, int area,
+    public Flat(int id, String name, Coordinates coordinates, LocalDateTime creationDate, int area,
                 long numberOfRooms, long numberOfBathrooms, Furnish furnish, View view, House house) {
         this.id = id;
         this.name = name;
@@ -99,7 +106,7 @@ public class Flat {
      *
      * @return creationDate
      */
-    public String getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
@@ -285,7 +292,8 @@ public class Flat {
                 "\nid=" + id +
                 ", \nname='" + name + '\'' +
                 ", \ncoordinates=" + coordinates +
-                ", \ncreationDate=" + creationDate +
+                ", \ncreationDate=" +
+                creationDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")) +
                 ", \narea=" + area +
                 ", \nnumberOfRooms=" + numberOfRooms +
                 ", \nnumberOfBathrooms=" + numberOfBathrooms +

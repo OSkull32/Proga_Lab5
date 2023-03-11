@@ -30,7 +30,7 @@ public class Save implements Command{
     public void execute(String args) throws WrongArgumentException {
         if (!args.isEmpty()) throw new WrongArgumentException();
         collectionManager.save();
-        CONSOLE.printCommandError("Коллекция была сохранена.");
+        CONSOLE.printCommandTextNext("Коллекция была сохранена.");
     }
 
     /**

@@ -274,7 +274,7 @@ public class CollectionManager {
         ArrayList<Flat> flatList = new ArrayList<>(flatCollection);
         flatList.sort(new SortByHouse());
         for (Flat flat : flatList) {
-            console.printCommandTextNext(flat.getName() + " " + flat.getHouse()); //todo изменить формат вывода
+            console.printCommandTextNext("Квартира: " + flat.getName() + " в доме " + flat.getHouse());
         }
     }
 
@@ -286,7 +286,7 @@ public class CollectionManager {
         Collection<Flat> flatCollection = hashtable.values();
         for (Flat flat : flatCollection){
             if (flat.getHouse().getNumberOfFloors() < numberOfFloors){
-                console.printCommandTextNext(flat.getName() + " " + flat.getHouse()); //todo изменить формат вывода
+                console.printCommandText(flat.getName() + "; ");
             }
         }
     }

@@ -1,7 +1,6 @@
 package ru.ifmo.lab.utility;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import ru.ifmo.lab.collection.Flat;
 
@@ -37,6 +36,5 @@ public class JsonParser {
      */
     public static Hashtable<Integer, Flat> decode(String jsonString) {
         return GSON.fromJson(jsonString, HASHTABLE_TYPE);
-    } //TODO JsonSyntax exception
+    }
 }
-
