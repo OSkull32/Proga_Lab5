@@ -1,5 +1,6 @@
 package ru.ifmo.lab.collection;
 
+import ru.ifmo.lab.exceptions.InvalidValueException;
 import ru.ifmo.lab.utility.Console;
 import ru.ifmo.lab.utility.JsonParser;
 import ru.ifmo.lab.utility.SortByHouse;
@@ -83,49 +84,49 @@ public class CollectionManager {
         try {
             switch (field) {
                 case "name": {
-                    if (value.equals("")) throw new NullPointerException();
+                    if (value.equals("")) throw new InvalidValueException();
                     hashtable.get(id).setName(value);
                     console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "coordinate_x": {
-                    if (value.equals("")) throw new NullPointerException();
+                    if (value.equals("")) throw new InvalidValueException();
                     hashtable.get(id).setCoordinateX(Integer.parseInt(value));
                     console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "coordinate_y": {
-                    if (value.equals("")) throw new NullPointerException();
+                    if (value.equals("")) throw new InvalidValueException();
                     hashtable.get(id).setCoordinateY(Integer.parseInt(value));
                     console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "area": {
-                    if (value.equals("")) throw new NullPointerException();
+                    if (value.equals("")) throw new InvalidValueException();
                     hashtable.get(id).setArea(Integer.parseInt(value));
                     console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "number_of_rooms": {
-                    if (value.equals("")) throw new NullPointerException();
+                    if (value.equals("")) throw new InvalidValueException();
                     hashtable.get(id).setNumberOfRooms(Long.parseLong(value));
                     console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "number_of_bathrooms": {
-                    if (value.equals("")) throw new NullPointerException();
+                    if (value.equals("")) throw new InvalidValueException();
                     hashtable.get(id).setNumberOfBathrooms(Long.parseLong(value));
                     console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "furnish": {
-                    if (value.equals("")) throw new NullPointerException();
+                    if (value.equals("")) throw new InvalidValueException();
                     hashtable.get(id).setFurnish(Furnish.valueOf(value.toUpperCase(Locale.ROOT)));
                     console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "view": {
-                    if (value.equals("")) throw new NullPointerException();
+                    if (value.equals("")) throw new InvalidValueException();
                     hashtable.get(id).setView(View.valueOf(value.toUpperCase(Locale.ROOT)));
                     console.printCommandTextNext("Значение поля было изменено");
                     break;
@@ -137,25 +138,25 @@ public class CollectionManager {
                     break;
                 }
                 case "house_year": {
-                    if (value.equals("")) throw new NullPointerException();
+                    if (value.equals("")) throw new InvalidValueException();
                     hashtable.get(id).setHouseYear(Integer.parseInt(value));
                     console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "house_number_of_floors": {
-                    if (value.equals("")) throw new NullPointerException();
+                    if (value.equals("")) throw new InvalidValueException();
                     hashtable.get(id).setHouseNumberOfFloors(Long.parseLong(value));
                     console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "house_number_of_flats_on_floor": {
-                    if (value.equals("")) throw new NullPointerException();
+                    if (value.equals("")) throw new InvalidValueException();
                     hashtable.get(id).setHouseNumberOfFlatsOnFloor(Long.parseLong(value));
                     console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "house_number_of_lifts": {
-                    if (value.equals("")) throw new NullPointerException();
+                    if (value.equals("")) throw new InvalidValueException();
                     hashtable.get(id).setHouseNumberOfLifts(Long.parseLong(value));
                     console.printCommandTextNext("Значение поля было изменено");
                     break;
@@ -164,16 +165,16 @@ public class CollectionManager {
                     break;
                 }
                 default: {
-                    System.out.println("Поле не распознано");
+                    console.printCommandTextNext("Поле не распознано");
                     break;
                 }
             }
         } catch (ClassCastException ex) {
-            System.err.println("Указано недопустимое значение для данного поля");
+            console.printCommandError("Указано недопустимое значение для данного поля");
         } catch (IllegalArgumentException ex) {
-            System.err.println("Значение аргумента не соответствует ожидаемому " + ex.getMessage());
-        } catch (NullPointerException ex) {
-            System.err.println("Невозможно записать null в данное поле");
+            console.printCommandError("Значение аргумента не соответствует ожидаемому " + ex.getMessage());
+        } catch (InvalidValueException ex) {
+            console.printCommandError("Невозможно записать null в данное поле");
         }
     }
 
@@ -239,8 +240,8 @@ public class CollectionManager {
         for (Integer key : keys) {
             hashtable.remove(key);
         }
-        if (size == hashtable.size()) System.out.println("Не было найдено элементов с таким значением поля");
-        else System.out.println("Элементы с данным значением поля удалены");
+        if (size == hashtable.size()) console.printCommandTextNext("Не было найдено элементов с таким значением поля");
+        else console.printCommandTextNext("Элементы с данным значением поля удалены");
     }
 
     /**
@@ -273,7 +274,7 @@ public class CollectionManager {
         ArrayList<Flat> flatList = new ArrayList<>(flatCollection);
         flatList.sort(new SortByHouse());
         for (Flat flat : flatList) {
-            console.printCommandTextNext(flat.getName() + " " + flat.getHouse()); //todo изменить формат вывода
+            console.printCommandTextNext("Квартира: " + flat.getName() + " в доме " + flat.getHouse());
         }
     }
 
@@ -285,7 +286,7 @@ public class CollectionManager {
         Collection<Flat> flatCollection = hashtable.values();
         for (Flat flat : flatCollection){
             if (flat.getHouse().getNumberOfFloors() < numberOfFloors){
-                console.printCommandTextNext(flat.getName() + " " + flat.getHouse()); //todo изменить формат вывода
+                console.printCommandText(flat.getName() + "; ");
             }
         }
     }

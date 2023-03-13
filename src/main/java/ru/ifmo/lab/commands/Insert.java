@@ -37,11 +37,11 @@ public class Insert implements Command {
                 Flat flat = flatReader.read(Integer.parseInt(args));
                 collectionManager.insert(Integer.parseInt(args), flat);
                 console.printCommandTextNext("Элемент добавлен в коллекцию");
-            } else System.err.println("Элемент с данным ключом уже существует в коллекции");
+            } else console.printCommandError("Элемент с данным ключом уже существует в коллекции");
         } catch (IndexOutOfBoundsException ex) {
-            System.err.println("Не указаны аргументы команды.");
+            console.printCommandError("Не указаны аргументы команды.");
         } catch (NumberFormatException ex) {
-            System.err.println("Формат аргумента не соответствует целочисленному " + ex.getMessage());
+            console.printCommandError("Формат аргумента не соответствует целочисленному " + ex.getMessage());
         }
     }
 

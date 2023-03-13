@@ -3,7 +3,7 @@ package ru.ifmo.lab.collection;
 /**
  * Класс - дом объекта класса Flat
  */
-public class House implements Comparable<House>{
+public class House implements Comparable<House> {
     /*
      * Имя объекта класса. Поле не может быть null
      */
@@ -28,11 +28,11 @@ public class House implements Comparable<House>{
     /**
      * Конструктор класса
      *
-     * @param name имя объекта класса
-     * @param year возраст объекта класса
-     * @param numberOfFloors количество этажей объекта класса
+     * @param name                 имя объекта класса
+     * @param year                 возраст объекта класса
+     * @param numberOfFloors       количество этажей объекта класса
      * @param numberOfFlatsOnFloor количество квартир на этаже объекта класса
-     * @param numberOfLifts количество лифтов объекта класса
+     * @param numberOfLifts        количество лифтов объекта класса
      */
     public House(String name, int year, Long numberOfFloors, long numberOfFlatsOnFloor, Long numberOfLifts) {
         this.name = name;
@@ -138,21 +138,26 @@ public class House implements Comparable<House>{
     @Override
     public String toString() {
         return "House{" +
-                "\nname='" + name + '\'' +
-                ", \nyear=" + year +
-                ", \nnumberOfFloors=" + numberOfFloors +
-                ", \nnumberOfFlatsOnFloor=" + numberOfFlatsOnFloor +
-                ", \nnumberOfLifts=" + numberOfLifts +
+                "name='" + name + '\'' +
+                ", year=" + year +
+                ", numberOfFloors=" + numberOfFloors +
+                ", numberOfFlatsOnFloor=" + numberOfFlatsOnFloor +
+                ", numberOfLifts=" + numberOfLifts +
                 '}';
     }
 
     /**
-     * Метод сравнивает 2 дома по количеству этажей.
+     * Метод сравнивает 2 дома по количеству этажей, если оно одинаковое, то сравнивает по
+     * количеству квартир на этаже.
+     *
      * @param o объект для сравнения.
-     * @return результат сравнения полей методом {@link Long#compare}.
+     * @return результат сравнения полей.
      */
     @Override
     public int compareTo(House o) {
+        if ((long) this.numberOfFloors == o.getNumberOfFloors()){
+            return Long.compare(this.numberOfFlatsOnFloor, o.getNumberOfFlatsOnFloor());
+        }
         return Long.compare(this.numberOfFloors, o.getNumberOfFloors());
     }
 }

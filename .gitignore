@@ -21,6 +21,7 @@
 
 /.idea/
 /build/
+/test-files/
 /out/
 /.gradle/
 *.iml

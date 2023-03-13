@@ -4,9 +4,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 public class Console {
-    /*
-     * хранит ссылку на Scanner
-     */
+
+    // хранит ссылку на Scanner
     private final Scanner scanner;
 
     /**
@@ -14,15 +13,6 @@ public class Console {
      */
     public Console() {
         scanner = new Scanner(System.in, StandardCharsets.UTF_8);
-    }
-
-    /**
-     * Конструктор класса с параметрами
-     *
-     * @param scanner хранит ссылку на объект типа Scanner
-     */
-    public Console(Scanner scanner) {
-        this.scanner = scanner;
     }
 
     /**
@@ -35,7 +25,7 @@ public class Console {
     }
 
     /**
-     * Метод, выводящий текст в стандартный поток вывода
+     * Метод, выводящий текст в стандартный поток вывода с переносом строки.
      *
      * @param str строка, которая выводиться в стандартный поток вывода
      */
@@ -44,7 +34,7 @@ public class Console {
     }
 
     /**
-     * Метод, выводящий текст в стандартный поток вывода
+     * Метод, выводящий текст в стандартный поток вывода без переноса строки.
      *
      * @param str строка, которая выводиться в стандартный поток вывода
      */

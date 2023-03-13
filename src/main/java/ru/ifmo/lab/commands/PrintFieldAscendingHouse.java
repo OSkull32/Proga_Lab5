@@ -27,7 +27,7 @@ public class PrintFieldAscendingHouse implements Command {
      * Метод запускает исполнение команды "print_field_ascending_house".
      *
      * @param args Строка, содержащая переданные команде аргументы.
-     * @throws WrongArgumentException - если команде был передан аргумент.
+     * @throws WrongArgumentException если команде был передан аргумент.
      */
     @Override
     public void execute(String args) throws WrongArgumentException {

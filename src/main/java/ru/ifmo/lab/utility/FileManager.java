@@ -3,7 +3,7 @@ package ru.ifmo.lab.utility;
 import java.io.*;
 
 /**
- * Класс, осуществляющий чтение/запись данных
+ * Класс, осуществляющий работу с файлом.
  *
  * @author Владимир Данченко, Kliodt Vadim
  * @version 2.0
@@ -14,6 +14,12 @@ public class FileManager {
 
     public FileManager(Console console) {
         this.console = console;
+    }
+
+    /**
+     * Метод добавляет файл для дальнейшей работы с ним.
+     */
+    public void addFile() {
         do {
             try {
                 this.file = askForFile();
@@ -30,11 +36,15 @@ public class FileManager {
                 "директории проекта): ");
         String path = console.readLine();
         File file = new File(path);
-        if (file.isFile()) {
+        if (file.isFile() && file.canRead()) {
             return file; //если все ОК
         }
         if (file.isDirectory()) { //если указана директория
-            console.printCommandError("Указана директория. Повторите попытку.");
+            console.printCommandError("указана директория. Повторите попытку.");
+            return null;
+        }
+        if (!file.canRead()) {
+            console.printCommandError("невозможно прочитать файл");
             return null;
         }
         if (!file.exists()) { //если файла вообще не существует
@@ -64,7 +74,8 @@ public class FileManager {
             byte[] bytes = bufferedInputStream.readAllBytes();
             return new String(bytes);
         } catch (FileNotFoundException e) {
-            // TODO добавить общий метод для случаев FileNotFoundException-ов
+            console.printCommandError("файл не найден. Повторите процесс выбора файла.");
+            addFile();
         } catch (IOException e) {
             console.printCommandError("невозможно прочитать файл. " + e.getMessage());
         }
@@ -78,8 +89,9 @@ public class FileManager {
      */
     public void writeToFile(String str) {
         try (FileWriter fileWriter = new FileWriter(file);
-             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)){
+             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
             bufferedWriter.write(str);
+            bufferedWriter.flush();
         } catch (IOException ex) {
             console.printCommandError("Произошла ошибка при добавлении файла в поток " + ex);
         } catch (NullPointerException ex) {

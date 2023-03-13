@@ -36,5 +36,5 @@ public class JsonParser {
      */
     public static Hashtable<Integer, Flat> decode(String jsonString) {
         return GSON.fromJson(jsonString, HASHTABLE_TYPE);
-    } //TODO JsonSyntax exception
+    }
 }

@@ -4,7 +4,6 @@ import ru.ifmo.lab.collection.*;
 import ru.ifmo.lab.exceptions.InvalidValueException;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 /**
  * Класс, необходимы для чтения полей объекта Flat
@@ -30,11 +29,7 @@ public class FlatReader {
      * @return объект типа Flat
      */
     public Flat read(int id){
-        // превращение даты создания объекта в строку
-        String creationDate = LocalDateTime
-                .now()
-                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
-        return new Flat(id, readName(), readCoordinates(), creationDate, readArea(),
+        return new Flat(id, readName(), readCoordinates(), LocalDateTime.now(), readArea(),
                 readNumberOfRooms(), readNumberOfBathrooms(), readFurnish(), readView(), readHouse());
     }
 
@@ -75,9 +70,9 @@ public class FlatReader {
                 if (x > 713) throw new InvalidValueException();
                 else return x;
             } catch (InvalidValueException ex) {
-                System.out.println("Координата x должна быть не более 713");
+                console.printCommandTextNext("Координата x должна быть не более 713");
             } catch (NumberFormatException ex) {
-                System.err.println("Число должно быть типа int");
+                console.printCommandError("Число должно быть типа int");
             }
         }
     }
@@ -96,9 +91,9 @@ public class FlatReader {
                 if (y <= -397) throw new InvalidValueException();
                 else return y;
             } catch (InvalidValueException ex) {
-                System.out.println("Координата y должна быть больше -397");
+                console.printCommandTextNext("Координата y должна быть больше -397");
             } catch (NumberFormatException ex) {
-                System.err.println("Число должно быть типа Integer и не null");
+                console.printCommandError("Число должно быть типа Integer и не null");
             }
         }
     }
@@ -117,9 +112,9 @@ public class FlatReader {
                 if (area <= 0) throw new InvalidValueException();
                 else return area;
             } catch (InvalidValueException ex) {
-                System.out.println("Значение area должно быть больше 0");
+                console.printCommandTextNext("Значение area должно быть больше 0");
             }   catch (NumberFormatException ex) {
-                System.err.println("Число должно быть типа int");
+                console.printCommandError("Число должно быть типа int");
             }
         }
     }
@@ -138,9 +133,9 @@ public class FlatReader {
                 if (numberOfRooms <= 0 || numberOfRooms > 14) throw new InvalidValueException();
                 else return numberOfRooms;
             } catch (InvalidValueException ex) {
-                System.out.println("Значение numberOfRooms должно быть больше 0 и не более 14");
+                console.printCommandTextNext("Значение numberOfRooms должно быть больше 0 и не более 14");
             }   catch (NumberFormatException ex) {
-                System.err.println("Число должно быть типа long");
+                console.printCommandError("Число должно быть типа long");
             }
         }
     }
@@ -159,9 +154,9 @@ public class FlatReader {
                 if (numberOfBathrooms <= 0) throw new InvalidValueException();
                 else return numberOfBathrooms;
             } catch (InvalidValueException ex) {
-                System.out.println("Значение numberOfBathrooms должно быть больше 0");
+                console.printCommandTextNext("Значение numberOfBathrooms должно быть больше 0");
             }   catch (NumberFormatException ex) {
-                System.err.println("Число должно быть типа long");
+                console.printCommandError("Число должно быть типа long");
             }
         }
     }
@@ -184,7 +179,7 @@ public class FlatReader {
                 furnish = Furnish.valueOf(console.readLine().toUpperCase().trim());
                 return furnish;
             }   catch (IllegalArgumentException ex) {
-                System.err.println("Введенная константа не представлена в допустимых значения Furnish");
+                console.printCommandError("Введенная константа не представлена в допустимых значения Furnish");
             }
         }
     }
@@ -207,7 +202,7 @@ public class FlatReader {
                 view = View.valueOf(console.readLine().toUpperCase().trim());
                 return view;
             }   catch (IllegalArgumentException ex) {
-                System.err.println("Введенная константа не представлена в допустимых значения View");
+                console.printCommandError("Введенная константа не представлена в допустимых значения View");
             }
         }
     }
@@ -252,9 +247,9 @@ public class FlatReader {
                 if (houseYear <= 0) throw new InvalidValueException();
                 else return houseYear;
             } catch (InvalidValueException ex) {
-                System.out.println("Значение houseYear должно быть больше 0");
+                console.printCommandTextNext("Значение houseYear должно быть больше 0");
             }   catch (NumberFormatException ex) {
-                System.err.println("Число должно быть типа int");
+                console.printCommandError("Число должно быть типа int");
             }
         }
     }
@@ -277,9 +272,9 @@ public class FlatReader {
                 }
                 return numberOfFloors;
             } catch (InvalidValueException ex) {
-                System.out.println("Значение numberOfFloors должно быть больше 0 и не более 39");
+                console.printCommandTextNext("Значение numberOfFloors должно быть больше 0 и не более 39");
             }   catch (NumberFormatException ex) {
-                System.err.println("Число должно быть типа Long");
+                console.printCommandError("Число должно быть типа Long");
             }
         }
     }
@@ -298,9 +293,9 @@ public class FlatReader {
                 if (numberOfFlatsOnFloor <= 0) throw new InvalidValueException();
                 else return numberOfFlatsOnFloor;
             } catch (InvalidValueException ex) {
-                System.out.println("Значение numberOfFlatsOnFloor должно быть больше 0");
+                console.printCommandTextNext("Значение numberOfFlatsOnFloor должно быть больше 0");
             }   catch (NumberFormatException ex) {
-                System.err.println("Число должно быть типа long");
+                console.printCommandError("Число должно быть типа long");
             }
         }
     }
@@ -323,9 +318,9 @@ public class FlatReader {
                 }
                 return numberOfLifts;
             } catch (InvalidValueException ex) {
-                System.out.println("Значение numberOfLifts должно быть больше 0");
+                console.printCommandTextNext("Значение numberOfLifts должно быть больше 0");
             } catch (NumberFormatException ex) {
-                System.err.println("Число должно быть типа long");
+                console.printCommandError("Число должно быть типа long");
             }
         }
     }

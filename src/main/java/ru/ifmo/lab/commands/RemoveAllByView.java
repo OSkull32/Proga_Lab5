@@ -3,20 +3,23 @@ package ru.ifmo.lab.commands;
 import ru.ifmo.lab.collection.CollectionManager;
 import ru.ifmo.lab.collection.View;
 import ru.ifmo.lab.exceptions.WrongArgumentException;
+import ru.ifmo.lab.utility.Console;
 
 /**
  * Класс команды, удаляющая элементы вид которых, соответствует заданному
  */
 public class RemoveAllByView implements Command{
     private final CollectionManager collectionManager;
+    private final Console CONSOLE;
 
     /**
      * Конструктор класса.
      *
      * @param collectionManager Хранит ссылку на объект CollectionManager.
      */
-    public RemoveAllByView(CollectionManager collectionManager) {
+    public RemoveAllByView(CollectionManager collectionManager, Console console) {
         this.collectionManager = collectionManager;
+        this.CONSOLE = console;
     }
 
     /**
@@ -30,13 +33,13 @@ public class RemoveAllByView implements Command{
         try {
             collectionManager.removeAllByView(View.valueOf(args));
         } catch (IllegalArgumentException ex) {
-            System.err.println("Выбранной константы нет в перечислении.");
-            System.out.println("Список всех констант:");
+            CONSOLE.printCommandError("Выбранной константы нет в перечислении.");
+            CONSOLE.printCommandTextNext("Список всех констант:");
             for (View view : View.values()) {
-                System.out.println(view);
+                CONSOLE.printCommandTextNext(view.toString());
             }
         } catch (ArrayIndexOutOfBoundsException ex) {
-            System.err.println("Не указаны аргументы команды.");
+            CONSOLE.printCommandError("Не указаны аргументы команды.");
         }
     }
 
