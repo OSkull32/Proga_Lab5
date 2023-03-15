@@ -33,7 +33,7 @@ public class Main {
         //проверка на валидность полей из файла:
         new CollectionChecker(flatReader, console).checkCollection(collection);
 
-        CollectionManager collectionManager = new CollectionManager(console, fileManager, collection);
+        CollectionManager collectionManager = new CollectionManager(console, fileManager, collection,flatReader);
         CommandManager commandManager = new CommandManager(console, collectionManager, flatReader);
 
         while (true) {

@@ -30,7 +30,7 @@ public class Update implements Command{
     public void execute(String args) throws WrongArgumentException {
         if (args.isEmpty()) throw new WrongArgumentException();
         try {
-            if (collectionManager.containsKey(Integer.parseInt(args))) {
+            if (collectionManager.containsKey(collectionManager.getKey(Integer.parseInt(args)))) {
                 console.printCommandTextNext(collectionManager.getFieldName());
 
                 console.printCommandTextNext("Если хотите остановите изменение элемента, напишите stop");
@@ -47,7 +47,7 @@ public class Update implements Command{
                         console.printCommandError("Не введено поле");
                     }
                 } while (!commandWords[0].equals("stop"));
-            } else console.printCommandError("Элемента с данным ключом не существует");
+            } else console.printCommandError("Элемента с данным id не существует");
         } catch (IndexOutOfBoundsException ex) {
             console.printCommandError("Не указаны все аргументы команды");
         } catch (NumberFormatException ex) {
