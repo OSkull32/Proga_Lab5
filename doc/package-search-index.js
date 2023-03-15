@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"ru.ifmo.lab"},{"l":"ru.ifmo.lab.collection"},{"l":"ru.ifmo.lab.commands"},{"l":"ru.ifmo.lab.exceptions"},{"l":"ru.ifmo.lab.utility"}];updateSearchResults();
