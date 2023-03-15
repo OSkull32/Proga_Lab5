@@ -18,6 +18,7 @@ public class CollectionManager {
     // Коллекция, с которой осуществляется работа
     private final Hashtable<Integer, Flat> hashtable;
 
+    private static final HashSet<Integer> allId = new HashSet<>();
     private final Console console;
     private final FileManager fileManager;
     // Время инициализации коллекции
@@ -289,5 +290,14 @@ public class CollectionManager {
                 console.printCommandText(flat.getName() + "; ");
             }
         }
+    }
+
+    public static int generateId(){
+        int id;
+        do {
+            id = (int) (100000 * Math.random() + 1);
+        }while (allId.contains(id));
+        allId.add(id);
+        return id;
     }
 }

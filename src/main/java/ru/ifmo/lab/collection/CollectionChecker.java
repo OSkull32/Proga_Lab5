@@ -23,7 +23,7 @@ public class CollectionChecker {
 
             //todo проверка ключа
 
-            if (!FlatChecker.checkId(flat.getId())) {
+            if (!FlatChecker.checkId(flat.getKey())) {
                 collection.remove(key);
                 CONSOLE.printCommandError("ошибка в поле ID у объекта: " + flat.getName() +
                         ". Объект удален из коллекции.");

@@ -14,7 +14,7 @@ public class FlatReader {
     private final Console console;
 
     /**
-     * Константа, хранящее шаблое (регулярное выражение), которому должны
+     * Константа, хранящее шаблон (регулярное выражение), которому должны
      * соответствовать все поля {@link Flat} типа String
      */
     public static final String PATTERN_NAMES = "^[a-zA-Z0-9_\\-\\s\u0410-\u044f\u0451\u0401]+$";
@@ -31,11 +31,11 @@ public class FlatReader {
     /**
      * Метод, выполняющий чтение данных из консоли. Ввод полей в определенном порядке
      *
-     * @param id Идентификатор объекта класса Flat, который записывается в качестве ключа в коллекцию
+     * @param key Идентификатор объекта класса Flat, который записывается в качестве ключа в коллекцию
      * @return объект типа Flat
      */
-    public Flat read(int id){
-        return new Flat(id, readName(), readCoordinates(), LocalDateTime.now(), readArea(),
+    public Flat read(int key){
+        return new Flat(CollectionManager.generateId(), key, readName(), readCoordinates(), LocalDateTime.now(), readArea(),
                 readNumberOfRooms(), readNumberOfBathrooms(), readFurnish(), readView(), readHouse());
     }
 

@@ -6,6 +6,9 @@ import ru.ifmo.lab.exceptions.WrongArgumentException;
 import ru.ifmo.lab.utility.Console;
 import ru.ifmo.lab.utility.FlatReader;
 
+/**
+ * Класс команды, которая добавляет элемент в коллекцию с заданным ключом
+ */
 public class Insert implements Command {
     private final CollectionManager collectionManager;
     private final Console console;
