@@ -1,6 +1,7 @@
 package ru.ifmo.lab;
 
 import com.google.gson.JsonSyntaxException;
+import ru.ifmo.lab.collection.CollectionChecker;
 import ru.ifmo.lab.collection.CollectionManager;
 import ru.ifmo.lab.collection.Flat;
 import ru.ifmo.lab.commands.*;
@@ -29,7 +30,8 @@ public class Main {
                         "Выберете другой файл");
             }
         }
-        //TODO сделать проверку файлов
+        //проверка на валидность полей из файла:
+        new CollectionChecker(flatReader, console).checkCollection(collection);
 
         CollectionManager collectionManager = new CollectionManager(console, fileManager, collection);
         CommandManager commandManager = new CommandManager(console, collectionManager, flatReader);

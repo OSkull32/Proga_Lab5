@@ -14,6 +14,12 @@ public class FlatReader {
     private final Console console;
 
     /**
+     * Константа, хранящее шаблое (регулярное выражение), которому должны
+     * соответствовать все поля {@link Flat} типа String
+     */
+    public static final String PATTERN_NAMES = "^[a-zA-Z0-9_\\-\\s\u0410-\u044f\u0451\u0401]+$";
+
+    /**
      * Конструктор класса, который присваивает console значение, переданное в конструкторе в качестве параметра
      *
      * @param console хранит ссылку на объект типа Console
@@ -42,7 +48,8 @@ public class FlatReader {
         while (true) {
             console.printCommandText("name (not null): ");
             String str = console.readLine().trim();
-            if (str.equals("")) console.printCommandError(" Значение поля не может быть null или пустой строкой");
+            if (str.equals("")) console.printCommandError("Значение поля не может быть null или пустой строкой");
+            else if (!str.matches(PATTERN_NAMES)) console.printCommandError("Введенная строка содержит запрещенные символы");
             else return str;
         }
     }
@@ -228,7 +235,8 @@ public class FlatReader {
         while (true) {
             console.printCommandText("House name (not null): ");
             str = console.readLine().trim();
-            if (str.equals("")) console.printCommandError(" Значение поля не может быть null");
+            if (str.equals("")) console.printCommandError("Значение поля не может быть null");
+            else if (!str.matches(PATTERN_NAMES)) console.printCommandError("Введенная строка содержит запрещенные символы");
             else return str;
         }
     }

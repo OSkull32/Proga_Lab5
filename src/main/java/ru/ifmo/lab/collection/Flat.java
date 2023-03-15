@@ -20,12 +20,12 @@ public class Flat {
     private String name;
 
     // Координаты объекта класса. Поле не может быть null
-    private final Coordinates coordinates;
+    private Coordinates coordinates;
 
     // Время создания объекта класса. Поле не может быть null,
     // Значение этого поля должно генерироваться автоматически
     @JsonAdapter(LocalDateTimeAdapter.class)
-    private final LocalDateTime creationDate;
+    private LocalDateTime creationDate;
 
     //Площадь объекта класса. Значение поля должно быть больше 0
     private int area;
@@ -44,7 +44,7 @@ public class Flat {
     private View view;
 
     // Дом объекта класса. Поле может быть null
-    private final House house;
+    private House house;
 
     /**
      * Конструктор объекта класса
@@ -79,7 +79,7 @@ public class Flat {
      *
      * @return id
      */
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -174,6 +174,15 @@ public class Flat {
     }
 
     /**
+     * Метод, присваивающий координаты объекту класса
+     *
+     * @param coordinates координаты
+     */
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    /**
      * Метод, присваивающий координату x объекту класса
      *
      * @param x координата х
@@ -189,6 +198,13 @@ public class Flat {
      */
     public void setCoordinateY(Integer y) {
         this.getCoordinates().setY(y);
+    }
+
+    /**
+     * Метод, изменяющий дату создания объекта на текущий момент
+     */
+    public void updateCreationDateToNow() {
+        this.creationDate = LocalDateTime.now();
     }
 
     /**
@@ -234,6 +250,15 @@ public class Flat {
      */
     public void setView(View view) {
         this.view = view;
+    }
+
+    /**
+     * Метод, присваивающий дом объекту класса
+     *
+     * @param house тип вида из окна
+     */
+    public void setHouse(House house) {
+        this.house = house;
     }
 
     /**
