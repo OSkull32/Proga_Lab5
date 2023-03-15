@@ -65,100 +65,109 @@ public class CollectionManager {
     /**
      * Метод, добавляющий новый элемент в коллекцию
      *
-     * @param id   идентификатор элемента
+     * @param key   идентификатор элемента
      * @param flat элемент коллекции, который нужно добавить
      */
-    public void insert(Integer id, Flat flat) {
-        if (hashtable.get(id) == null) {
-            hashtable.put(id, flat);
+    public void insert(Integer key, Flat flat) {
+        if (hashtable.get(key) == null) {
+            hashtable.put(key, flat);
         } else console.printCommandTextNext("Элемент с данным ключом уже существует");
     }
 
     /**
      * Метод, изменяющий поле выбранного элемента коллекции
      *
-     * @param id идентификатор (ключ)
+     * @param id идентификатор
      * @param field имя поля
      * @param value значение поля
      */
     public void update(Integer id, String field, String value) {
+        Flat flat = null;
+        for (Flat flat1 : hashtable.values()){
+            if (flat1.getId() == id) {
+                flat = flat1;
+                break;
+            }
+        }
+
+        if (flat == null) return;
         try {
             switch (field) {
                 case "name": {
                     if (value.equals("")) throw new InvalidValueException();
-                    hashtable.get(id).setName(value);
+                    flat.setName(value);
                     console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "coordinate_x": {
                     if (value.equals("")) throw new InvalidValueException();
-                    hashtable.get(id).setCoordinateX(Integer.parseInt(value));
+                    flat.setCoordinateX(Integer.parseInt(value));
                     console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "coordinate_y": {
                     if (value.equals("")) throw new InvalidValueException();
-                    hashtable.get(id).setCoordinateY(Integer.parseInt(value));
+                    flat.setCoordinateY(Integer.parseInt(value));
                     console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "area": {
                     if (value.equals("")) throw new InvalidValueException();
-                    hashtable.get(id).setArea(Integer.parseInt(value));
+                    flat.setArea(Integer.parseInt(value));
                     console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "number_of_rooms": {
                     if (value.equals("")) throw new InvalidValueException();
-                    hashtable.get(id).setNumberOfRooms(Long.parseLong(value));
+                    flat.setNumberOfRooms(Long.parseLong(value));
                     console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "number_of_bathrooms": {
                     if (value.equals("")) throw new InvalidValueException();
-                    hashtable.get(id).setNumberOfBathrooms(Long.parseLong(value));
+                    flat.setNumberOfBathrooms(Long.parseLong(value));
                     console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "furnish": {
                     if (value.equals("")) throw new InvalidValueException();
-                    hashtable.get(id).setFurnish(Furnish.valueOf(value.toUpperCase(Locale.ROOT)));
+                    flat.setFurnish(Furnish.valueOf(value.toUpperCase(Locale.ROOT)));
                     console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "view": {
                     if (value.equals("")) throw new InvalidValueException();
-                    hashtable.get(id).setView(View.valueOf(value.toUpperCase(Locale.ROOT)));
+                    flat.setView(View.valueOf(value.toUpperCase(Locale.ROOT)));
                     console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "house_name": {
                     if (value.equals("")) throw new NullPointerException();
-                    hashtable.get(id).setHouseName(value);
+                    flat.setHouseName(value);
                     console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "house_year": {
                     if (value.equals("")) throw new InvalidValueException();
-                    hashtable.get(id).setHouseYear(Integer.parseInt(value));
+                    hashtable.get(key).setHouseYear(Integer.parseInt(value));
                     console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "house_number_of_floors": {
                     if (value.equals("")) throw new InvalidValueException();
-                    hashtable.get(id).setHouseNumberOfFloors(Long.parseLong(value));
+                    hashtable.get(key).setHouseNumberOfFloors(Long.parseLong(value));
                     console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "house_number_of_flats_on_floor": {
                     if (value.equals("")) throw new InvalidValueException();
-                    hashtable.get(id).setHouseNumberOfFlatsOnFloor(Long.parseLong(value));
+                    hashtable.get(key).setHouseNumberOfFlatsOnFloor(Long.parseLong(value));
                     console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
                 case "house_number_of_lifts": {
                     if (value.equals("")) throw new InvalidValueException();
-                    hashtable.get(id).setHouseNumberOfLifts(Long.parseLong(value));
+                    hashtable.get(key).setHouseNumberOfLifts(Long.parseLong(value));
                     console.printCommandTextNext("Значение поля было изменено");
                     break;
                 }
@@ -248,11 +257,11 @@ public class CollectionManager {
     /**
      * Метод, выводящий истину, если в коллекции существует элемент с выбранным ключом, иначе ложь
      *
-     * @param id идентификатор элемента (ключ)
+     * @param key идентификатор элемента (ключ)
      * @return true - в коллекции существует элемент с выбранным ключом, false - такого элемента не существует
      */
-    public boolean containsKey(int id) {
-        return hashtable.containsKey(id);
+    public boolean containsKey(int key) {
+        return hashtable.containsKey(key);
     }
 
     /**

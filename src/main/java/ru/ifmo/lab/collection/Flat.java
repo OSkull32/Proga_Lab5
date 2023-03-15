@@ -167,10 +167,14 @@ public class Flat {
     }
 
     /**
-     * Метод, присваивающий имя объекту класса
+     * Метод, возвращающий идентификатор объекта класса
      *
-     * @param name имя
+     * @return id идентификатор
      */
+    public int getId() {
+        return id;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
