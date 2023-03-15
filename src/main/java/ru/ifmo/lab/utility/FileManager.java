@@ -43,10 +43,6 @@ public class FileManager {
             console.printCommandError("указана директория. Повторите попытку.");
             return null;
         }
-        if (!file.canRead()) {
-            console.printCommandError("невозможно прочитать файл");
-            return null;
-        }
         if (!file.exists()) { //если файла вообще не существует
             console.printCommandError("файл не существует. Введите \"create\", чтобы создать.");
             if (console.readLine().equals("create")) {
@@ -59,6 +55,10 @@ public class FileManager {
             } else {
                 console.printCommandError("неверный ввод. Повторите попытку.");
             }
+        }
+        if (!file.canRead()) {
+            console.printCommandError("невозможно прочитать файл");
+            return null;
         }
         return null;
     }
