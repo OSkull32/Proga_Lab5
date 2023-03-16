@@ -237,7 +237,8 @@ public class CollectionManager {
         int size = hashtable.size();
         ArrayList<Integer> keys = new ArrayList<>();
         for (Map.Entry<Integer, Flat> entry : hashtable.entrySet()) {
-            if (entry.getValue().getView().equals(view)) keys.add(entry.getKey());
+            if (entry.getValue().getView() == null) keys.add(entry.getKey());
+            else if (entry.getValue().getView().equals(view)) keys.add((entry.getKey()));
         }
         for (Integer key : keys) {
             hashtable.remove(key);

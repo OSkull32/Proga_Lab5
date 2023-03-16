@@ -205,7 +205,13 @@ public class FlatReader {
                     console.printCommandText(val.name() + "\n");
                 }
                 console.printCommandText("view: ");
-                view = View.valueOf(console.readLine().toUpperCase().trim());
+                String str = console.readLine().trim();
+                if (str.equals("")) {
+                    view = null;
+                }
+                else {
+                    view = View.valueOf(str);
+                }
                 return view;
             }   catch (IllegalArgumentException ex) {
                 console.printCommandError("Введенная константа не представлена в допустимых значения View");
@@ -219,8 +225,18 @@ public class FlatReader {
      * @return объект типа House
      */
     public House readHouse() {
-        return new House(readHouseName(), readHouseYear(), readHouseNumberOfFloors(),
-                readHouseNumberOfFlatsOnFloor(), readHouseNumberOfLifts());
+            while (true) {
+                console.printCommandText("Нажмите enter, чтобы ввести в поле house null или введите House name (not null):");
+                String str = console.readLine().trim();
+                if (str.equals(""))
+                    return null;
+                else {
+                    if (!str.matches(PATTERN_NAMES))
+                        console.printCommandError("Введенная строка содержит запрещенные символы");
+                    else return new House(str, readHouseYear(), readHouseNumberOfFloors(),
+                            readHouseNumberOfFlatsOnFloor(), readHouseNumberOfLifts());
+                }
+            }
     }
 
     /**
