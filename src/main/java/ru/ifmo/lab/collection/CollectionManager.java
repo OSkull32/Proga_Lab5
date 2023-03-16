@@ -24,6 +24,11 @@ public class CollectionManager {
     private final FlatReader flatReader;
 
     /**
+     * Максимальный ID у объектов коллекции
+     */
+    public static final int MAX_ID = 100000;
+
+    /**
      * Конструктор, создающий новый объект менеджера коллекции
      */
     public CollectionManager(Console console, FileManager fileManager, Hashtable<Integer, Flat> hashtable, FlatReader flatReader) {
@@ -35,6 +40,10 @@ public class CollectionManager {
 
         String i = LocalDateTime.now().toString();
         collectionInitialization = LocalDateTime.parse(i);
+
+        for (Flat flat : this.hashtable.values()){
+            allId.add(flat.getId());
+        }
     }
 
     /**
@@ -56,8 +65,8 @@ public class CollectionManager {
         if (hashtable.size() == 0) {
             console.printCommandTextNext("Коллекция пуста.");
         } else {
-            for (Map.Entry<Integer, Flat> entry : hashtable.entrySet()) {
-                console.printCommandTextNext(entry.getValue().toString());
+            for (int key : hashtable.keySet()) {
+                console.printCommandTextNext("\nЭлемент: " + key +"\n"+ hashtable.get(key).toString());
             }
         }
     }
@@ -74,118 +83,100 @@ public class CollectionManager {
         } else console.printCommandTextNext("Элемент с данным ключом уже существует");
     }
 
+    /**
+     * Метод возвращает ключ элемента по его id
+     *
+     * @param id id
+     * @return ключ
+     */
     public int getKey(int id){
-        int key = 0;
-        for (Flat flat : hashtable.values()){
-            if (flat.getId() == id) {
-                key = flat.getKey();
+        for (int key : hashtable.keySet()){
+            if (hashtable.get(key).getId() == id) {
+                return key;
             }
         }
-        return key;
+        return -1;
     }
     /**
      * Метод, изменяющий поле выбранного элемента коллекции
      *
-     * @param id идентификатор
+     * @param key идентификатор
      * @param field имя поля
-     * @param value значение поля
      */
-    public void update(Integer id, String field, String value) {
-        int key = getKey(id);
-        try {
-            switch (field) {
-                case "name": {
-                    if (value.equals("")) throw new InvalidValueException();
-                    hashtable.get(key).setName(flatReader.readName());
-                    console.printCommandTextNext("Значение поля было изменено");
-                    break;
-                }
-                case "coordinate_x": {
-                    if (value.equals("")) throw new InvalidValueException();
-                    hashtable.get(key).setCoordinateX(flatReader.readCoordinatesX());
-                    console.printCommandTextNext("Значение поля было изменено");
-                    break;
-                }
-                case "coordinate_y": {
-                    if (value.equals("")) throw new InvalidValueException();
-                    hashtable.get(key).setCoordinateY(flatReader.readCoordinatesY());
-                    console.printCommandTextNext("Значение поля было изменено");
-                    break;
-                }
-                case "area": {
-                    if (value.equals("")) throw new InvalidValueException();
-                    hashtable.get(key).setArea(flatReader.readArea());
-                    console.printCommandTextNext("Значение поля было изменено");
-                    break;
-                }
-                case "number_of_rooms": {
-                    if (value.equals("")) throw new InvalidValueException();
-                    hashtable.get(key).setNumberOfRooms(flatReader.readNumberOfRooms());
-                    console.printCommandTextNext("Значение поля было изменено");
-                    break;
-                }
-                case "number_of_bathrooms": {
-                    if (value.equals("")) throw new InvalidValueException();
-                    hashtable.get(key).setNumberOfBathrooms(flatReader.readNumberOfBathrooms());
-                    console.printCommandTextNext("Значение поля было изменено");
-                    break;
-                }
-                case "furnish": {
-                    if (value.equals("")) throw new InvalidValueException();
-                    hashtable.get(key).setFurnish(flatReader.readFurnish());
-                    console.printCommandTextNext("Значение поля было изменено");
-                    break;
-                }
-                case "view": {
-                    if (value.equals("")) throw new InvalidValueException();
-                    hashtable.get(key).setView(flatReader.readView());
-                    console.printCommandTextNext("Значение поля было изменено");
-                    break;
-                }
-                case "house_name": {
-                    if (value.equals("")) throw new NullPointerException();
-                    hashtable.get(key).setHouseName(flatReader.readHouseName());
-                    console.printCommandTextNext("Значение поля было изменено");
-                    break;
-                }
-                case "house_year": {
-                    if (value.equals("")) throw new InvalidValueException();
-                    hashtable.get(key).setHouseYear(flatReader.readHouseYear());
-                    console.printCommandTextNext("Значение поля было изменено");
-                    break;
-                }
-                case "house_number_of_floors": {
-                    if (value.equals("")) throw new InvalidValueException();
-                    hashtable.get(key).setHouseNumberOfFloors(flatReader.readHouseNumberOfFloors());
-                    console.printCommandTextNext("Значение поля было изменено");
-                    break;
-                }
-                case "house_number_of_flats_on_floor": {
-                    if (value.equals("")) throw new InvalidValueException();
-                    hashtable.get(key).setHouseNumberOfFlatsOnFloor(flatReader.readHouseNumberOfFlatsOnFloor());
-                    console.printCommandTextNext("Значение поля было изменено");
-                    break;
-                }
-                case "house_number_of_lifts": {
-                    if (value.equals("")) throw new InvalidValueException();
-                    hashtable.get(key).setHouseNumberOfLifts(flatReader.readHouseNumberOfLifts());
-                    console.printCommandTextNext("Значение поля было изменено");
-                    break;
-                }
-                case "stop": {
-                    break;
-                }
-                default: {
-                    console.printCommandTextNext("Поле не распознано");
-                    break;
-                }
+    public void update(int key, String field) throws InvalidValueException {
+
+        switch (field) {
+            case "name": {
+                hashtable.get(key).setName(flatReader.readName());
+                console.printCommandTextNext("Значение поля было изменено");
+                break;
             }
-        } catch (ClassCastException ex) {
-            console.printCommandError("Указано недопустимое значение для данного поля");
-        } catch (IllegalArgumentException ex) {
-            console.printCommandError("Значение аргумента не соответствует ожидаемому " + ex.getMessage());
-        } catch (InvalidValueException ex) {
-            console.printCommandError("Невозможно записать null в данное поле");
+            case "coordinate_x": {
+                hashtable.get(key).setCoordinateX(flatReader.readCoordinatesX());
+                console.printCommandTextNext("Значение поля было изменено");
+                break;
+            }
+            case "coordinate_y": {
+                hashtable.get(key).setCoordinateY(flatReader.readCoordinatesY());
+                console.printCommandTextNext("Значение поля было изменено");
+                break;
+            }
+            case "area": {
+                hashtable.get(key).setArea(flatReader.readArea());
+                console.printCommandTextNext("Значение поля было изменено");
+                break;
+            }
+            case "number_of_rooms": {
+                hashtable.get(key).setNumberOfRooms(flatReader.readNumberOfRooms());
+                console.printCommandTextNext("Значение поля было изменено");
+                break;
+            }
+            case "number_of_bathrooms": {
+                hashtable.get(key).setNumberOfBathrooms(flatReader.readNumberOfBathrooms());
+                console.printCommandTextNext("Значение поля было изменено");
+                break;
+            }
+            case "furnish": {
+                hashtable.get(key).setFurnish(flatReader.readFurnish());
+                console.printCommandTextNext("Значение поля было изменено");
+                break;
+            }
+            case "view": {
+                hashtable.get(key).setView(flatReader.readView());
+                console.printCommandTextNext("Значение поля было изменено");
+                break;
+            }
+            case "house_name": {
+                hashtable.get(key).setHouseName(flatReader.readHouseName());
+                console.printCommandTextNext("Значение поля было изменено");
+                break;
+            }
+            case "house_year": {
+                hashtable.get(key).setHouseYear(flatReader.readHouseYear());
+                console.printCommandTextNext("Значение поля было изменено");
+                break;
+            }
+            case "house_number_of_floors": {
+                hashtable.get(key).setHouseNumberOfFloors(flatReader.readHouseNumberOfFloors());
+                console.printCommandTextNext("Значение поля было изменено");
+                break;
+            }
+            case "house_number_of_flats_on_floor": {
+                hashtable.get(key).setHouseNumberOfFlatsOnFloor(flatReader.readHouseNumberOfFlatsOnFloor());
+                console.printCommandTextNext("Значение поля было изменено");
+                break;
+            }
+            case "house_number_of_lifts": {
+                hashtable.get(key).setHouseNumberOfLifts(flatReader.readHouseNumberOfLifts());
+                console.printCommandTextNext("Значение поля было изменено");
+                break;
+            }
+            case "stop": {
+                break;
+            }
+            default: {
+                throw new InvalidValueException();
+            }
         }
     }
 
@@ -302,10 +293,15 @@ public class CollectionManager {
         }
     }
 
+    /**
+     * Метод генерирует уникальное значение id
+     *
+     * @return уникальный id
+     */
     public static int generateId(){
         int id;
         do {
-            id = (int) (100000 * Math.random() + 1);
+            id = (int) (MAX_ID * Math.random() + 1);
         }while (allId.contains(id));
         allId.add(id);
         return id;
