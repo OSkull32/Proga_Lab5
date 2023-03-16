@@ -32,7 +32,11 @@ public final class LocalDateTimeAdapter extends TypeAdapter<LocalDateTime> {
         in.nextName();
         String creationDate = in.nextString();
         in.endObject();
+        try{
+            return LocalDateTime.parse(creationDate);
+        } catch (Exception e) {
+            return null;
+        }
 
-        return LocalDateTime.parse(creationDate);
     }
 }

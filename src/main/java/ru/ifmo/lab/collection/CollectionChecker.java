@@ -66,11 +66,6 @@ public class CollectionChecker {
                         ". Повторите ввод.");
                 flat.setFurnish(FLAT_READER.readFurnish());
             }
-            if (!FlatChecker.checkView(flat.getView())) {
-                CONSOLE.printCommandError("ошибка в поле View у объекта: " + flat.getName() +
-                        ". Повторите ввод.");
-                flat.setView(FLAT_READER.readView());
-            }
             if (!FlatChecker.checkHouse(flat.getHouse())) {
                 CONSOLE.printCommandError("ошибка в поле House у объекта: " + flat.getName() +
                         ". Повторите ввод.");
@@ -122,17 +117,13 @@ public class CollectionChecker {
             return (furnish != null);
         }
 
-        private static boolean checkView(View view) {
-            return (view != null);
-        }
-
         private static boolean checkHouse(House house) {
             if (house != null) return HouseChecker.checkName(house.getName()) &&
                     HouseChecker.checkYear(house.getYear()) &&
                     HouseChecker.checkNumberOfFloors(house.getNumberOfFloors()) &&
                     HouseChecker.checkNumberOfFlatsOnFloor(house.getNumberOfFlatsOnFloor()) &&
                     HouseChecker.checkNumberOfLifts(house.getNumberOfLifts());
-            return false;
+            return true;
         }
     }
 

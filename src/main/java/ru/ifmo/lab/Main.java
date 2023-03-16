@@ -20,9 +20,10 @@ public class Main {
         FlatReader flatReader = new FlatReader(console);
         FileManager fileManager = new FileManager(console);
         Hashtable<Integer, Flat> collection;
+
         while (true) {
+            fileManager.addFile(args[0]);
             try {
-                fileManager.addFile();
                 collection = decode(fileManager.readFromFile());
                 break;
             } catch (JsonSyntaxException e){
