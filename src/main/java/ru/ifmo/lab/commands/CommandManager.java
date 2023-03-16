@@ -64,7 +64,7 @@ public class CommandManager {
         addCommand("clear", new Clear(COLLECTION_MANAGER, CONSOLE));
         addCommand("execute_script", new ExecuteScript(this, CONSOLE));
         addCommand("exit", new Exit(CONSOLE));
-        addCommand("filter_less_than_house", new FilterLessThanHouse(COLLECTION_MANAGER));
+        addCommand("filter_less_than_house", new FilterLessThanHouse(COLLECTION_MANAGER, CONSOLE));
         addCommand("help", new Help(this));
         addCommand("history", new History(this));
         addCommand("info", new Info(COLLECTION_MANAGER));

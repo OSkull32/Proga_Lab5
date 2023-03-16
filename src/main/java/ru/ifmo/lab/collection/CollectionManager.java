@@ -285,11 +285,13 @@ public class CollectionManager {
      * Метод выводит в консоль список квартир в домах с меньшим числом этажей, чем указано в параметре.
      * @param numberOfFloors количество этажей.
      */
-    public void filterLessThanHouse(int numberOfFloors) {
+    public void filterLessThanHouse(int year, Long numberOfFloors, long numberOfFlatsOnFloor, Long numberOfLifts) {
         Collection<Flat> flatCollection = hashtable.values();
         for (Flat flat : flatCollection){
-            if (flat.getHouse().getNumberOfFloors() < numberOfFloors){
-                console.printCommandText(flat.getName() + "; ");
+            if (flat.getHouse().getYear() < year && flat.getHouse().getNumberOfFloors() < numberOfFloors
+                    && flat.getHouse().getNumberOfFlatsOnFloor() < numberOfFlatsOnFloor
+                    && flat.getHouse().getNumberOfLifts() < numberOfLifts){
+                console.printCommandTextNext(flat.getName() + "; ");
             }
         }
     }

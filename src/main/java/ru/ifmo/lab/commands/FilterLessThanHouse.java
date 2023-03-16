@@ -2,6 +2,7 @@ package ru.ifmo.lab.commands;
 
 import ru.ifmo.lab.collection.CollectionManager;
 import ru.ifmo.lab.exceptions.WrongArgumentException;
+import ru.ifmo.lab.utility.Console;
 
 /**
  * Класс команды "filter_less_than_house".
@@ -11,6 +12,9 @@ import ru.ifmo.lab.exceptions.WrongArgumentException;
  */
 
 public class FilterLessThanHouse implements Command {
+
+    private final Console console;
+
     private final CollectionManager COLLECTION_MANAGER;
 
     /**
@@ -18,10 +22,11 @@ public class FilterLessThanHouse implements Command {
      *
      * @param collectionManager указывает на объект {@link CollectionManager}, в котором
      *                          будет вызываться соответствующий
-     *                          метод {@link CollectionManager#filterLessThanHouse(int numberOfFloors)}.
+     *                          метод {@link CollectionManager#filterLessThanHouse(int year, Long numberOfFloors, long numberOfFlatsOnFloor, Long numberOfLifts)}.
      */
-    public FilterLessThanHouse(CollectionManager collectionManager) {
+    public FilterLessThanHouse(CollectionManager collectionManager, Console console) {
         this.COLLECTION_MANAGER = collectionManager;
+        this.console = console;
     }
 
     /**
@@ -33,10 +38,13 @@ public class FilterLessThanHouse implements Command {
     @Override
     public void execute(String args) throws WrongArgumentException {
         if (args.isEmpty()) throw new WrongArgumentException("Требуется аргумент.");
+        String[] arguments = args.split("\\s");
         try {
-            COLLECTION_MANAGER.filterLessThanHouse(Integer.parseInt(args));
+            COLLECTION_MANAGER.filterLessThanHouse(Integer.parseInt(arguments[0]), Long.parseLong(arguments[1]), Long.parseLong(arguments[2]), Long.parseLong(arguments[3]));
         } catch (NumberFormatException e) {
             throw new WrongArgumentException("Аргумент должен быть числом.");
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            console.printCommandError("Не указаны аргументы команды, необходимо ввести 4 аргумента через пробел");
         }
     }
 
