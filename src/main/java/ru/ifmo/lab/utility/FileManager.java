@@ -30,6 +30,10 @@ public class FileManager {
         console.printCommandTextNext("Файл успешно добавлен");
     }
 
+    public void addFile(String path){
+        this.file = new File(path);
+    }
+
     //метод запрашивает у пользователя имя файла и проверяет его на валидность
     private File askForFile() throws IOException {
         console.printCommandText("Введите имя файла (абсолютный путь или путь относительно " +
