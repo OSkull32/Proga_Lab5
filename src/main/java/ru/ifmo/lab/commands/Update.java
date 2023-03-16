@@ -1,6 +1,7 @@
 package ru.ifmo.lab.commands;
 
 import ru.ifmo.lab.collection.CollectionManager;
+import ru.ifmo.lab.exceptions.InvalidValueException;
 import ru.ifmo.lab.exceptions.WrongArgumentException;
 import ru.ifmo.lab.utility.Console;
 
@@ -29,24 +30,26 @@ public class Update implements Command{
     @Override
     public void execute(String args) throws WrongArgumentException {
         if (args.isEmpty()) throw new WrongArgumentException();
+
+        int id = Integer.parseInt(args);
+        int key = collectionManager.getKey(id);
         try {
-            if (collectionManager.containsKey(collectionManager.getKey(Integer.parseInt(args)))) {
+            if (collectionManager.containsKey(key)) {
+
                 console.printCommandTextNext(collectionManager.getFieldName());
 
-                console.printCommandTextNext("Если хотите остановите изменение элемента, напишите stop");
-                console.printCommandText("Введите название поля и желаемое значение для изменения:");
-                String[] commandWords = new String[0];
+                String command;
                 do {
+                    console.printCommandText("Введите название поля для изменения, " +
+                            "\"stop\", чтобы остановить изменения: ");
+                    command = console.readLine().trim();
                     try {
-                        commandWords = console.readLine().trim().split("\\s+");
-                        if (commandWords.length == 1) {
-                            collectionManager.update(Integer.parseInt(args), commandWords[0], "");
-                        } else
-                            collectionManager.update(Integer.parseInt(args), commandWords[0], commandWords[1]);
-                    } catch (IndexOutOfBoundsException ex) {
-                        console.printCommandError("Не введено поле");
+                        collectionManager.update(key, command);
+                    } catch (InvalidValueException ex) {
+                        console.printCommandTextNext("Поле не распознано. Повторите ввод.");
                     }
-                } while (!commandWords[0].equals("stop"));
+
+                } while (!command.equals("stop"));
             } else console.printCommandError("Элемента с данным id не существует");
         } catch (IndexOutOfBoundsException ex) {
             console.printCommandError("Не указаны все аргументы команды");

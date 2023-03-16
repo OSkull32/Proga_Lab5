@@ -6,6 +6,7 @@ import ru.ifmo.lab.utility.FlatReader;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.Set;
 
 public class CollectionChecker {
     private final FlatReader FLAT_READER;
@@ -18,15 +19,17 @@ public class CollectionChecker {
 
     public void checkCollection(Hashtable<Integer, Flat> collection) {
         if (collection == null) return;
-        for (Integer key : collection.keySet()) {
+        Set<Integer> keySet = Set.copyOf(collection.keySet());
+
+        for (Integer key : keySet) {
             Flat flat = collection.get(key);
 
-            //todo проверка ключа
-
-            if (!FlatChecker.checkId(flat.getKey())) {
+            //проверка полей
+            if (!FlatChecker.checkId(flat.getId())) {
                 collection.remove(key);
                 CONSOLE.printCommandError("ошибка в поле ID у объекта: " + flat.getName() +
                         ". Объект удален из коллекции.");
+                continue;
             }
             if (!FlatChecker.checkName(flat.getName())) {
                 CONSOLE.printCommandError("ошибка в поле Name у объекта: " + flat.getName() +
@@ -82,7 +85,7 @@ public class CollectionChecker {
         private static final HashSet<Integer> ID_LIST = new HashSet<>();
 
         private static boolean checkId(int id) {
-            if (ID_LIST.contains(id) || id <= 0) return false;
+            if (ID_LIST.contains(id) || id < 1 || id > CollectionManager.MAX_ID) return false;
             ID_LIST.add(id);
             return true;
         }
@@ -156,16 +159,16 @@ public class CollectionChecker {
 
         private static boolean checkNumberOfFloors(Long numberOfFloors) {
             if (numberOfFloors != null) return (numberOfFloors > 0 && numberOfFloors <= 39);
-            return false;
+            return true;
         }
 
         private static boolean checkNumberOfFlatsOnFloor(long numberOfFlatsOnFloor) {
             return (numberOfFlatsOnFloor > 0);
         }
 
-        private static boolean checkNumberOfLifts(Long numberOfFloors) {
-            if (numberOfFloors != null) return (numberOfFloors > 0);
-            return false;
+        private static boolean checkNumberOfLifts(Long numberOfLifts) {
+            if (numberOfLifts != null) return (numberOfLifts > 0);
+            return true;
         }
     }
 

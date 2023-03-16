@@ -20,7 +20,7 @@ public class Coordinates {
      * @param x значение координаты x
      * @param y значение координаты y
      */
-    public Coordinates(int x, Integer y){
+    public Coordinates(int x, Integer y) {
         this.x = x;
         this.y = y;
     }
@@ -30,7 +30,7 @@ public class Coordinates {
      *
      * @param x значение координаты x
      */
-    public void setX(int x){
+    public void setX(int x) {
         this.x = x;
     }
 
@@ -39,7 +39,7 @@ public class Coordinates {
      *
      * @param y значение координаты y
      */
-    public void setY(Integer y){
+    public void setY(Integer y) {
         this.y = y;
     }
 
@@ -68,6 +68,6 @@ public class Coordinates {
      */
     @Override
     public String toString() {
-        return "(x,y) = (" + x+ "," + y + ")";
+        return "(x,y) = (" + x + "," + y + ")";
     }
 }

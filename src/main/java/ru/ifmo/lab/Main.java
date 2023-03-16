@@ -30,6 +30,7 @@ public class Main {
                         "Выберете другой файл");
             }
         }
+
         //проверка на валидность полей из файла:
         new CollectionChecker(flatReader, console).checkCollection(collection);
 

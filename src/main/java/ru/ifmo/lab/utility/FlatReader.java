@@ -31,11 +31,10 @@ public class FlatReader {
     /**
      * Метод, выполняющий чтение данных из консоли. Ввод полей в определенном порядке
      *
-     * @param key Идентификатор объекта класса Flat, который записывается в качестве ключа в коллекцию
      * @return объект типа Flat
      */
-    public Flat read(int key){
-        return new Flat(CollectionManager.generateId(), key, readName(), readCoordinates(), LocalDateTime.now(), readArea(),
+    public Flat read(){
+        return new Flat(CollectionManager.generateId(), readName(), readCoordinates(), LocalDateTime.now(), readArea(),
                 readNumberOfRooms(), readNumberOfBathrooms(), readFurnish(), readView(), readHouse());
     }
 

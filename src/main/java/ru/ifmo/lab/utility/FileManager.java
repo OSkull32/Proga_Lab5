@@ -44,8 +44,13 @@ public class FileManager {
             return null;
         }
         if (!file.exists()) { //если файла вообще не существует
-            console.printCommandError("файл не существует. Введите \"create\", чтобы создать.");
-            if (console.readLine().equals("create")) {
+            console.printCommandError("файл не существует. Введите \"create\", чтобы создать; " +
+                    "Введите \"exit\", чтобы выйти из программы; " +
+                    "Нажмите \"Enter\", чтобы повторить ввод");
+            String line = console.readLine();
+            if (line.equals("exit")) System.exit(0);
+            if (line.equals("")) return null;
+            if (line.equals("create")) {
                 if (file.createNewFile()) {
                     console.printCommandTextNext("Файл создан");
                     return file;
@@ -54,11 +59,10 @@ public class FileManager {
                 }
             } else {
                 console.printCommandError("неверный ввод. Повторите попытку.");
+                return null;
             }
-        }
-        if (!file.canRead()) {
+        } else if (!file.canRead()) { //если файл существует но не может быть прочитан по какой-то причине
             console.printCommandError("невозможно прочитать файл");
-            return null;
         }
         return null;
     }

@@ -37,7 +37,7 @@ public class Insert implements Command {
         try {
             if (!collectionManager.containsKey(Integer.parseInt(args))) {
                 console.printCommandTextNext("Введите значения полей для элемента коллекции");
-                Flat flat = flatReader.read(Integer.parseInt(args));
+                Flat flat = flatReader.read();
                 collectionManager.insert(Integer.parseInt(args), flat);
                 console.printCommandTextNext("Элемент добавлен в коллекцию");
             } else console.printCommandError("Элемент с данным ключом уже существует в коллекции");

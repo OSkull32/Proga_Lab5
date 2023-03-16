@@ -10,12 +10,11 @@ import java.time.format.DateTimeFormatter;
  * Класс объектов коллекции
  */
 public class Flat {
-    private final int id;
 
     // Идентификатор коллекции. Значение поля должно быть больше 0,
     // Значение этого поля должно быть уникальным,
     // Значение этого поля должно генерироваться автоматически
-    private final int key;
+    private final int id;
 
     // Имя объекта класса. Поле не может быть null, Строка не может быть пустой
     private String name;
@@ -25,7 +24,7 @@ public class Flat {
 
     // Время создания объекта класса. Поле не может быть null,
     // Значение этого поля должно генерироваться автоматически
-    @JsonAdapter(LocalDateTimeAdapter.class)
+    @JsonAdapter(LocalDateTimeAdapter.class) //адаптировать для сериализации
     private LocalDateTime creationDate;
 
     //Площадь объекта класса. Значение поля должно быть больше 0
@@ -50,7 +49,6 @@ public class Flat {
     /**
      * Конструктор объекта класса
      *
-     * @param key                Идентификатор объекта коллекции
      * @param name              Имя объекта класса
      * @param coordinates       Координаты объекта класса
      * @param creationDate      Время создания объекта класса
@@ -61,10 +59,9 @@ public class Flat {
      * @param view              Вид из объекта класса
      * @param house             Дом объекта класса
      */
-    public Flat(int id, int key, String name, Coordinates coordinates, LocalDateTime creationDate, int area,
+    public Flat(int id, String name, Coordinates coordinates, LocalDateTime creationDate, int area,
                 long numberOfRooms, long numberOfBathrooms, Furnish furnish, View view, House house) {
         this.id = id;
-        this.key = key;
         this.name = name;
         this.coordinates = coordinates;
         this.creationDate = creationDate;
@@ -74,15 +71,6 @@ public class Flat {
         this.furnish = furnish;
         this.view = view;
         this.house = house;
-    }
-
-    /**
-     * Метод, возвращающий идентификатор объекта класса
-     *
-     * @return id
-     */
-    public int getKey() {
-        return key;
     }
 
     /**
@@ -321,7 +309,6 @@ public class Flat {
     public String toString() {
         return "Flat{" +
                 "\nid=" + id +
-                "\nkey=" + key +
                 ", \nname='" + name + '\'' +
                 ", \ncoordinates=" + coordinates +
                 ", \ncreationDate=" +
