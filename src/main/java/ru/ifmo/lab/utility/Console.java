@@ -1,5 +1,8 @@
 package ru.ifmo.lab.utility;
 
+import ru.ifmo.lab.commands.CommandManager;
+import ru.ifmo.lab.commands.ExecuteScript;
+
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
@@ -7,6 +10,12 @@ public class Console {
 
     // хранит ссылку на Scanner
     private final Scanner scanner;
+
+    private boolean scriptMode = false;
+
+    public void setScriptMode(boolean scriptMode) {
+        this.scriptMode = scriptMode;
+    }
 
     /**
      * Конструктор класса без параметров. При вызове scanner производит чтение из стандартного потока ввода с кодировкой UTF-8
@@ -21,7 +30,10 @@ public class Console {
      * @return возвращает считанную строку
      */
     public String readLine() {
-        return scanner.nextLine();
+        if (!scriptMode){
+            return scanner.nextLine();
+        }
+        return ExecuteScript.getScanner().nextLine();
     }
 
     /**

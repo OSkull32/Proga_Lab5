@@ -9,20 +9,21 @@ import ru.ifmo.lab.utility.Console;
 import ru.ifmo.lab.utility.FileManager;
 import ru.ifmo.lab.utility.FlatReader;
 
+import java.util.Arrays;
 import java.util.Hashtable;
 
 import static ru.ifmo.lab.utility.JsonParser.decode;
 
 public class Main {
     public static void main(String[] args) {
-
+        System.out.println(Arrays.toString(args));
         Console console = new Console();
         FlatReader flatReader = new FlatReader(console);
         FileManager fileManager = new FileManager(console);
         Hashtable<Integer, Flat> collection;
 
         while (true) {
-            fileManager.addFile(args[0]);
+            if (args.length != 1) fileManager.addFile(args[0]);
             try {
                 collection = decode(fileManager.readFromFile());
                 break;

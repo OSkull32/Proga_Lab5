@@ -19,6 +19,11 @@ public class ExecuteScript implements Command {
 
     private final Script script = new Script();
     private final Console CONSOLE;
+    private static Scanner scanner;
+
+    public static Scanner getScanner() {
+        return scanner;
+    }
 
     /**
      * Конструктор класса
@@ -63,10 +68,12 @@ public class ExecuteScript implements Command {
 
             FileInputStream fileInputStream = new FileInputStream(scriptPath);
             BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
-            Scanner scanner = new Scanner(bufferedInputStream);
+            scanner = new Scanner(bufferedInputStream);
 
+            CONSOLE.setScriptMode(true);
             while (scanner.hasNext()) {
                 commandManager.executeScript(scanner.nextLine());
+
             }
         } catch (FileNotFoundException ex) {
             CONSOLE.printCommandError("Файл скрипта не найден");
@@ -76,8 +83,10 @@ public class ExecuteScript implements Command {
             CONSOLE.printCommandError("Доступ к файлу невозможен " + ex.getMessage());
         } catch (IllegalArgumentException ex) {
             CONSOLE.printCommandError("Скрипт не передан в качестве аргумента команды");
-        }catch (RecursiveException ex) {
+        } catch (RecursiveException ex) {
             CONSOLE.printCommandError("Скрипт " + scriptPath + " уже существует, произошел рекурсивный вызов");
+        } finally {
+            CONSOLE.setScriptMode(false);
         }
         script.removeScript(scriptPath);
     }

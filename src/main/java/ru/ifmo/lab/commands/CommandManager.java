@@ -41,17 +41,18 @@ public class CommandManager {
      * @param firstCommand Первая строка команды
      */
     public void executeScript(String firstCommand) throws WrongArgumentException {
-        String[] words = firstCommand.trim().split("\\s+");
-        String[] args = Arrays.copyOfRange(words, 1, words.length);
-
-        if (COMMANDS.containsKey(words[0].toLowerCase(Locale.ROOT))) {
-            Command command;
-
-            command = COMMANDS.get(words[0].toLowerCase(Locale.ROOT));
-            command.execute(Arrays.toString(args).replace("[", "").replace("]", ""));
-        } else {
-            CONSOLE.printCommandError("Команда " + words[0] + " не распознана, используйте help для справки.");
-        }
+//        String[] words = firstCommand.trim().split("\\s+");
+//        String[] args = Arrays.copyOfRange(words, 1, words.length);
+//
+//        if (COMMANDS.containsKey(words[0].toLowerCase(Locale.ROOT))) {
+//            Command command;
+//
+//            command = COMMANDS.get(words[0].toLowerCase(Locale.ROOT));
+//            command.execute(Arrays.toString(args).replace("[", "").replace("]", ""));
+//        } else {
+//            CONSOLE.printCommandError("Команда " + words[0] + " не распознана, используйте help для справки.");
+//        }
+        nextCommand();
     }
 
 
