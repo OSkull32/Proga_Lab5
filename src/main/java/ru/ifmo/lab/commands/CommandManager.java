@@ -6,7 +6,9 @@ import ru.ifmo.lab.exceptions.WrongArgumentException;
 import ru.ifmo.lab.utility.Console;
 import ru.ifmo.lab.utility.FlatReader;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
 
 /**
  * Класс, управляющий вызовом команд.
@@ -36,32 +38,19 @@ public class CommandManager {
     }
 
     /**
-     * Метод, который определяет из полученной строки команду и исполняет ее
-     *
-     * @param firstCommand Первая строка команды
+     * Метод, исполняющий скрипт.
      */
-    public void executeScript(String firstCommand) throws WrongArgumentException {
-//        String[] words = firstCommand.trim().split("\\s+");
-//        String[] args = Arrays.copyOfRange(words, 1, words.length);
-//
-//        if (COMMANDS.containsKey(words[0].toLowerCase(Locale.ROOT))) {
-//            Command command;
-//
-//            command = COMMANDS.get(words[0].toLowerCase(Locale.ROOT));
-//            command.execute(Arrays.toString(args).replace("[", "").replace("]", ""));
-//        } else {
-//            CONSOLE.printCommandError("Команда " + words[0] + " не распознана, используйте help для справки.");
-//        }
+    public void executeScript() {
         nextCommand();
     }
-
 
     // Добавляет команду к общему списку и делает ее возможной для вызова.
     private void addCommand(String name, Command command) {
         COMMANDS.put(name, command);
     }
+
     // метод добавляет все команды в список
-    private void putAllCommands(){
+    private void putAllCommands() {
         addCommand("clear", new Clear(COLLECTION_MANAGER, CONSOLE));
         addCommand("execute_script", new ExecuteScript(this, CONSOLE));
         addCommand("exit", new Exit(CONSOLE));

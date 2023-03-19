@@ -4,8 +4,11 @@ import ru.ifmo.lab.exceptions.RecursiveException;
 import ru.ifmo.lab.exceptions.WrongArgumentException;
 import ru.ifmo.lab.utility.Console;
 
-import java.io.*;
-import java.util.ArrayList;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 /**
@@ -14,15 +17,19 @@ import java.util.Scanner;
 public class ExecuteScript implements Command {
 
     private final CommandManager commandManager;
-
-    private String scriptPath;
-
-    private final Script script = new Script();
     private final Console CONSOLE;
-    private static Scanner scanner;
 
-    public static Scanner getScanner() {
-        return scanner;
+    private final LinkedList<String> scriptPathsSequence = new LinkedList<>(); //используется для обнаружении рекурсии
+    private final LinkedList<Script> scriptSequence = new LinkedList<>(); //используется для работы со вложенными скриптами
+
+    private void addScriptToList(String name, Script script) {
+        scriptPathsSequence.add(name);
+        scriptSequence.push(script);
+    }
+
+    private void removeScriptFromList() {
+        scriptPathsSequence.remove();
+        scriptSequence.remove();
     }
 
     /**
@@ -35,18 +42,23 @@ public class ExecuteScript implements Command {
         this.CONSOLE = console;
     }
 
+    //для каждого нового вызванного скрипта создается объект данного класса
+    private class Script {
+        private Scanner scanner;
 
-    //Статический класс, в котором храниться коллекция адресов скрипта
-    private static class Script {
-        private final ArrayList<String> scriptPaths = new ArrayList<>();
+        private void addFile(String path) throws IOException {
+            File file = new File(path);
+            if (!file.canRead() || file.isDirectory() || !file.isFile()) throw new IOException();
 
-        //Метод, добавляющий скрипт в коллекцию.
-        private void putScript(String scriptPath) {
-            scriptPaths.add(scriptPath);
+            FileInputStream fileInputStream = new FileInputStream(file);
+            BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
+            scanner = new Scanner(bufferedInputStream);
         }
-        // Метод, убирающий скрипт в коллекцию.
-        private void removeScript(String scriptPath) {
-            scriptPaths.remove(scriptPath);
+
+        private void run() {
+            while (scanner.hasNext()) {
+                commandManager.executeScript();
+            }
         }
     }
 
@@ -57,46 +69,38 @@ public class ExecuteScript implements Command {
      */
     @Override
     public void execute(String args) throws WrongArgumentException {
+        if (args.isEmpty()) throw new WrongArgumentException();
+
         try {
-            if (!args.isEmpty()) {
-                scriptPath = args;
-                if (script.scriptPaths.contains(scriptPath)) throw new RecursiveException();
-                else script.putScript(scriptPath);
-            } else throw new IllegalArgumentException();
-            File file = new File(scriptPath);
-            if (!file.canRead() || file.isDirectory() || !file.isFile())  throw new IOException();
+            Script script = new Script();
 
-            FileInputStream fileInputStream = new FileInputStream(scriptPath);
-            BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
-            scanner = new Scanner(bufferedInputStream);
+            script.addFile(args);
+            if (scriptPathsSequence.contains(args)) throw new RecursiveException();
 
-            CONSOLE.setScriptMode(true);
-            while (scanner.hasNext()) {
-                commandManager.executeScript(scanner.nextLine());
+            CONSOLE.turnOnScriptMode(script.scanner);
 
-            }
-        } catch (FileNotFoundException ex) {
-            CONSOLE.printCommandError("Файл скрипта не найден");
-        } catch (NullPointerException ex) {
-            CONSOLE.printCommandError("Не выбран файл из которого читать скрипт");
-        } catch (IOException ex) {
-            CONSOLE.printCommandError("Доступ к файлу невозможен " + ex.getMessage());
-        } catch (IllegalArgumentException ex) {
-            CONSOLE.printCommandError("Скрипт не передан в качестве аргумента команды");
-        } catch (RecursiveException ex) {
-            CONSOLE.printCommandError("Скрипт " + scriptPath + " уже существует, произошел рекурсивный вызов");
+            CONSOLE.printCommandTextNext("Выполнение скрипта " + args);
+            addScriptToList(args, script);
+            script.run();
+            removeScriptFromList();
+            CONSOLE.printCommandTextNext("Скрипт " + args + " выполнен");
+
+        } catch (IOException e) {
+            CONSOLE.printCommandError("ошибка при добавлении файла \"" + args + "\"");
+        } catch (RecursiveException e) {
+            CONSOLE.printCommandError("произошла рекурсия: \n\tСкрипт " + args + " не будет выполнен.");
         } finally {
-            CONSOLE.setScriptMode(false);
+            if (scriptSequence.size() == 0) CONSOLE.turnOffScriptMode();
+            else CONSOLE.turnOnScriptMode(scriptSequence.peek().scanner); //обновляет scanner
         }
-        script.removeScript(scriptPath);
     }
 
     /**
-     * @see Command
      * @return Описание команды execute_script
+     * @see Command
      */
     @Override
-    public String  getDescription() {
+    public String getDescription() {
         return "выполняет команды, описанные в скрипте";
     }
 }
