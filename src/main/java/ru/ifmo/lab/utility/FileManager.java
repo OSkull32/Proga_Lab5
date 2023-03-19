@@ -11,35 +11,54 @@ import java.io.*;
 public class FileManager {
     private final Console console;
     private File file;
+    private String filePath;
 
     public FileManager(Console console) {
         this.console = console;
     }
 
     /**
-     * Метод добавляет файл для дальнейшей работы с ним.
+     * Метод добавляет файл для дальнейшей работы с ним. Путь к файлу запрашивается через консоль.
+     * Метод не прекратит работу, пока файл не будет добавлен.
      */
     public void addFile() {
         do {
+            console.printCommandText("Введите имя файла (абсолютный путь или путь относительно " +
+                    "директории проекта): ");
+            String filePath = console.readLine();
             try {
-                this.file = askForFile();
+                this.file = validateFile(filePath);
             } catch (IOException e) {
                 console.printCommandError("ошибка при создании. Повторите попытку.");
             }
         } while (this.file == null);
         console.printCommandTextNext("Файл успешно добавлен");
     }
-
-    public void addFile(String path){
-        this.file = new File(path);
+    /**
+     * Метод добавляет файл для дальнейшей работы с ним. Путь к файлу указывается в параметре метода.
+     *
+     * @param path путь до файла
+     */
+    public void addFile(String path) {
+        try{
+            this.file = new File(path);
+            console.printCommandTextNext("Файл успешно добавлен");
+        } catch (Exception e) {
+            console.printCommandError("не удалось добавить файл, указанный в аргументах " +
+                    "командной строки. Повторите процесс выбора файла.");
+            addFile();
+        }
     }
 
-    //метод запрашивает у пользователя имя файла и проверяет его на валидность
-    private File askForFile() throws IOException {
-        console.printCommandText("Введите имя файла (абсолютный путь или путь относительно " +
-                "директории проекта): ");
-        String path = console.readLine();
-        File file = new File(path);
+    //метод проверяет, что находится по указанному в параметрах пути
+    private File validateFile(String filePath) throws IOException {
+
+        if (filePath == null) { //если не указан путь
+            console.printCommandError("путь к файлу не указан.");
+            return null;
+        }
+
+        File file = new File(filePath);
         if (file.isFile() && file.canRead()) {
             return file; //если все ОК
         }
@@ -83,7 +102,6 @@ public class FileManager {
             return new String(bytes);
         } catch (FileNotFoundException e) {
             console.printCommandError("файл не найден. Повторите процесс выбора файла.");
-            addFile();
         } catch (IOException e) {
             console.printCommandError("невозможно прочитать файл. " + e.getMessage());
         }

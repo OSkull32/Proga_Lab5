@@ -15,14 +15,13 @@ import static ru.ifmo.lab.utility.JsonParser.decode;
 
 public class Main {
     public static void main(String[] args) {
-
         Console console = new Console();
         FlatReader flatReader = new FlatReader(console);
         FileManager fileManager = new FileManager(console);
         Hashtable<Integer, Flat> collection;
 
+        fileManager.addFile(args.length == 0 ? null : args[0]);
         while (true) {
-            fileManager.addFile(args[0]);
             try {
                 collection = decode(fileManager.readFromFile());
                 break;
@@ -33,7 +32,7 @@ public class Main {
         }
 
         //проверка на валидность полей из файла:
-        new CollectionChecker(flatReader, console).checkCollection(collection);
+        (new CollectionChecker(flatReader, console)).checkCollection(collection);
 
         CollectionManager collectionManager = new CollectionManager(console, fileManager, collection,flatReader);
         CommandManager commandManager = new CommandManager(console, collectionManager, flatReader);
