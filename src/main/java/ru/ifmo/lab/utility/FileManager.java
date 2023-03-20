@@ -1,5 +1,7 @@
 package ru.ifmo.lab.utility;
 
+import ru.ifmo.lab.exceptions.WrongArgumentException;
+
 import java.io.*;
 
 /**
@@ -11,7 +13,6 @@ import java.io.*;
 public class FileManager {
     private final Console console;
     private File file;
-    private String filePath;
 
     public FileManager(Console console) {
         this.console = console;
@@ -37,12 +38,13 @@ public class FileManager {
     /**
      * Метод добавляет файл для дальнейшей работы с ним. Путь к файлу указывается в параметре метода.
      *
-     * @param path путь до файла
+     * @param filePath путь до файла
      */
-    public void addFile(String path) {
+    public void addFile(String filePath) {
         try{
-            this.file = new File(path);
-            console.printCommandTextNext("Файл успешно добавлен");
+            this.file = validateFile(filePath);
+            if (this.file == null) throw new WrongArgumentException();
+            else console.printCommandTextNext("Файл успешно добавлен");
         } catch (Exception e) {
             console.printCommandError("не удалось добавить файл, указанный в аргументах " +
                     "командной строки. Повторите процесс выбора файла.");
@@ -51,6 +53,7 @@ public class FileManager {
     }
 
     //метод проверяет, что находится по указанному в параметрах пути
+    //если там файл, то метод возвращает файл. В противном случае - null
     private File validateFile(String filePath) throws IOException {
 
         if (filePath == null) { //если не указан путь
