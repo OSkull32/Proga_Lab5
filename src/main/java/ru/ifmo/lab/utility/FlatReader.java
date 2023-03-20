@@ -33,7 +33,7 @@ public class FlatReader {
      *
      * @return объект типа Flat
      */
-    public Flat read(){
+    public Flat read() {
         return new Flat(CollectionManager.generateId(), readName(), readCoordinates(), LocalDateTime.now(), readArea(),
                 readNumberOfRooms(), readNumberOfBathrooms(), readFurnish(), readView(), readHouse());
     }
@@ -48,7 +48,8 @@ public class FlatReader {
             console.printCommandText("name (not null): ");
             String str = console.readLine().trim();
             if (str.equals("")) console.printCommandError("Значение поля не может быть null или пустой строкой");
-            else if (!str.matches(PATTERN_NAMES)) console.printCommandError("Введенная строка содержит запрещенные символы");
+            else if (!str.matches(PATTERN_NAMES))
+                console.printCommandError("Введенная строка содержит запрещенные символы");
             else return str;
         }
     }
@@ -119,7 +120,7 @@ public class FlatReader {
                 else return area;
             } catch (InvalidValueException ex) {
                 console.printCommandTextNext("Значение area должно быть больше 0");
-            }   catch (NumberFormatException ex) {
+            } catch (NumberFormatException ex) {
                 console.printCommandError("Число должно быть типа int");
             }
         }
@@ -140,7 +141,7 @@ public class FlatReader {
                 else return numberOfRooms;
             } catch (InvalidValueException ex) {
                 console.printCommandTextNext("Значение numberOfRooms должно быть больше 0 и не более 14");
-            }   catch (NumberFormatException ex) {
+            } catch (NumberFormatException ex) {
                 console.printCommandError("Число должно быть типа long");
             }
         }
@@ -161,7 +162,7 @@ public class FlatReader {
                 else return numberOfBathrooms;
             } catch (InvalidValueException ex) {
                 console.printCommandTextNext("Значение numberOfBathrooms должно быть больше 0");
-            }   catch (NumberFormatException ex) {
+            } catch (NumberFormatException ex) {
                 console.printCommandError("Число должно быть типа long");
             }
         }
@@ -184,7 +185,7 @@ public class FlatReader {
                 console.printCommandText("furnish: ");
                 furnish = Furnish.valueOf(console.readLine().toUpperCase().trim());
                 return furnish;
-            }   catch (IllegalArgumentException ex) {
+            } catch (IllegalArgumentException ex) {
                 console.printCommandError("Введенная константа не представлена в допустимых значения Furnish");
             }
         }
@@ -208,12 +209,11 @@ public class FlatReader {
                 String str = console.readLine().trim();
                 if (str.equals("")) {
                     view = null;
-                }
-                else {
-                    view = View.valueOf(str);
+                } else {
+                    view = View.valueOf(str.toUpperCase().trim());
                 }
                 return view;
-            }   catch (IllegalArgumentException ex) {
+            } catch (IllegalArgumentException ex) {
                 console.printCommandError("Введенная константа не представлена в допустимых значения View");
             }
         }
@@ -225,18 +225,18 @@ public class FlatReader {
      * @return объект типа House
      */
     public House readHouse() {
-            while (true) {
-                console.printCommandText("Нажмите enter, чтобы ввести в поле house null или введите House name (not null):");
-                String str = console.readLine().trim();
-                if (str.equals(""))
-                    return null;
-                else {
-                    if (!str.matches(PATTERN_NAMES))
-                        console.printCommandError("Введенная строка содержит запрещенные символы");
-                    else return new House(str, readHouseYear(), readHouseNumberOfFloors(),
-                            readHouseNumberOfFlatsOnFloor(), readHouseNumberOfLifts());
-                }
+        while (true) {
+            console.printCommandText("Нажмите enter, чтобы ввести в поле house null или введите House name (not null):");
+            String str = console.readLine().trim();
+            if (str.equals(""))
+                return null;
+            else {
+                if (!str.matches(PATTERN_NAMES))
+                    console.printCommandError("Введенная строка содержит запрещенные символы");
+                else return new House(str, readHouseYear(), readHouseNumberOfFloors(),
+                        readHouseNumberOfFlatsOnFloor(), readHouseNumberOfLifts());
             }
+        }
     }
 
     /**
@@ -251,7 +251,8 @@ public class FlatReader {
             console.printCommandText("House name (not null): ");
             str = console.readLine().trim();
             if (str.equals("")) console.printCommandError("Значение поля не может быть null");
-            else if (!str.matches(PATTERN_NAMES)) console.printCommandError("Введенная строка содержит запрещенные символы");
+            else if (!str.matches(PATTERN_NAMES))
+                console.printCommandError("Введенная строка содержит запрещенные символы");
             else return str;
         }
     }
@@ -271,7 +272,7 @@ public class FlatReader {
                 else return houseYear;
             } catch (InvalidValueException ex) {
                 console.printCommandTextNext("Значение houseYear должно быть больше 0");
-            }   catch (NumberFormatException ex) {
+            } catch (NumberFormatException ex) {
                 console.printCommandError("Число должно быть типа int");
             }
         }
@@ -296,7 +297,7 @@ public class FlatReader {
                 return numberOfFloors;
             } catch (InvalidValueException ex) {
                 console.printCommandTextNext("Значение numberOfFloors должно быть больше 0 и не более 39");
-            }   catch (NumberFormatException ex) {
+            } catch (NumberFormatException ex) {
                 console.printCommandError("Число должно быть типа Long");
             }
         }
@@ -317,7 +318,7 @@ public class FlatReader {
                 else return numberOfFlatsOnFloor;
             } catch (InvalidValueException ex) {
                 console.printCommandTextNext("Значение numberOfFlatsOnFloor должно быть больше 0");
-            }   catch (NumberFormatException ex) {
+            } catch (NumberFormatException ex) {
                 console.printCommandError("Число должно быть типа long");
             }
         }

@@ -28,6 +28,7 @@ public class Main {
             } catch (JsonSyntaxException e){
                 console.printCommandError("JSON файл был поврежден и не может быть расшифрован." +
                         "Выберете другой файл");
+                fileManager.addFile();
             }
         }
 
