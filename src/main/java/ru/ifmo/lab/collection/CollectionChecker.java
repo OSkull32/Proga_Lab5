@@ -8,15 +8,32 @@ import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Set;
 
+/**
+ * Класс включает в себя методы для проверки полей объектов из коллекции.
+ *
+ * @author Kliodt Vadim
+ * @version 1.0
+ */
 public class CollectionChecker {
     private final FlatReader FLAT_READER;
     private final Console CONSOLE;
 
+    /**
+     * Конструктор класса.
+     *
+     * @param flatReader объект способный осуществлять чтение полей и возвращать объект {@link Flat}
+     * @param console объект консоли
+     */
     public CollectionChecker(FlatReader flatReader, Console console) {
         this.FLAT_READER = flatReader;
         this.CONSOLE = console;
     }
 
+    /**
+     * Основной метод проверки коллекции.
+     *
+     * @param collection коллекция на проверку.
+     */
     public void checkCollection(Hashtable<Integer, Flat> collection) {
         if (collection == null) return;
         Set<Integer> keySet = Set.copyOf(collection.keySet());

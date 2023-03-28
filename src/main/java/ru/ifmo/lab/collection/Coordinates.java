@@ -66,6 +66,7 @@ public class Coordinates {
      *
      * @return поля объекта класса
      */
+
     @Override
     public String toString() {
         return "(x,y) = (" + x + "," + y + ")";

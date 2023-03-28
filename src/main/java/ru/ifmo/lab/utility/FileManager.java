@@ -1,7 +1,5 @@
 package ru.ifmo.lab.utility;
 
-import ru.ifmo.lab.exceptions.WrongArgumentException;
-
 import java.io.*;
 
 /**
@@ -43,7 +41,7 @@ public class FileManager {
     public void addFile(String filePath) {
         try{
             this.file = validateFile(filePath);
-            if (this.file == null) throw new WrongArgumentException();
+            if (this.file == null) addFile();
             else console.printCommandTextNext("Файл успешно добавлен");
         } catch (Exception e) {
             console.printCommandError("не удалось добавить файл, указанный в аргументах " +

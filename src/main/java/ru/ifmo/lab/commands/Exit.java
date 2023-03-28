@@ -6,25 +6,31 @@ import ru.ifmo.lab.utility.Console;
 /**
  * Класс команды, которая завершает работу программы
  */
-public class Exit implements Command{
+public class Exit implements Command {
     private final Console CONSOLE;
 
-    public Exit(Console console){
+    /**
+     * Конструктор класса
+     *
+     * @param console консоль
+     */
+    public Exit(Console console) {
         this.CONSOLE = console;
     }
+
     /**
      * Метод, исполняющий команду. Выводит сообщение о завершении работы программы
      */
     @Override
-    public void execute(String args) throws WrongArgumentException{
+    public void execute(String args) throws WrongArgumentException {
         if (!args.isEmpty()) throw new WrongArgumentException();
         CONSOLE.printCommandTextNext("Завершение работы программы");
         System.exit(0);
     }
 
     /**
-     * @see Command
      * @return описание команды
+     * @see Command
      */
     @Override
     public String getDescription() {
