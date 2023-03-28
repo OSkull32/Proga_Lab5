@@ -1,5 +1,6 @@
 package ru.ifmo.lab.commands;
 
+import ru.ifmo.lab.exceptions.ErrorInScriptException;
 import ru.ifmo.lab.exceptions.RecursiveException;
 import ru.ifmo.lab.exceptions.WrongArgumentException;
 import ru.ifmo.lab.utility.Console;
@@ -19,7 +20,7 @@ public class ExecuteScript implements Command {
     private final CommandManager commandManager;
     private final Console CONSOLE;
 
-    private final LinkedList<String> scriptPathsSequence = new LinkedList<>(); //используется для обнаружении рекурсии
+    private final LinkedList<String> scriptPathsSequence = new LinkedList<>(); //используется для обнаружения рекурсии
     private final LinkedList<Script> scriptSequence = new LinkedList<>(); //используется для работы со вложенными скриптами
 
     private void addScriptToList(String name, Script script) {
@@ -44,10 +45,11 @@ public class ExecuteScript implements Command {
 
     //для каждого нового вызванного скрипта создается объект данного класса
     private class Script {
+        private File file;
         private Scanner scanner;
 
         private void addFile(String path) throws IOException {
-            File file = new File(path);
+            file = new File(path);
             if (!file.canRead() || file.isDirectory() || !file.isFile()) throw new IOException();
 
             FileInputStream fileInputStream = new FileInputStream(file);
@@ -56,8 +58,18 @@ public class ExecuteScript implements Command {
         }
 
         private void run() {
-            while (scanner.hasNext()) {
-                commandManager.executeScript();
+            addScriptToList(file.getPath(), this);
+            try {
+                CONSOLE.printCommandTextNext("Выполнение скрипта " + file.getName());
+                while (scanner.hasNext()) {
+                    commandManager.executeCommandFromScript();
+                }
+                CONSOLE.printCommandTextNext("Скрипт " + file.getName() + " выполнен");
+
+            } catch (ErrorInScriptException e) {
+                CONSOLE.printCommandTextNext("Выполнение скрипта " + file.getName() + " прервано.");
+            } finally {
+                removeScriptFromList();
             }
         }
     }
@@ -71,28 +83,22 @@ public class ExecuteScript implements Command {
     public void execute(String args) throws WrongArgumentException {
         if (args.isEmpty()) throw new WrongArgumentException();
 
+        CONSOLE.turnOffScriptMode();
+        Script script = new Script();
         try {
-            Script script = new Script();
-
             script.addFile(args);
             if (scriptPathsSequence.contains(args)) throw new RecursiveException();
-
             CONSOLE.turnOnScriptMode(script.scanner);
-
-            CONSOLE.printCommandTextNext("Выполнение скрипта " + args);
-            addScriptToList(args, script);
             script.run();
-            removeScriptFromList();
-            CONSOLE.printCommandTextNext("Скрипт " + args + " выполнен");
 
         } catch (IOException e) {
             CONSOLE.printCommandError("ошибка при добавлении файла \"" + args + "\"");
         } catch (RecursiveException e) {
-            CONSOLE.printCommandError("произошла рекурсия: \n\tСкрипт " + args + " не будет выполнен.");
-        } finally {
-            if (scriptSequence.size() == 0) CONSOLE.turnOffScriptMode();
-            else CONSOLE.turnOnScriptMode(scriptSequence.peek().scanner); //обновляет scanner
+            CONSOLE.printCommandError("произошла рекурсия: \n\tСкрипт \"" + args + "\" не будет выполнен.");
         }
+
+        if (scriptSequence.size() == 0) CONSOLE.turnOffScriptMode();
+        else CONSOLE.turnOnScriptMode(scriptSequence.peek().scanner); //обновляет scanner
     }
 
     /**
