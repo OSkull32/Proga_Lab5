@@ -8,6 +8,7 @@ import ru.ifmo.lab.commands.*;
 import ru.ifmo.lab.utility.Console;
 import ru.ifmo.lab.utility.FileManager;
 import ru.ifmo.lab.utility.FlatReader;
+import ru.ifmo.lab.utility.UserConsole;
 
 import java.util.Hashtable;
 
@@ -15,22 +16,13 @@ import static ru.ifmo.lab.utility.JsonParser.decode;
 
 public class Main {
     public static void main(String[] args) {
-        Console console = new Console();
+        Console console = new UserConsole();
         FlatReader flatReader = new FlatReader(console);
         FileManager fileManager = new FileManager(console);
-        Hashtable<Integer, Flat> collection;
 
         fileManager.addFile(args.length == 0 ? null : args[0]);
-        while (true) {
-            try {
-                collection = decode(fileManager.readFromFile());
-                break;
-            } catch (JsonSyntaxException e){
-                console.printCommandError("JSON файл был поврежден и не может быть расшифрован." +
-                        "Выберете другой файл");
-                fileManager.addFile();
-            }
-        }
+
+        Hashtable<Integer, Flat> collection = getCollectionFromFile(console, fileManager);
 
         //проверка на валидность полей из файла:
         (new CollectionChecker(flatReader, console)).checkCollection(collection);
@@ -40,6 +32,18 @@ public class Main {
 
         while (true) {
             commandManager.nextCommand();
+        }
+    }
+
+    private static Hashtable<Integer, Flat> getCollectionFromFile(Console console, FileManager fileManager) {
+        while (true) {
+            try {
+                return decode(fileManager.readFromFile());
+            } catch (JsonSyntaxException e){
+                console.printCommandError("JSON файл был поврежден и не может быть расшифрован. " +
+                        "Выберете другой файл");
+                fileManager.addFile();
+            }
         }
     }
 }

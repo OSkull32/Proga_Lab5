@@ -37,7 +37,6 @@ public class FilterLessThanHouse implements Command {
      */
     @Override
     public void execute(String args) throws WrongArgumentException {
-        if (args.isEmpty()) throw new WrongArgumentException("Требуется аргумент.");
         String[] arguments = args.split("\\s");
         try {
             COLLECTION_MANAGER.filterLessThanHouse(Integer.parseInt(arguments[0]), Long.parseLong(arguments[1]), Long.parseLong(arguments[2]), Long.parseLong(arguments[3]));

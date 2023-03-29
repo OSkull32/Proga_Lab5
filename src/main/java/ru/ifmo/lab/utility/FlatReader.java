@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 /**
  * Класс, необходимы для чтения полей объекта Flat
  */
-public class FlatReader {
+public class FlatReader implements FlatReaderInterface, CoordinatesReaderInterface, HouseReaderInterface{
 
     // Поле, хранящее ссылку на объект класса типа Console
     private final Console console;
@@ -33,6 +33,7 @@ public class FlatReader {
      *
      * @return объект типа Flat
      */
+    @Override
     public Flat read() {
         return new Flat(CollectionManager.generateId(), readName(), readCoordinates(), LocalDateTime.now(), readArea(),
                 readNumberOfRooms(), readNumberOfBathrooms(), readFurnish(), readView(), readHouse());
@@ -43,6 +44,7 @@ public class FlatReader {
      *
      * @return значение поля name, уже проверенное на условия допустимости
      */
+    @Override
     public String readName() {
         while (true) {
             console.printCommandText("name (not null): ");
@@ -59,6 +61,7 @@ public class FlatReader {
      *
      * @return объект типа Coordinates
      */
+    @Override
     public Coordinates readCoordinates() {
         return new Coordinates(readCoordinatesX(), readCoordinatesY());
     }
@@ -68,6 +71,7 @@ public class FlatReader {
      *
      * @return значение поля x, уже проверенное на условия допустимости
      */
+    @Override
     public int readCoordinatesX() {
         int x;
         while (true) {
@@ -89,6 +93,7 @@ public class FlatReader {
      *
      * @return значение поля y, уже проверенное на условия допустимости
      */
+    @Override
     public Integer readCoordinatesY() {
         Integer y;
         while (true) {
@@ -110,6 +115,7 @@ public class FlatReader {
      *
      * @return значение поля area, уже проверенное на условия допустимости
      */
+    @Override
     public int readArea() {
         int area;
         while (true) {
@@ -131,6 +137,7 @@ public class FlatReader {
      *
      * @return значение поля numberOfRooms, уже проверенное на условия допустимости
      */
+    @Override
     public long readNumberOfRooms() {
         long numberOfRooms;
         while (true) {
@@ -152,6 +159,7 @@ public class FlatReader {
      *
      * @return значение поля numberOfBathrooms, уже проверенное на условия допустимости
      */
+    @Override
     public long readNumberOfBathrooms() {
         long numberOfBathrooms;
         while (true) {
@@ -174,6 +182,7 @@ public class FlatReader {
      *
      * @return значение поля furnish, уже проверенное на условия допустимости
      */
+    @Override
     public Furnish readFurnish() {
         Furnish furnish;
         while (true) {
@@ -197,6 +206,7 @@ public class FlatReader {
      *
      * @return значение поля view, уже проверенное на условия допустимости
      */
+    @Override
     public View readView() {
         View view;
         while (true) {
@@ -224,6 +234,7 @@ public class FlatReader {
      *
      * @return объект типа House
      */
+    @Override
     public House readHouse() {
         while (true) {
             console.printCommandText("Нажмите enter, чтобы ввести в поле house null или введите House name (not null):");
@@ -244,6 +255,7 @@ public class FlatReader {
      *
      * @return значение поля area, уже проверенное на условия допустимости
      */
+    @Override
     public String readHouseName() {
         String str;
 
@@ -262,6 +274,7 @@ public class FlatReader {
      *
      * @return значение поля year, уже проверенное на условия допустимости
      */
+    @Override
     public int readHouseYear() {
         int houseYear;
         while (true) {
@@ -283,6 +296,7 @@ public class FlatReader {
      *
      * @return значение поля numberOfFloors, уже проверенное на условия допустимости
      */
+    @Override
     public Long readHouseNumberOfFloors() {
         Long numberOfFloors;
         while (true) {
@@ -308,6 +322,7 @@ public class FlatReader {
      *
      * @return значение поля numberOfFlatsOnFloor, уже проверенное на условия допустимости
      */
+    @Override
     public long readHouseNumberOfFlatsOnFloor() {
         long numberOfFlatsOnFloor;
         while (true) {
@@ -329,6 +344,7 @@ public class FlatReader {
      *
      * @return значение поля numberOfLifts, уже проверенное на условия допустимости
      */
+    @Override
     public Long readHouseNumberOfLifts() {
         Long numberOfLifts;
         while (true) {

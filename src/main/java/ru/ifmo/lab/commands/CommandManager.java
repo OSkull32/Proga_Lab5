@@ -1,6 +1,7 @@
 package ru.ifmo.lab.commands;
 
 import ru.ifmo.lab.collection.CollectionManager;
+import ru.ifmo.lab.exceptions.ErrorInScriptException;
 import ru.ifmo.lab.exceptions.InvalidCommandException;
 import ru.ifmo.lab.exceptions.WrongArgumentException;
 import ru.ifmo.lab.utility.Console;
@@ -40,7 +41,7 @@ public class CommandManager {
     /**
      * Метод, исполняющий скрипт.
      */
-    public void executeScript() {
+    public void executeCommandFromScript() {
         nextCommand();
     }
 
