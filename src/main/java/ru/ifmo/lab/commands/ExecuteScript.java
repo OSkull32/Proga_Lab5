@@ -66,7 +66,7 @@ public class ExecuteScript implements Command {
                 }
                 CONSOLE.printCommandTextNext("Скрипт " + file.getName() + " выполнен");
 
-            } catch (ErrorInScriptException e) {
+            } catch (Exception e) {
                 CONSOLE.printCommandTextNext("Выполнение скрипта " + file.getName() + " прервано.");
             } finally {
                 removeScriptFromList();
