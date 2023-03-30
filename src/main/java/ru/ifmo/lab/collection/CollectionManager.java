@@ -283,17 +283,27 @@ public class CollectionManager {
 
     /**
      * Метод выводит в консоль список квартир в домах с меньшим числом этажей, чем указано в параметре.
-     * @param numberOfFloors количество этажей.
      */
-    public void filterLessThanHouse(int year, Long numberOfFloors, long numberOfFlatsOnFloor, Long numberOfLifts) {
+    public void filterLessThanHouse() {
+        console.printCommandTextNext("Введите поля House");
+        int year = flatReader.readHouseYear();
+        Long numberOfFloors = flatReader.readHouseNumberOfFloors();
+        long numberOfFlatsOnFloor = flatReader.readHouseNumberOfFlatsOnFloor();
+        Long numberOfLifts = flatReader.readHouseNumberOfLifts();
+
         Collection<Flat> flatCollection = hashtable.values();
+        int countHouse = 0;
         for (Flat flat : flatCollection){
-            if (flat.getHouse().getYear() < year && flat.getHouse().getNumberOfFloors() < numberOfFloors
+            if (flat.getHouse() == null) continue;
+            if (flat.getHouse().getYear() < year
+                    && flat.getHouse().getNumberOfFloors() < numberOfFloors
                     && flat.getHouse().getNumberOfFlatsOnFloor() < numberOfFlatsOnFloor
                     && flat.getHouse().getNumberOfLifts() < numberOfLifts){
+                countHouse++;
                 console.printCommandTextNext(flat.getName() + "; ");
             }
         }
+        if (countHouse == 0) console.printCommandTextNext("Таких домов нет.");
     }
 
     /**

@@ -22,7 +22,7 @@ public class FilterLessThanHouse implements Command {
      *
      * @param collectionManager указывает на объект {@link CollectionManager}, в котором
      *                          будет вызываться соответствующий
-     *                          метод {@link CollectionManager#filterLessThanHouse(int year, Long numberOfFloors, long numberOfFlatsOnFloor, Long numberOfLifts)}.
+     *                          метод {@link CollectionManager#filterLessThanHouse()}.
      */
     public FilterLessThanHouse(CollectionManager collectionManager, Console console) {
         this.COLLECTION_MANAGER = collectionManager;
@@ -37,9 +37,9 @@ public class FilterLessThanHouse implements Command {
      */
     @Override
     public void execute(String args) throws WrongArgumentException {
-        String[] arguments = args.split("\\s");
+        if (!args.isEmpty()) throw new WrongArgumentException();
         try {
-            COLLECTION_MANAGER.filterLessThanHouse(Integer.parseInt(arguments[0]), Long.parseLong(arguments[1]), Long.parseLong(arguments[2]), Long.parseLong(arguments[3]));
+            COLLECTION_MANAGER.filterLessThanHouse();
         } catch (NumberFormatException e) {
             throw new WrongArgumentException("Аргумент должен быть числом.");
         } catch (ArrayIndexOutOfBoundsException ex) {
