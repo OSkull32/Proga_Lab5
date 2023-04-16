@@ -1,7 +1,6 @@
 package ru.ifmo.lab.commands;
 
 import ru.ifmo.lab.collection.CollectionManager;
-import ru.ifmo.lab.exceptions.ErrorInScriptException;
 import ru.ifmo.lab.exceptions.InvalidCommandException;
 import ru.ifmo.lab.exceptions.WrongArgumentException;
 import ru.ifmo.lab.utility.Console;
@@ -18,12 +17,12 @@ import java.util.Set;
  * @version 2.0
  */
 public class CommandManager {
-    private final Console CONSOLE;
-    private final HashMap<String, Command> COMMANDS = new HashMap<>();
-    private final ArrayList<String> HISTORY_LIST = new ArrayList<>();
-    private final CollectionManager COLLECTION_MANAGER;
-    private final FlatReader FLAT_READER;
-    private final int MAX_HISTORY_SIZE = 13;
+    private final Console console;
+    private final HashMap<String, Command> commands = new HashMap<>();
+    private final ArrayList<String> historyList = new ArrayList<>();
+    private final CollectionManager collectionManager;
+    private final FlatReader flatReader;
+    private final int maxHistorySize = 13;
 
     /**
      * Конструирует менеджера команд с заданными {@link Console}
@@ -32,58 +31,50 @@ public class CommandManager {
      *                осуществляет взаимодействие с пользователем.
      */
     public CommandManager(Console console, CollectionManager collectionManager, FlatReader flatReader) {
-        this.CONSOLE = console;
-        this.COLLECTION_MANAGER = collectionManager;
-        this.FLAT_READER = flatReader;
+        this.console = console;
+        this.collectionManager = collectionManager;
+        this.flatReader = flatReader;
         putAllCommands();
-    }
-
-    /**
-     * Метод, исполняющий скрипт.
-     */
-    public void executeCommandFromScript() {
-        nextCommand();
     }
 
     // Добавляет команду к общему списку и делает ее возможной для вызова.
     private void addCommand(String name, Command command) {
-        COMMANDS.put(name, command);
+        commands.put(name, command);
     }
 
     // метод добавляет все команды в список
     private void putAllCommands() {
-        addCommand("clear", new Clear(COLLECTION_MANAGER, CONSOLE));
-        addCommand("execute_script", new ExecuteScript(this, CONSOLE));
-        addCommand("exit", new Exit(CONSOLE));
-        addCommand("filter_less_than_house", new FilterLessThanHouse(COLLECTION_MANAGER, CONSOLE));
+        addCommand("clear", new Clear(collectionManager, console));
+        addCommand("execute_script", new ExecuteScript(this, console));
+        addCommand("exit", new Exit(console));
+        addCommand("filter_less_than_house", new FilterLessThanHouse(collectionManager, console));
         addCommand("help", new Help(this));
         addCommand("history", new History(this));
-        addCommand("info", new Info(COLLECTION_MANAGER));
-        addCommand("update", new Update(COLLECTION_MANAGER, CONSOLE));
-        addCommand("insert", new Insert(COLLECTION_MANAGER, CONSOLE, FLAT_READER));
-        addCommand("print_field_ascending_house", new PrintFieldAscendingHouse(COLLECTION_MANAGER));
-        addCommand("remove_all_by_view", new RemoveAllByView(COLLECTION_MANAGER, CONSOLE));
-        addCommand("remove_greater_key", new RemoveGreaterKey(COLLECTION_MANAGER, CONSOLE));
-        addCommand("remove_key", new RemoveKey(COLLECTION_MANAGER, CONSOLE));
-        addCommand("remove_lower_key", new RemoveLowerKey(COLLECTION_MANAGER, CONSOLE));
-        addCommand("save", new Save(COLLECTION_MANAGER, CONSOLE));
-        addCommand("show", new Show(COLLECTION_MANAGER));
+        addCommand("info", new Info(collectionManager));
+        addCommand("update", new Update(collectionManager, console));
+        addCommand("insert", new Insert(collectionManager, console, flatReader));
+        addCommand("print_field_ascending_house", new PrintFieldAscendingHouse(collectionManager));
+        addCommand("remove_all_by_view", new RemoveAllByView(collectionManager, console));
+        addCommand("remove_greater_key", new RemoveGreaterKey(collectionManager, console));
+        addCommand("remove_key", new RemoveKey(collectionManager, console));
+        addCommand("remove_lower_key", new RemoveLowerKey(collectionManager, console));
+        addCommand("save", new Save(collectionManager, console));
+        addCommand("show", new Show(collectionManager));
     }
 
     /**
      * При вызове этого метода в консоли запрашивается команда.
      */
     public void nextCommand() {
-        CONSOLE.printPreamble(); //print ">"
-        String[] inputs = CONSOLE
+        console.printPreamble(); //print ">"
+        String[] inputs = console
                 .readLine()
                 .trim()
                 .split("\\s+", 2);
-
         try {
             executeCommand(inputs);
         } catch (InvalidCommandException | WrongArgumentException e) {
-            CONSOLE.printCommandError(e.getMessage());
+            console.printCommandError(e.getMessage());
         }
     }
 
@@ -91,7 +82,7 @@ public class CommandManager {
     private void executeCommand(String[] inputs) throws InvalidCommandException, WrongArgumentException {
 
         if (inputs[0].equals("")) return;
-        Command command = COMMANDS.get(inputs[0]);
+        Command command = commands.get(inputs[0]);
 
         if (command == null) throw new InvalidCommandException("введена несуществующая команда");
         if (inputs.length == 1) {
@@ -100,10 +91,10 @@ public class CommandManager {
             command.execute(inputs[1]); //если было передано 1 и более аргументов
         }
 
-        HISTORY_LIST.add(inputs[0]);
+        historyList.add(inputs[0]);
 
-        if (HISTORY_LIST.size() > MAX_HISTORY_SIZE) {
-            HISTORY_LIST.remove(0);
+        if (historyList.size() > maxHistorySize) {
+            historyList.remove(0);
         }
     }
 
@@ -111,11 +102,11 @@ public class CommandManager {
      * Печатает в консоль последние 13 использованных команд.
      */
     public void getHistoryList() { //команда history
-        if (HISTORY_LIST.size() == 0) {
-            CONSOLE.printCommandTextNext("History is empty");
+        if (historyList.size() == 0) {
+            console.printCommandTextNext("History is empty");
         } else {
-            CONSOLE.printCommandTextNext("History (latest " + MAX_HISTORY_SIZE + " commands): " +
-                    HISTORY_LIST.toString().replace("[", "").replace("]", ""));
+            console.printCommandTextNext("History (latest " + maxHistorySize + " commands): " +
+                    historyList.toString().replace("[", "").replace("]", ""));
         }
     }
 
@@ -125,9 +116,9 @@ public class CommandManager {
      * @see Command#getDescription()
      */
     public void getCommandsInfo() { //команда help
-        Set<String> commandNames = COMMANDS.keySet();
+        Set<String> commandNames = commands.keySet();
         for (String commandName : commandNames) {
-            CONSOLE.printCommandTextNext(commandName + ": " + COMMANDS.get(commandName).getDescription());
+            console.printCommandTextNext(commandName + ": " + commands.get(commandName).getDescription());
         }
     }
 }

@@ -105,6 +105,6 @@ public class UserConsole implements Console {
      */
     @Override
     public void printPreamble() {
-        System.out.print(">");
+        System.out.print("\uD83C\uDF7A>");
     }
 }
