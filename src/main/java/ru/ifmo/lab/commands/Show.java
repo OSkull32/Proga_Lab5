@@ -1,24 +1,28 @@
 package ru.ifmo.lab.commands;
 
 import ru.ifmo.lab.collection.CollectionManager;
+import ru.ifmo.lab.collection.Flat;
 import ru.ifmo.lab.exceptions.WrongArgumentException;
+import ru.ifmo.lab.utility.Console;
+
+import java.util.Hashtable;
 
 /**
  * Класс команды, которая показывает содержимое коллекции
  */
 public class Show implements Command{
-    /**
-     * Поле, хранящее ссылку на объект класса CollectionManager
-     */
+
     private final CollectionManager collectionManager;
+    private final Console console;
 
     /**
      * Конструктор класса
      *
      * @param collectionManager хранит ссылку на объект CollectionManager
      */
-    public Show(CollectionManager collectionManager) {
+    public Show(CollectionManager collectionManager, Console console) {
         this.collectionManager = collectionManager;
+        this.console = console;
     }
 
     /**
@@ -27,7 +31,20 @@ public class Show implements Command{
     @Override
     public void execute(String args) throws WrongArgumentException {
         if (!args.isEmpty()) throw new WrongArgumentException();
-        collectionManager.show();
+        show();
+    }
+
+
+    //Метод, выводящий элементы коллекции
+    private void show() {
+        Hashtable<Integer, Flat> hashtable = collectionManager.getCollection();
+        if (hashtable.size() == 0) {
+            console.printCommandTextNext("Коллекция пуста.");
+        } else {
+            for (int key : hashtable.keySet()) {
+                console.printCommandTextNext("\nЭлемент: " + key +"\n"+ hashtable.get(key).toString());
+            }
+        }
     }
 
     /**

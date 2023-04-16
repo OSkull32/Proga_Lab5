@@ -1,16 +1,21 @@
 package ru.ifmo.lab.commands;
 
 import ru.ifmo.lab.collection.CollectionManager;
+import ru.ifmo.lab.collection.Flat;
 import ru.ifmo.lab.collection.View;
 import ru.ifmo.lab.exceptions.WrongArgumentException;
 import ru.ifmo.lab.utility.Console;
+
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Map;
 
 /**
  * Класс команды, удаляющая элементы вид которых, соответствует заданному
  */
 public class RemoveAllByView implements Command{
     private final CollectionManager collectionManager;
-    private final Console CONSOLE;
+    private final Console console;
 
     /**
      * Конструктор класса.
@@ -19,7 +24,7 @@ public class RemoveAllByView implements Command{
      */
     public RemoveAllByView(CollectionManager collectionManager, Console console) {
         this.collectionManager = collectionManager;
-        this.CONSOLE = console;
+        this.console = console;
     }
 
     /**
@@ -32,18 +37,33 @@ public class RemoveAllByView implements Command{
         if (args.isEmpty()) throw new WrongArgumentException();
         try {
             if (args.equals("null")) {
-                collectionManager.removeAllByView(null);
+                removeByView(null);
             }
-            else collectionManager.removeAllByView(View.valueOf(args));
+            else removeByView(View.valueOf(args));
         } catch (IllegalArgumentException ex) {
-            CONSOLE.printCommandError("Выбранной константы нет в перечислении.");
-            CONSOLE.printCommandTextNext("Список всех констант:");
+            console.printCommandError("Выбранной константы нет в перечислении.");
+            console.printCommandTextNext("Список всех констант:");
             for (View view : View.values()) {
-                CONSOLE.printCommandTextNext(view.toString());
+                console.printCommandTextNext(view.toString());
             }
         } catch (ArrayIndexOutOfBoundsException ex) {
-            CONSOLE.printCommandError("Не указаны аргументы команды.");
+            console.printCommandError("Не указаны аргументы команды.");
         }
+    }
+
+    private void removeByView(View view){
+        Hashtable<Integer, Flat> hashtable= collectionManager.getCollection();
+        int size = hashtable.size();
+        ArrayList<Integer> keys = new ArrayList<>();
+        for (Map.Entry<Integer, Flat> entry : hashtable.entrySet()) {
+            if (entry.getValue().getView() == null) keys.add(entry.getKey());
+            else if (entry.getValue().getView().equals(view)) keys.add((entry.getKey()));
+        }
+        for (Integer key : keys) {
+            hashtable.remove(key);
+        }
+        if (size == hashtable.size()) console.printCommandTextNext("Не было найдено элементов с таким значением поля");
+        else console.printCommandTextNext("Элементы с данным значением поля удалены");
     }
 
     /**

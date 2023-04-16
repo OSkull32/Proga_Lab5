@@ -4,6 +4,8 @@ import ru.ifmo.lab.collection.CollectionManager;
 import ru.ifmo.lab.exceptions.WrongArgumentException;
 import ru.ifmo.lab.utility.Console;
 
+import java.util.Set;
+
 /**
  * Класс команды, удаляющий элементы, у которых id меньше заданного ключа
  */
@@ -22,13 +24,19 @@ public class RemoveLowerKey implements Command{
     }
 
     /**
-     * Метод, удаляющий все элементы коллекции, значения id которых меньше заданного ключа
+     * Метод, удаляющий все элементы коллекции, значения key которых меньше заданного ключа
      */
     @Override
     public void execute(String args) throws WrongArgumentException {
         if (args.isEmpty()) throw new WrongArgumentException();
         try {
-            collectionManager.removeLowerKey(Integer.parseInt(args));
+            int maxKey = Integer.parseInt(args);
+            Set<Integer> allKeys = collectionManager.getKeys();
+            for (int key : allKeys){
+                if(key < maxKey){
+                    collectionManager.removeKey(key);
+                }
+            }
             CONSOLE.printCommandTextNext("Элементы коллекции были удалены.");
         } catch (IndexOutOfBoundsException ex) {
             CONSOLE.printCommandError("Не указан аргумент команды");

@@ -17,18 +17,20 @@ import static ru.ifmo.lab.utility.JsonParser.decode;
 public class Main {
     public static void main(String[] args) {
         Console console = new UserConsole();
-        FlatReader flatReader = new FlatReader(console);
-        FileManager fileManager = new FileManager(console);
 
+        FileManager fileManager = new FileManager(console);
         fileManager.addFile(args.length == 0 ? null : args[0]);
 
         Hashtable<Integer, Flat> collection = getCollectionFromFile(console, fileManager);
 
+        CollectionManager collectionManager = new CollectionManager(console, collection);
+
+        FlatReader flatReader = new FlatReader(console, collectionManager);
+
         //проверка на валидность полей из файла:
         (new CollectionChecker(flatReader, console)).checkCollection(collection);
 
-        CollectionManager collectionManager = new CollectionManager(console, fileManager, collection,flatReader);
-        CommandManager commandManager = new CommandManager(console, collectionManager, flatReader);
+        CommandManager commandManager = new CommandManager(console, collectionManager, flatReader, fileManager);
 
         while (true) {
             commandManager.nextCommand();

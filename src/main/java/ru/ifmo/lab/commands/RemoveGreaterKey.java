@@ -4,6 +4,8 @@ import ru.ifmo.lab.collection.CollectionManager;
 import ru.ifmo.lab.exceptions.WrongArgumentException;
 import ru.ifmo.lab.utility.Console;
 
+import java.util.Set;
+
 /**
  * Класс команды, удаляющей элементы, ключ которых больше заданного.
  */
@@ -28,7 +30,13 @@ public class RemoveGreaterKey implements Command {
     public void execute(String args) throws WrongArgumentException {
         if (args.isEmpty()) throw new WrongArgumentException();
         try {
-            collectionManager.removeGreaterKey(Integer.parseInt(args));
+            int minKey = Integer.parseInt(args);
+            Set<Integer> allKeys = collectionManager.getKeys();
+            for (int key : allKeys){
+                if(key > minKey){
+                    collectionManager.removeKey(key);
+                }
+            }
             CONSOLE.printCommandTextNext("Элементы коллекции были удалены.");
         } catch (IndexOutOfBoundsException ex) {
             CONSOLE.printCommandError("Не указан аргумент команды");

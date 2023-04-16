@@ -4,6 +4,7 @@ import ru.ifmo.lab.collection.CollectionManager;
 import ru.ifmo.lab.exceptions.InvalidCommandException;
 import ru.ifmo.lab.exceptions.WrongArgumentException;
 import ru.ifmo.lab.utility.Console;
+import ru.ifmo.lab.utility.FileManager;
 import ru.ifmo.lab.utility.FlatReader;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class CommandManager {
     private final ArrayList<String> historyList = new ArrayList<>();
     private final CollectionManager collectionManager;
     private final FlatReader flatReader;
+    private final FileManager fileManager;
     private final int maxHistorySize = 13;
 
     /**
@@ -30,10 +32,11 @@ public class CommandManager {
      * @param console Объект {@link Console}, через который класс
      *                осуществляет взаимодействие с пользователем.
      */
-    public CommandManager(Console console, CollectionManager collectionManager, FlatReader flatReader) {
+    public CommandManager(Console console, CollectionManager collectionManager, FlatReader flatReader, FileManager fileManager) {
         this.console = console;
         this.collectionManager = collectionManager;
         this.flatReader = flatReader;
+        this.fileManager = fileManager;
         putAllCommands();
     }
 
@@ -47,19 +50,19 @@ public class CommandManager {
         addCommand("clear", new Clear(collectionManager, console));
         addCommand("execute_script", new ExecuteScript(this, console));
         addCommand("exit", new Exit(console));
-        addCommand("filter_less_than_house", new FilterLessThanHouse(collectionManager, console));
+        addCommand("filter_less_than_house", new FilterLessThanHouse(collectionManager, console, flatReader));
         addCommand("help", new Help(this));
         addCommand("history", new History(this));
         addCommand("info", new Info(collectionManager));
-        addCommand("update", new Update(collectionManager, console));
+        addCommand("update", new Update(collectionManager, console, flatReader));
         addCommand("insert", new Insert(collectionManager, console, flatReader));
-        addCommand("print_field_ascending_house", new PrintFieldAscendingHouse(collectionManager));
+        addCommand("print_field_ascending_house", new PrintFieldAscendingHouse(collectionManager, console));
         addCommand("remove_all_by_view", new RemoveAllByView(collectionManager, console));
         addCommand("remove_greater_key", new RemoveGreaterKey(collectionManager, console));
         addCommand("remove_key", new RemoveKey(collectionManager, console));
         addCommand("remove_lower_key", new RemoveLowerKey(collectionManager, console));
-        addCommand("save", new Save(collectionManager, console));
-        addCommand("show", new Show(collectionManager));
+        addCommand("save", new Save(collectionManager, console, fileManager));
+        addCommand("show", new Show(collectionManager, console));
     }
 
     /**

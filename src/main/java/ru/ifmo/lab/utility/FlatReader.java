@@ -12,6 +12,7 @@ public class FlatReader implements FlatReaderInterface, CoordinatesReaderInterfa
 
     // Поле, хранящее ссылку на объект класса типа Console
     private final Console console;
+    private final CollectionManager collectionManager;
 
     /**
      * Константа, хранящее шаблон (регулярное выражение), которому должны
@@ -24,8 +25,9 @@ public class FlatReader implements FlatReaderInterface, CoordinatesReaderInterfa
      *
      * @param console хранит ссылку на объект типа Console
      */
-    public FlatReader(Console console) {
+    public FlatReader(Console console, CollectionManager collectionManager) {
         this.console = console;
+        this.collectionManager = collectionManager;
     }
 
     /**
@@ -35,7 +37,7 @@ public class FlatReader implements FlatReaderInterface, CoordinatesReaderInterfa
      */
     @Override
     public Flat read() {
-        return new Flat(CollectionManager.generateId(), readName(), readCoordinates(), LocalDateTime.now(), readArea(),
+        return new Flat(generateId(), readName(), readCoordinates(), LocalDateTime.now(), readArea(),
                 readNumberOfRooms(), readNumberOfBathrooms(), readFurnish(), readView(), readHouse());
     }
 
@@ -363,5 +365,14 @@ public class FlatReader implements FlatReaderInterface, CoordinatesReaderInterfa
                 console.printCommandError("Число должно быть типа long");
             }
         }
+    }
+
+//Метод генерирует уникальное значение id
+    private int generateId(){
+        int id;
+        do {
+            id = (int) (CollectionManager.MAX_ID * Math.random() + 1);
+        }while (collectionManager.containsId(id));
+        return id;
     }
 }
