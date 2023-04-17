@@ -1,9 +1,13 @@
 package ru.ifmo.lab.commands;
 
 import ru.ifmo.lab.collection.CollectionManager;
+import ru.ifmo.lab.collection.Furnish;
+import ru.ifmo.lab.collection.View;
 import ru.ifmo.lab.exceptions.InvalidValueException;
 import ru.ifmo.lab.exceptions.WrongArgumentException;
 import ru.ifmo.lab.utility.Console;
+
+import java.util.Arrays;
 
 /**
  * Класс команды, которая обновляет значение элемента коллекции с выбранным id
@@ -36,7 +40,7 @@ public class Update implements Command{
         try {
             if (collectionManager.containsKey(key)) {
 
-                console.printCommandTextNext(collectionManager.getFieldName());
+                console.printCommandTextNext(getFieldName());
 
                 String command;
                 do {
@@ -58,6 +62,13 @@ public class Update implements Command{
         }
     }
 
+    //Метод, возвращающий названия всех полей коллекции, которые могут быть изменены
+    private String getFieldName() {
+        return "Список всех полей:\nname\ncoordinate_x\ncoordinate_y\n" +
+                "area\nnumber_of_rooms\nnumber_of_bathrooms\nfurnish: " + Arrays.toString(Furnish.values())
+                + "\nview: " + Arrays.toString(View.values()) +
+                "\nhouse_name\nhouse_year\nhouse_number_of_floors\nhouse_number_of_flats_on_floor\nhouse_number_of_lifts";
+    }
 
     /**
      * @return Метод, возвращающий описание команды.

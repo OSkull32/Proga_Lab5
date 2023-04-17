@@ -3,6 +3,8 @@ package ru.ifmo.lab.commands;
 import ru.ifmo.lab.collection.CollectionManager;
 import ru.ifmo.lab.exceptions.WrongArgumentException;
 import ru.ifmo.lab.utility.Console;
+import ru.ifmo.lab.utility.FileManager;
+import ru.ifmo.lab.utility.JsonParser;
 
 /**
  * Класс, который сохраняет коллекцию в файл.
@@ -12,15 +14,17 @@ import ru.ifmo.lab.utility.Console;
  */
 public class Save implements Command{
     private final CollectionManager collectionManager;
-    private final Console CONSOLE;
+    private final Console console;
+    private final FileManager fileManager;
     /**
      * Конструктор класса
      *
      * @param collectionManager Хранит ссылку на объект CollectionManager.
      */
-    public Save(CollectionManager collectionManager, Console console) {
+    public Save(CollectionManager collectionManager, Console console, FileManager fileManager) {
         this.collectionManager = collectionManager;
-        this.CONSOLE = console;
+        this.console = console;
+        this.fileManager = fileManager;
     }
 
     /**
@@ -29,8 +33,8 @@ public class Save implements Command{
     @Override
     public void execute(String args) throws WrongArgumentException {
         if (!args.isEmpty()) throw new WrongArgumentException();
-        collectionManager.save();
-        CONSOLE.printCommandTextNext("Коллекция была сохранена.");
+        fileManager.writeToFile(JsonParser.encode(collectionManager.getCollection()));
+        console.printCommandTextNext("Коллекция была сохранена.");
     }
 
     /**

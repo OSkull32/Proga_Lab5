@@ -1,8 +1,12 @@
 package ru.ifmo.lab.commands;
 
 import ru.ifmo.lab.collection.CollectionManager;
+import ru.ifmo.lab.collection.Flat;
 import ru.ifmo.lab.exceptions.WrongArgumentException;
 import ru.ifmo.lab.utility.Console;
+import ru.ifmo.lab.utility.FlatReader;
+
+import java.util.Collection;
 
 /**
  * Класс команды "filter_less_than_house".
@@ -14,19 +18,18 @@ import ru.ifmo.lab.utility.Console;
 public class FilterLessThanHouse implements Command {
 
     private final Console console;
-
-    private final CollectionManager COLLECTION_MANAGER;
+    private final CollectionManager collectionManager;
+    private final FlatReader flatReader;
 
     /**
      * Конструирует объект, привязывая его к конкретному объекту {@link CollectionManager}.
      *
-     * @param collectionManager указывает на объект {@link CollectionManager}, в котором
-     *                          будет вызываться соответствующий
-     *                          метод {@link CollectionManager#filterLessThanHouse()}.
+     * @param collectionManager указывает на объект {@link CollectionManager}.
      */
-    public FilterLessThanHouse(CollectionManager collectionManager, Console console) {
-        this.COLLECTION_MANAGER = collectionManager;
+    public FilterLessThanHouse(CollectionManager collectionManager, Console console, FlatReader flatReader) {
+        this.collectionManager = collectionManager;
         this.console = console;
+        this.flatReader = flatReader;
     }
 
     /**
@@ -39,7 +42,26 @@ public class FilterLessThanHouse implements Command {
     public void execute(String args) throws WrongArgumentException {
         if (!args.isEmpty()) throw new WrongArgumentException();
         try {
-            COLLECTION_MANAGER.filterLessThanHouse();
+            console.printCommandTextNext("Введите поля House");
+            int year = flatReader.readHouseYear();
+            Long numberOfFloors = flatReader.readHouseNumberOfFloors();
+            long numberOfFlatsOnFloor = flatReader.readHouseNumberOfFlatsOnFloor();
+            Long numberOfLifts = flatReader.readHouseNumberOfLifts();
+
+            Collection<Flat> flatCollection = collectionManager.getCollection().values();
+            int countHouse = 0;
+            for (Flat flat : flatCollection){
+                if (flat.getHouse() == null) continue;
+                if (flat.getHouse().getYear() < year
+                        && flat.getHouse().getNumberOfFloors() < numberOfFloors
+                        && flat.getHouse().getNumberOfFlatsOnFloor() < numberOfFlatsOnFloor
+                        && flat.getHouse().getNumberOfLifts() < numberOfLifts){
+                    countHouse++;
+                    console.printCommandTextNext(flat.getName() + "; ");
+                }
+            }
+            if (countHouse == 0) console.printCommandTextNext("Таких домов нет.");
+
         } catch (NumberFormatException e) {
             throw new WrongArgumentException("Аргумент должен быть числом.");
         } catch (ArrayIndexOutOfBoundsException ex) {

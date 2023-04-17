@@ -13,11 +13,10 @@ import java.util.*;
 public class CollectionManager {
 
     // Коллекция, с которой осуществляется работа
-    private Hashtable<Integer, Flat> hashtable;
+    private final Hashtable<Integer, Flat> hashtable;
 
     private static final HashSet<Integer> allId = new HashSet<>();
     private final Console console;
-    private final FileManager fileManager;
     // Время инициализации коллекции
     private final LocalDateTime collectionInitialization;
 
@@ -31,11 +30,10 @@ public class CollectionManager {
     /**
      * Конструктор, создающий новый объект менеджера коллекции
      */
-    public CollectionManager(Console console, FileManager fileManager, Hashtable<Integer, Flat> hashtable, FlatReader flatReader) {
+    public CollectionManager(Console console, Hashtable<Integer, Flat> hashtable, FlatReader flatReader) {
         if (hashtable != null) this.hashtable = hashtable;
         else this.hashtable = new Hashtable<>();
         this.console = console;
-        this.fileManager = fileManager;
         this.flatReader = flatReader;
 
         String i = LocalDateTime.now().toString();
@@ -47,7 +45,15 @@ public class CollectionManager {
     }
 
     /**
-     * Метод, выводящий основную информацию об коллекции
+     * Метод возвращает коллекцию целиком
+     * @return коллекция
+     */
+    public Hashtable<Integer, Flat> getCollection(){
+        return hashtable;
+    }
+
+    /**
+     * Метод выводит информацию о коллекции
      */
     public void info() {
         console.printCommandTextNext("Коллекция: " + hashtable.getClass().getSimpleName());
@@ -59,27 +65,15 @@ public class CollectionManager {
     }
 
     /**
-     * Метод, выводящий элементы коллекции
-     */
-    public void show() {
-        if (hashtable.size() == 0) {
-            console.printCommandTextNext("Коллекция пуста.");
-        } else {
-            for (int key : hashtable.keySet()) {
-                console.printCommandTextNext("\nЭлемент: " + key +"\n"+ hashtable.get(key).toString());
-            }
-        }
-    }
-
-    /**
      * Метод, добавляющий новый элемент в коллекцию
      *
      * @param key   идентификатор элемента
      * @param flat элемент коллекции, который нужно добавить
      */
     public void insert(Integer key, Flat flat) {
-        if (hashtable.get(key) == null) {
+        if (!hashtable.contains(key)) {
             hashtable.put(key, flat);
+            allId.add(flat.getId());
         } else console.printCommandTextNext("Элемент с данным ключом уже существует");
     }
 
@@ -183,34 +177,40 @@ public class CollectionManager {
     /**
      * Метод, удаляющий выбранный по идентификатору элемент коллекции
      *
-     * @param id идентификатор элемента коллекции (ключ)
+     * @param key идентификатор элемента коллекции (ключ)
      */
-    public void removeKey(Integer id) {
-        hashtable.remove(id);
+    public void removeKey(Integer key) {
+        Flat flat = hashtable.remove(key);
+        allId.remove(flat.getId());
     }
 
     /**
      * Метод, удаляющий все элементы коллекции, значение ключа которых меньше указанного
      *
-     * @param id значение ключа, меньше которого следует удалять элементы
+     * @param key значение ключа, меньше которого следует удалять элементы
      */
-    public void removeLowerKey(Integer id) {
+    public void removeLowerKey(Integer key) {
         ArrayList<Integer> keys = new ArrayList<>();
         for (Map.Entry<Integer, Flat> entry : hashtable.entrySet()) {
-            if (entry.getKey() < id) keys.add(entry.getKey());
+            if (entry.getKey() < key) keys.add(entry.getKey());
         }
-        for (Integer key : keys) {
-            hashtable.remove(key);
+        for (Integer k : keys) {
+            removeKey(k);
         }
     }
 
-    public void removeGreaterKey(Integer id) {
+    /**
+     * Метод, удаляющий все элементы коллекции, значение ключа которых больше указанного
+     *
+     * @param key значение ключа, больше которого следует удалять элементы
+     */
+    public void removeGreaterKey(Integer key) {
         ArrayList<Integer> keys = new ArrayList<>();
         for (Map.Entry<Integer, Flat> entry : hashtable.entrySet()) {
-            if (entry.getKey() > id) keys.add(entry.getKey());
+            if (entry.getKey() > key) keys.add(entry.getKey());
         }
-        for (Integer key : keys) {
-            hashtable.remove(key);
+        for (Integer k : keys) {
+            removeKey(k);
         }
     }
 
@@ -219,13 +219,7 @@ public class CollectionManager {
      */
     public void clear() {
         hashtable.clear();
-    }
-
-    /**
-     * Метод, сохраняющий элементы коллекции в файл в формате JSON.
-     */
-    public void save() {
-        fileManager.writeToFile(JsonParser.encode(hashtable));
+        allId.clear();
     }
 
     /**
@@ -255,55 +249,6 @@ public class CollectionManager {
      */
     public boolean containsKey(int key) {
         return hashtable.containsKey(key);
-    }
-
-    /**
-     * Метод, возвращающий названия всех полей коллекции, которые могут быть изменены
-     *
-     * @return Все поля коллекции выводит в столбец
-     */
-    public String getFieldName() {
-        return "Список всех полей:\nname\ncoordinate_x\ncoordinate_y\n" +
-                "area\nnumber_of_rooms\nnumber_of_bathrooms\nfurnish: " + Arrays.toString(Furnish.values())
-                + "\nview: " + Arrays.toString(View.values()) +
-                "\nhouse_name\nhouse_year\nhouse_number_of_floors\nhouse_number_of_flats_on_floor\nhouse_number_of_lifts";
-    }
-
-    /**
-     * Метод выводит в консоль список квартир, отсортированный относительно количества этажей в доме.
-     */
-    public void printFieldAscendingHouse() {
-        Collection<Flat> flatCollection = hashtable.values();
-        ArrayList<Flat> flatList = new ArrayList<>(flatCollection);
-        flatList.sort(new SortByHouse());
-        for (Flat flat : flatList) {
-            console.printCommandTextNext("Квартира: " + flat.getName() + " в доме " + flat.getHouse());
-        }
-    }
-
-    /**
-     * Метод выводит в консоль список квартир в домах с меньшим числом этажей, чем указано в параметре.
-     */
-    public void filterLessThanHouse() {
-        console.printCommandTextNext("Введите поля House");
-        int year = flatReader.readHouseYear();
-        Long numberOfFloors = flatReader.readHouseNumberOfFloors();
-        long numberOfFlatsOnFloor = flatReader.readHouseNumberOfFlatsOnFloor();
-        Long numberOfLifts = flatReader.readHouseNumberOfLifts();
-
-        Collection<Flat> flatCollection = hashtable.values();
-        int countHouse = 0;
-        for (Flat flat : flatCollection){
-            if (flat.getHouse() == null) continue;
-            if (flat.getHouse().getYear() < year
-                    && flat.getHouse().getNumberOfFloors() < numberOfFloors
-                    && flat.getHouse().getNumberOfFlatsOnFloor() < numberOfFlatsOnFloor
-                    && flat.getHouse().getNumberOfLifts() < numberOfLifts){
-                countHouse++;
-                console.printCommandTextNext(flat.getName() + "; ");
-            }
-        }
-        if (countHouse == 0) console.printCommandTextNext("Таких домов нет.");
     }
 
     /**
